@@ -1,0 +1,7 @@
+{
+    "baseUrlx" : "http://www.publish.io",
+    "baseUrly" : "https://newsroomtest.aappublish.com.au",
+    "baseUrl" : "https://regionals.cognitives.link",
+
+    "watchForFileChanges": false
+}

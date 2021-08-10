@@ -1,14 +1,12 @@
 //Bootstrap
 @import 'vendors/bootstrap/bootstrap';
 @import 'vendors/font-awesome-4.7.0/font-awesome';
-@import 'vendors/slick/slick';
-@import 'vendors/slick/slick-theme';
-@import 'vendors/bootstrap-datetimepicker-build';
+// @import 'vendors/slick/slick';
+// @import 'vendors/slick/slick-theme';
 
 @import "settings.variables";
 // @import 'datetimepicker';
 
-@import "acme-grid";
 
 
 @import "tools.functions";
@@ -16,8 +14,6 @@
 
 
 
-
-// @import "modal";
 @import "owl-theme";
 
 
@@ -45,89 +41,47 @@
 @import 'component.form';
 @import 'component.login-form';
 @import 'component.forgot-form';
-@import 'component.account-form';
-@import 'component.property-form';
 @import 'component.reset-password'; 
 @import 'component.checkbox'; 
 
 @import 'component.error';
 
 @import 'component.article';
-@import 'component.paywalled_cta';
 @import 'component.advertisment';
 @import 'component.related-articles';
 @import 'component.article-gallery';
 @import 'component.author';
-@import 'component.buttons';
-@import 'component.contact';
-@import 'component.page-info';
-@import "component.digital-edition";
-@import 'component.propertyarticle';
 
 
 // Events
 @import 'component.eventform';
 @import 'component.events';
 @import 'component.event';
-@import 'component.events-panel';
 
 //header
-@import 'component.header-1';
-@import 'component.header-2';
-@import 'component.header-3';
-@import 'component.header-4';
-@import 'component.header-0';
+@import 'component.header';
 @import 'component.header-top-bar';
-@import 'component.navigation-0';
-@import 'component.navigation-1';
-@import 'component.navigation-2';
-@import 'component.navigation-3';
-@import 'component.navigation-4';
+@import 'component.navigation';
 @import 'component.search-bar';
-@import 'component.weather'; 
-@import 'component.weather-reverse'; 
+@import 'component.responsiveNav';
 
 @import 'component.footer';
-@import 'component.footer-scoast';
-@import 'component.footer-white';
-// @import 'component.forms';
+
 @import 'component.messagebox';
 @import 'component.modals';
 @import 'component.modal';
-@import 'component.pageHead';
 @import 'component.pagination';
-@import 'component.payhead';
-@import 'component.paysub';
-@import 'component.responsiveNav';
 @import 'component.search';
 
 // listings
-@import 'component.listing';
-@import 'component.property-search';
 
-@import "component.altsite";
 @import 'component.section';
 @import 'component.section-panel';
-@import 'component.subscribe'; 
 @import 'component.form-pulldown'; 
-@import 'component.upload-image'; 
-@import 'component.ordersummary'; 
-@import 'component.subscribe_multi_notice'; 
 
 //my account page
-@import 'component.myAccount';
-@import 'component.account-plans'; 
-@import 'component.managed-user'; 
-@import 'component.managed-user-new'; 
-@import 'component.managed-user-search'; 
-@import 'component.profile-message'; 
 
-@import "component.classified-search";
-@import "component.classifieds-form";
-@import "component.classifieds";
 
-@import 'component.faqs';
-@import 'component.landing';
 
 // old
 @import "component.modal-login-form";
@@ -137,15 +91,6 @@
 @import "component.spinner-modal";
 @import "component.lightbox-modal";
 
-
-@import 'component.screen';
-@import "component.cta";
-
-// Gazette
-@import "component.blog-details";
-
-//trumps
-@import "trumps.utilities";
 
 
 
@@ -157,26 +102,10 @@
 @import "card-3";
 @import "card-4";
 @import "card-5";
-@import "card-6";
-@import "card-7";
-@import "card-8";
-@import "card-9";
-@import "card-10";
-@import "card-11";
-@import "card-12";
-@import "card-13";
-@import "card-14";
 
-@import "card-social-popup";
-@import "card-property";
 
 @import "event-card";
-@import "event-card-1";
-@import "event-card-2";  // leaderboard
-@import "card-plan";
-@import "card-screen";
 
 
-@import "acme-card";
-@import "acme-card-1";
-@import "acme-card-10";  // classifieds lightbox
+//trumps
+@import "trumps.utilities";

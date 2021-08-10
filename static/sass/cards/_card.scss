@@ -3,7 +3,6 @@
 .c-cards-view {
     @include flexbox();
     @include calc(height, '100% - 40px');
-    margin-bottom: 40px;
     position: relative;
 
     &.draft {
@@ -61,49 +60,26 @@
     }
 
     &__container {
-        height: 100%;
     }
 
     &__category {
-        font-weight: $weightMedium;
         @include font-size(12);
-        letter-spacing: 0.87px;
-        line-height: 15px;
-        color: $mainColor;
-        text-transform: uppercase;
-        margin-bottom: 12px;
-    }
+   }
 
     &__heading {
         @include font-size(22);
-        font-weight: $weightRegular;
-        line-height: 1.4;
-        color: $black;
-        overflow: hidden;
-    }
+   }
 
     &__description {
         @include font-size(14);
-        font-weight: $weightRegular;
-        line-height: 1.54;
-        color: $greyish;
-        display: none;
-        overflow: hidden;
-    }
+   }
 
     &__additional-info {
         @include flexbox();
         @include justify-content(space-between);
         @include align-items(center);
-        margin: 10px 0 15px;
-        display: none;
-
         &__price {
             @include font-size(14);
-            font-weight: $weightMedium;
-            line-height: 1.07;
-            letter-spacing: 1px;
-            color: $greyish;
         }
 
         &__features {
@@ -115,48 +91,22 @@
                 margin-left: 15px;
 
                 .icon {
-                    @include font-size(14);
-                    color: $mainColor;
                 }
 
                 .text {
-                    // margin-left: 5px;
-                    @include font-size(14);
-                    font-weight: $weightRegular;
-                    line-height: 1.07;
-                    letter-spacing: 1px;
-                    color: $greyish;
                 }
             }
         }
     }
 
     &__author {
-        border-top: 1px solid rgba($greyish, 0.3);
-        @include flexbox();
-        @include justify-content(space-between);
-        @include align-items(center);
-        padding-top: 10px;
 
     }
 
     &__author-name {
-        font-family: $secondaryFont;
-        font-weight: $weightRegular;
-        font-style: italic;
-        @include font-size(11);
-        letter-spacing: 0.87px;
-        line-height: 15px;
-        color: $greyish;
     }
 
     &__time {
-        color: rgba($greyish, 0.8);
-        font-weight: $weightRegular;
-        @include font-size(12);
-        letter-spacing: 0.87px;
-        line-height: 15px;
-        text-transform: uppercase;
     }
 
 
@@ -187,104 +137,7 @@
                 display:block;
             }
         }
-
-        .social-icon {
-            position: absolute;
-            left: 0;
-            top: 0;
-            z-index: 16;
-            text-align: center;
-
-            &:before {
-                content: '';
-                font-family: $iconfont;
-                color: $white;
-                @include font-size(26);
-                line-height: 52px;
-            }
-        }
-
-        &.facebook {
-            .social-icon {
-                background-color: $facebook;
-
-                &:before {
-                    content: '\f09a';
-                }
-            }
-        }
-
-        &.twitter {
-            .social-icon {
-                background-color: $twitter;
-
-                &:before {
-                    content: '\f099';
-                }
-            }
-        }
-
-        &.linkedin {
-            .social-icon {
-                background-color: $linkedin;
-
-                &:before {
-                    content: '\f0e1';
-                }
-            }
-        }
-
-        &.youtube {
-            .social-icon {
-                background-color: $youtube;
-
-                &:before {
-                    content: '\f16a';
-                }
-            }
-        }
-
-        &.instagram {
-            .social-icon {
-                background-color: $instagram;
-
-                &:before {
-                    content: '\f16d';
-                }
-            }
-        }
-
-        &.pinterest {
-            .social-icon {
-                background-color: $pinterest;
-
-                &:before {
-                    content: '\f231';
-                }
-            }
-        }
-
-        &.googleplus {
-            .social-icon {
-                background-color: $googleplus;
-
-                &:before {
-                    content: '\f0d5';
-                }
-            }
-        }
-
-        &.vimeo {
-            .social-icon {
-                background-color: $vimeo;
-
-                &:before {
-                    content: '\f27d';
-                }
-            }
-        }
     }
-
 }
 
 div[class^="card"] {
