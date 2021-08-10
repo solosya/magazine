@@ -1,0 +1,74 @@
+
+
+{% set count = {} %}
+
+{% set feedArr = [] %}
+
+{% set blogLink = "" %}
+
+
+{# If a page section has articles from multiple blogs, assemble here #}
+{% if config.articleOrder is defined and config.articleOrder | length > 0 %}
+    {% for a in config.articleOrder %}
+
+        {% set count = count | merge( { (a) : count[a] + 1 } ) %}
+        {% if blogFeeds[a].feed.articles | length >= count[a] %}
+            {% set feedArr = feedArr | merge( { (loop.index0) : blogFeeds[a].feed.articles[ count[a] - 1 ] }) %}
+        {% endif %}
+    {% endfor %}
+
+    {% set blogLink = blogFeeds[config.blogs[0]].link %}
+
+{# else if a page section has articles from a single blog, no assembly required #}
+{% else %}
+
+
+    {% if config.blogs is defined and blogFeeds[config.blogs[0]] is defined %}
+        {% set feedArr = blogFeeds[config.blogs[0]].feed.articles %}
+        {% set blogLink = blogFeeds[config.blogs[0]].link %}
+
+    {% else %}
+        {% set feedArr = blogFeeds[config.blog].feed.articles %}
+        {% set blogLink = blogFeeds[config.blog].link %}
+
+    {% endif %}
+
+{% endif %}
+
+
+{% if config.template != '' %}
+
+
+    {% set params = {
+        articles        : feedArr,
+        link            : config.link is defined ? config.link : blogLink,
+        title           : config.title is defined ? config.title : '',
+        dev             : dev,
+        site            : site,
+        networkData     : networkData,
+        blogData        : blogData,
+        adslots         : config.adslots is defined ? config.adslots : [],
+        timeSuppress    : config.timeSuppress is defined ? config.timeSuppress : false
+    } %}
+
+    {% if config.template_params is defined and config.template_params | length > 0  %}
+        {% set params = params | merge(config.template_params) %}
+    {% endif %}
+
+    {% set margin = 'u-margin-top-30 u-desktop-margin-top-40' %}
+
+    {% if config.background %}
+        <div class="c-section-panel__background {{margin}}">
+            {% set margin = '' %}
+
+    {% endif %}
+
+        <section class="container {{margin}}">
+            {{this.render(config.template ~ ".twig" , params) | raw}} 
+        </section>
+
+    {% if config.background %}
+        </div>
+    {% endif %}
+
+{% endif %}

@@ -1,0 +1,74 @@
+{% set link = _Blog.getHomeBlogSettings() %}
+{% set logo = networkData.templatePath~'/static/images/logo.svg'%}
+{% if networkData.logoMedia | length > 0 %}
+    {% set logo = _Media.getMediaUrl(networkData.secondaryLogoMedia, 650, 144, {'crop': 'fit'} )%}
+{% endif %}
+{% set footerMenu = _Menu.get({'menuType': 'header', 'menuGroupName': 'footer'}) %}
+
+{% if config['footer-settings']['statement'] is defined and config['footer-settings']['statement'] != '' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 u-margin-top-30 u-margin-bottom-30">
+                <p class="c-footer-white__statement">
+                    {{config['footer-settings']['statement']|raw}}
+                </p>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<footer class="c-footer c-footer-sm c-footer--themecolour">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="c-footer__container">
+                    <div class="row">
+                        <div class="col-12 col-lg-5">
+                            <a href="{{networkData.defaultBlogUrl}}" class="c-footer__logo">
+                                <img src="{{logo}}" class="image-fluid"/>
+                            </a>
+
+                            <div class="c-footer__addresses">
+                                {% if addresses.name != "" %}
+                                    <p class="c-footer__addresses__content">{{addresses.name}}</p>
+                                {% endif %}
+                                {% if addresses.email != "" %}
+                                    <p class="c-footer__addresses__content">{{addresses.email}}</p>
+                                {% endif %}
+                                <p class="c-footer__addresses__content">{{addresses.address}}<br />{{addresses.city}}<br />{{addresses.state}} {{addresses.postcode}}</p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-12 col-lg-7 u-tablet-margin-top-40">
+                            <div class="row justify-content-end">
+
+                                {% set footercols = 0 %}
+                                {% for i in 0..3 if footerMenu | length > footercols %}
+                                    <div class="col-12 col-md-3  u-tablet-margin-bottom-40 u-mobile-margin-top-20">
+                                        <div class="c-footer__navigation c-footer__navigation-sm">
+                                            {{this.render('../_submenu_navigation.twig', {
+                                                items: footerMenu | slice(footercols, 4),
+                                                class: '',
+                                            }) | raw}}
+                                        </div>
+                                    </div>
+                                    {% set footercols = footercols + 4 %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+                <div class="c-footer__bottom u-margin-top-80 u-tablet-margin-top-40">
+                    <div class="c-footer__bottom__copyright">&copy; Copyright {{networkData.title}} {{ "now"|date("Y") }}</div>
+                    <a href="https://pagemasters.com" class="c-footer__bottom__powered">DESIGNED AND POWERED BY PAGEMASTERS PUBLISH</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ networkData['styling']['customFooter'] | raw }}
+
+</footer>

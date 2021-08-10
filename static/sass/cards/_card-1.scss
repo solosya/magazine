@@ -1,0 +1,244 @@
+@mixin card-1-base() {
+    @include card-name("C1 mobile");
+    .c-cards-view {
+        @include flex-direction(column, vertical);
+        // height: 320px;
+
+        &__media {
+            height: 40vw;
+        }
+
+        &__author {
+            border: none;
+        }
+        &__heading {
+            font-weight: $weightBold;
+            @include font-size(20);
+            @include flex-height(50px);
+        }
+
+        &__container {
+            margin-top: -14px;
+            margin-left: 10px;
+            @include calc(width, '100% - 20px');
+            background: $white none repeat scroll 0 0;
+            height: inherit;
+            padding: 20px 20px 0 20px;
+            z-index: 1;
+        }
+
+        &__author {
+            margin-top:18px;
+        }
+
+        &.without-image {
+            .c-cards-view {
+                &__container {
+                    width: 100%;
+                    margin-top: 40px;
+                    padding: 0 40px 40px;
+                    margin-left: 0;
+                    background: none;
+                }
+                &__heading {
+                    margin-top:40px;
+                }
+
+
+                &__description {
+                    margin-top:20px;
+                    display:block;
+                    @include font-size(13);
+                    line-height: 1.44;
+                    @include flex-height(80px);
+                }
+
+
+                &__author {
+                    margin-top:20px;
+                    border-top: 1px solid rgba($greyish, 0.3);
+                }
+            }
+        }
+
+
+
+    // ****************************
+    //          SOCIAL
+    // ****************************
+        &.social {
+            .social-icon {
+                @include size(30px);
+
+                &:before {
+                    @include font-size(13);
+                    line-height: 32px;
+                }
+            }
+
+            &.without-image {
+                .c-cards-view {
+                    &__container {
+                        @include calc(width, '100% - 30px');
+                        margin-left: 0px;
+                        padding: 0 20px;
+                        background: none;
+                        margin-top: 40px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+.card-1-mobile {
+    @media #{$mobile} {
+        @include card-1-base();
+    }
+}
+
+
+@mixin card-1-tablet-base() {
+    @include card-1-base();
+    @include card-name("C1 tablet");
+    .c-cards-view {
+
+        height: 417px;
+
+        &__media {
+            //@include flex-height(360px);
+            @include calc(width, '100% - 26%');
+            position: absolute;
+            right: 0;
+            height: 100%;
+            &--video {
+                &:before {
+                    @include size(88px);
+                }
+            }
+
+        }
+
+        &__heading {
+            @include font-size(28);
+            max-height: 140px;
+            min-height: 40px;
+            margin-top: 72px;
+
+        }
+
+        &__container {
+            margin-top: 20px;
+            margin-left: 0;
+            position: absolute;
+            width:238px;
+            height: 373px;
+        }
+
+        &__time{
+            position: absolute;
+            bottom: 23px;
+        }
+    
+        &.without-image {
+            .c-cards-view {
+                &__container {
+                    margin-top: 40px;
+                    padding: 0 40px;
+                }
+                &__heading {
+                    margin-top:82px;
+                    margin-bottom:15px;
+                    @include font-size(28);
+                    font-weight: $weightBold;
+                    @include flex-height(68px);
+
+                }
+                &__description {
+                    margin-top: 10px;
+                    display:block;
+                    @include font-size(18);
+                    line-height:1.56;
+                    @include flex-height(85px);
+                }
+                &__author {
+                    margin-top:115px;
+                    border-top: 1px solid rgba($greyish, 0.3);
+                }
+            }
+        }
+    }
+
+
+    // ****************************
+    //          SOCIAL
+    // ****************************
+    &.social {
+        .social-icon {
+            @include size(50px);
+
+            &:before {
+                @include font-size(22);
+                line-height: 52px;
+            }
+        }
+
+        &.without-image {
+            .c-cards-view {
+                &__container {
+                    margin-top: 60px;
+                }
+            }
+        }
+    }
+}
+
+
+.card-1-tablet {
+	@media #{$tablet} {
+        @include card-1-tablet-base();
+        @include card-name("C1 desktop");
+    }
+}
+.card-1-desktop {
+	@media #{$desktop-up} {
+        @include card-1-tablet-base();
+        @include card-name("C1 desktop");
+
+        .c-cards-view {
+
+            &__heading {
+                margin-top: 27px;
+                margin-bottom: 10px;
+            }
+
+            &__container {
+                width:333px;
+            }
+            &__description{
+                max-height: 75px;
+                display: block;
+            }
+            &.without-image {
+                .c-cards-view {
+                    
+                    &__heading {
+                        margin-top:42px;
+                    }
+                    &__time{
+                        bottom: 43px;
+                    }
+                }
+            }
+        }
+        
+    }
+}
+

@@ -1,0 +1,34 @@
+{% set articleCount = 0 %}
+{% set cardIndex = 0 %}
+
+
+<div class="row" data-section="02">
+    <div class="col-12">
+        <div class="c-page-head c-page-head-xs">
+            <div class="u-heading__large u-heading__large-xs u-pr--6">{{title}}</div>
+            <a href="{{link}}" class="c-page-head__link">View all</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">       
+    {% for i in 0..6 if articles[articleCount] %}
+        <div class="col-12 col-md-4 col-lg-3{% if i == 6 %} d-md-none d-lg-block{% endif %}">
+            {{this.render('../_single-article.twig', {
+                article: articles[articleCount], 
+                position: (articleCount+1),
+                imageSize: {width: 740, height: 360},
+                containerClass: "card-5-mobile card-4-tablet card-2-desktop card-2-desktop-lg",
+                timeSuppress: timeSuppress
+            }) | raw}}
+            {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+        </div>
+    {% endfor %}
+             
+    <div class="col-12 col-lg-3 d-none d-lg-block">
+        {% if adslots[0] is defined %}
+            <div class="j-adslot" id="{{adslots[0]}}" data-adshape="mrec"></div>
+        {% endif %}
+    </div>
+</div>

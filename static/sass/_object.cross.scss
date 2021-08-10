@@ -1,0 +1,29 @@
+.o-close {
+    position:relative;
+    width: 28px;
+    height: 28px;
+}
+.o-close:hover {
+    opacity: 1;
+}
+.o-close:before, .o-close:after {
+    content: ' ';
+    position: absolute;
+    left: 13px;
+    height: 27px;
+    width: 1px;
+}
+.o-close:before {
+    transform: rotate(45deg);
+}
+.o-close:after {
+    transform: rotate(-45deg);
+}
+
+.o-close:before, .o-close:after {
+    background-color: $white;
+}
+
+.o-close--dark:before, .o-close--dark:after {
+    background-color: $greyish;
+}

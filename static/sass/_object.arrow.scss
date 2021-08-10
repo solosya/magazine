@@ -1,0 +1,48 @@
+.o-arrow {
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	position: absolute;
+	// left: 50%;
+	// top: 50%;
+	transform: rotate(-45deg);
+	
+	&::before {
+		content: '';
+		width: 100%;
+		height: 100%;
+		border-width: 1px 1px 0 0;
+		border-style: solid;
+		border-color: inherit;
+		transition: .2s ease;
+		display: block;
+		transform-origin: 100% 0;
+	}
+
+	
+	&:after {
+		content: '';
+		float: left;
+		position: relative;
+		top: -100%;
+		width: 100%;
+		height: 100%;
+		border-width: 0 1px 0 0;
+		border-style: solid;
+		border-color: inherit;
+		transform-origin: 100% 0;
+		transition:.2s ease;
+	}
+	
+	// &:hover::after {
+	// 	transform: rotate(45deg);
+	// 	// border-color: $mainColor;
+	// 	height: 120%;
+	// }
+	// &:hover::before {
+	// 	// border-color: $mainColor;
+	// 	transform: scale(.8);
+		
+	// }
+	
+}

@@ -1,0 +1,610 @@
+/* Forms
+------------------------------------*/
+.horizontal-form {
+	label {
+        cursor:pointer;
+		min-height:20px;
+        margin-bottom:8px;
+	}
+	
+	.account-form__group {
+        width:100%;
+		margin-bottom:15px;
+	
+		&.no-margin-bottom {
+			margin-bottom:0px;
+		}
+        
+        .static-text {
+            width:100%;
+            color:$black;
+            @include font-size(13);
+            line-height:1.5;
+            font-weight:$weightRegular;
+            
+            &.unsuccessful {
+                color:$unsuccessful;
+                font-weight:$weightBold;
+                
+                > small {
+                    color:$greyish;
+                }
+            }
+        }
+	}
+        
+    .help-block {
+        display:none;
+    }
+}
+.form__footer {
+    text-align:right;
+}
+.form-control-static-value {
+	display:table;
+	width:100%;
+	
+	> p {
+		height:46px;
+		color:$grey;
+		padding-left:20px;
+		display:table-cell;
+		@include font-size(16);
+		line-height:1.2;
+		vertical-align:middle;
+	}
+}
+
+input[type="text"], input[type="password"], input[type="tel"], input[type="email"], input[type="search"], input[type="url"], input[type="number"], select, textarea {
+	display:block;
+	width:100%;
+	padding:4px 8px;
+	outline:none;
+	// @include font-size(16);
+	line-height:28px;
+	font-weight:400;
+	color:$black;
+    height:auto;
+	text-align:left;
+	font-family:$primaryFont;
+	-webkit-appearance:none;
+	-moz-appearance:none;
+	appearance:none;
+	// @include border-radius(6px);
+	// border:1px solid $border;
+	// background:$white none repeat scroll 0 0;
+	@include transition(all 0.3s ease-out);
+    // @include box-shadow(2px 2px 4px #f9f9f9);
+}
+.horizontal-form {
+    input {
+        &[type="text"], &[type="password"], &[type="tel"], &[type="email"], &[type="search"], &[type="url"], &[type="number"] {
+            height:44px;
+        }
+
+        &[type="text"]:focus, &[type="password"]:focus, &[type="tel"]:focus, &[type="number"]:focus, &[type="url"]:focus, &[type="email"]:focus, &[type="search"]:focus, select:focus, textarea:focus {
+            border:1px solid $mainColor;
+            @include border-radius(6px);
+            background:$white none repeat scroll 0 0;
+        }
+    }
+}
+.form-control {
+	color:$black;
+	font-weight:400;
+	border-color:$border;
+	@include border-radius(6px);
+    background:$white none repeat scroll 0 0!important;
+}
+select {
+	height:44px;
+	cursor:pointer;
+	padding:4px 12px;
+	@include border-radius(6px);
+}
+select:focus, textarea:focus {
+	@include border-radius(6px);
+	border:1px solid $mainColor!important;
+	background:$white none repeat scroll 0 0;
+}
+textarea {
+    resize:none;
+  	height:120px;
+    border:1px solid $border;
+    background:$white none repeat scroll 0 0;
+}
+
+
+.req, .has-error label {
+  color:$error!important;
+}
+
+.has-error {
+	input {
+	
+		&[type="text"], &[type="password"], &[type="tel"], &[type="number"], &[type="url"], &[type="email"], &[type="search"], &[type="text"]:focus, &[type="password"]:focus, &[type="tel"]:focus, &[type="number"]:focus, &[type="url"]:focus, &[type="email"]:focus, &[type="search"]:focus {
+			color:$error;
+			border-color:$error;
+			background:$white none repeat scroll 0 0;
+		}
+	}
+	
+	select, textarea, .cog-input-group .input-group-addon, select:focus, textarea:focus, .cog-input-group .input-group-addon:focus {
+		color:$error;
+		border-color:$error;
+		background:$white none repeat scroll 0 0;
+	}
+            
+    .help-block {
+        color:$error;
+        display:block;
+        margin-top:4px;
+        @include font-size(12);
+    }
+}
+
+.has-success {
+	input {
+	
+		&[type="text"], &[type="password"], &[type="tel"], &[type="number"], &[type="url"], &[type="email"], &[type="search"], &[type="text"]:focus, &[type="password"]:focus, &[type="tel"]:focus, &[type="number"]:focus, &[type="url"]:focus, &[type="email"]:focus, &[type="search"]:focus {
+			color:$black;
+			border-color:$success;
+			background:$white none repeat scroll 0 0;
+		}
+	}
+	
+	select, textarea, .cog-input-group .input-group-addon, select:focus, textarea:focus, .cog-input-group .input-group-addon:focus {
+		color:$black;
+		border-color:$success;
+        background:$white none repeat scroll 0 0;
+	}
+}
+
+.horizontal-form {
+    &.label__inline {
+        .account-form__group.has-error {
+            position:relative;
+            @include padding-bottom(20);
+            @media (max-width:767px) {
+                @include padding-bottom(0);
+            }
+            .help-block {
+                bottom:0px;
+                position:absolute;
+                @include margin-left(130);
+                
+                @media (max-width:767px) {
+                    position:relative;
+                    @include margin-left(0);
+                }
+            }
+        }
+    }
+}
+
+
+
+.added-placeholder [type="text"]:focus {
+	border:1px solid $border;
+	@include border-radius(6px);
+	background:$white none repeat scroll 0 0;
+}
+
+
+.form-control::-webkit-input-placeholder {
+    color:$black;
+	@include opacity(0.75);
+}
+.form-control::-moz-placeholder {
+    color:$black;
+	@include opacity(0.75);
+}
+.form-control::-ms-input-placeholder {
+    color:$black;
+	@include opacity(0.75);
+}
+.form-control::-o-placeholder {
+    color:$black;
+	@include opacity(0.75);
+}
+
+
+/* Custom Radio and Checkboxes
+------------------------------------- */
+.form-wrap.text-center label.error {
+	display:table;
+	margin-top:5px;
+	text-align:left!important;
+}
+
+.button-set {
+    width:100%;
+	position:relative;
+	margin-bottom:0px;
+
+    [class^="column"] {
+        margin-right:50px;
+        display:inline-block;
+        @media #{$media-phone} {
+            display:block;
+            margin-right:0px;
+        }
+    }
+
+	label {
+        width:100%;
+		cursor:pointer;
+		margin-right:0px;
+		color: $greyish;
+        margin-bottom:0px;
+        @include font-size(14);
+        line-height:1.5;
+        font-weight:$weightRegular;
+	}
+	input {
+
+		&[type="radio"], &[type="checkbox"] {
+			margin:0;
+			height:1px;
+			@include padding(0);
+			@include opacity(0);
+			position:absolute;
+			pointer-events:none;
+		}
+		&[type="radio"] + span, &[type="checkbox"] + span {
+			@include size(20px);
+			text-align:center;
+			display:inline-block;
+			background-color:$white;
+			border:1px solid $border;
+			vertical-align:text-bottom;
+			position:relative;
+			margin-right:6px;
+			@include transition(all 0.1s ease);
+			@include border-radius(6px);
+		}
+        &[type="radio"] + span {
+            top:1.5px;
+        }
+        &[type="checkbox"] + span {
+            top:1.5px;
+        }
+		&[type="radio"] + span::after, &[type="checkbox"] + span::after {
+			content:"";
+			display:inline-block;
+			@include opacity(0);
+			width:100%;
+			position:absolute;
+			top:0;
+			left:0;
+			height:100%;
+			@include transition(all 0.1s ease);
+		}
+		&[type="radio"]:focus + span, &[type="checkbox"]:focus + span, &[type="radio"]:active + span, &[type="checkbox"]:active + span {
+			border-color:$success;
+		}
+		&[type="radio"]:checked + span::after, &[type="checkbox"]:checked + span::after {
+			@include opacity(1);
+		}
+		&[type="radio"].error + span, &[type="checkbox"].error + span {
+			border-color:$error;
+		}
+		&[type="radio"] {
+			+ span {
+				@include border-radius(6px);
+
+				&::after {
+					@include border-radius(4px);
+					background-color:$mainColor;
+					border-color:$mainColor;
+				}
+			}
+			&:checked + span {
+				border:1px solid $mainColor;
+				@include transition(all 0.1s ease);
+			}
+		}
+		&[type="radio"]:checked + span::after {
+			border:2px solid $white;
+            @include border-radius(6px);
+		}
+
+		&[type="checkbox"] {
+			+ span {
+				@include border-radius(6px);
+
+				&::after {
+					@include border-radius(4px);
+					background-color:$mainColor;
+					border-color:$mainColor;
+				}
+			}
+			&:checked + span {
+				border:1px solid $mainColor;
+				@include transition(all 0.1s ease);
+			}
+		}
+		&[type="checkbox"]:checked + span::after {
+			border:2px solid $white;
+            @include border-radius(6px);
+		}
+	}
+}
+
+form.contact-form .help-block-error {
+    display:block;
+}
+
+
+.title {
+    .button-set {
+        label {
+            color:$black;
+        }
+        input {
+            &[type="radio"] + span, &[type="checkbox"] + span {
+                border:0px none;
+            }
+        }
+    }
+}
+
+.button-set {
+    .eds-checked {
+        top:1px;
+        position:relative;
+        padding-right:5px;
+        display:inline-block;
+        vertical-align:middle;
+        
+        &:before {
+            top:0;
+            left:0;
+            margin:0;
+            z-index:1;
+            content:"";
+            display:block;
+            position:absolute;
+            @include opacity(0);
+            @include size(20px, 20px);
+            @include border-radius(100%);
+            background-color:rgba($white, 0);
+            @include transform(scale3d(2.3,2.3,1));
+        }
+    }
+    .eds-checked .check {
+        z-index:1;
+        overflow:hidden;
+        position:relative;
+        display:inline-block;
+        background-color:$white;
+        border:1px solid $border;
+        @include size(19px, 19px);
+        @include border-radius(1px);
+        
+        &:before {
+            content:"";
+            display:block;
+            margin-top:-3px;
+            margin-left:7px;
+            position:absolute;
+            background:$hoverColor!important;
+            @include size(0px, 0px);
+            @include transform(rotate(45deg));
+            -webkit-animation:checkbox-off 0.3s forwards;
+            -moz-animation:checkbox-off 0.3s forwards;
+            -o-animation:checkbox-off 0.3s forwards;
+            -ms-animation:checkbox-off 0.3s forwards;
+            animation:checkbox-off 0.3s forwards;
+        }
+    }
+    input[type=checkbox] {
+        &:focus + .eds-checked .check:after {
+            @include opacity(0.2);
+        }
+        &:checked + .eds-checked .check {
+            background:$hoverColor!important;
+            border-color:darken($hoverColor, 6%);
+            &:before {
+                color:$white;
+                background:$hoverColor!important;
+                -webkit-animation:checkbox-on 0.3s forwards;
+                -moz-animation:checkbox-on 0.3s forwards;
+                -ms-animation:checkbox-on 0.3s forwards;
+                -o-animation:checkbox-on 0.3s forwards;
+                animation:checkbox-on 0.3s forwards;
+                -webkit-box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px -12px 0 11px;
+                -moz-box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px -12px 0 11px;
+                -ms-box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px -12px 0 11px;
+                -o-box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px -12px 0 11px;
+                box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px -12px 0 11px;
+            }
+        }
+        &[disabled] {
+            ~ .eds-checked .check {
+                border-color:$hoverColor;
+                @include opacity(0.26);
+            }
+            + .eds-checked .check:after {
+                @include transform(rotate(-45deg));
+                background-color:rgba($hoverColor, 1)!important;
+            }
+        }
+    }
+}
+
+.button-set input[type=checkbox]:checked + .eds-checked:before,
+.button-set input[type=radio]:checked + .eds-checked:before {
+    -webkit-animation:rippleOn 500ms;
+    -moz-animation:rippleOn 500ms;
+    -o-animation:rippleOn 500ms;
+    -ms-animation:rippleOn 500ms;
+    animation:rippleOn 500ms;
+    background-color:rgba($hoverColor, 0.3);
+}
+.button-set input[type=checkbox]:checked + .eds-checked .check:after,
+.button-set input[type=radio]:checked + .eds-checked span:after{
+    -webkit-animation:rippleOn 500ms forwards;
+    -moz-animation:rippleOn 500ms forwards;
+    -o-animation:rippleOn 500ms forwards;
+    -ms-animation:rippleOn 500ms forwards;
+    animation:rippleOn 500ms forwards;
+}
+.button-set input[type=checkbox]:not(:checked) + .eds-checked:before,
+.button-set input[type=radio]:not(:checked) + .eds-checked:before {
+    -webkit-animation:rippleOff 500ms;
+    -moz-animation:rippleOff 500ms;
+    -o-animation:rippleOff 500ms;
+    -ms-animation:rippleOff 500ms;
+    animation:rippleOff 500ms;
+    background-color:rgba($hoverColor, 0.3);
+}
+
+@keyframes checkbox-on {
+    0% {
+        -webkit-box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 15px 2px 0 11px;
+        -moz-box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 15px 2px 0 11px;
+        -ms-box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 15px 2px 0 11px;
+        -o-box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 15px 2px 0 11px;
+        box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 15px 2px 0 11px;
+    }
+    50% {
+        -webkit-box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px 2px 0 11px;
+        -moz-box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px 2px 0 11px;
+        -ms-box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px 2px 0 11px;
+        -o-box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px 2px 0 11px;
+        box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px 2px 0 11px;
+    }
+    100% {
+        -webkit-box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px -12px 0 11px;
+        -moz-box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px -12px 0 11px;
+        -ms-box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px -12px 0 11px;
+        -o-box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px -12px 0 11px;
+        box-shadow:0 0 0 10px, 10px -10px 0 10px, 32px 0 0 20px, 0px 32px 0 20px, -5px 5px 0 10px, 20px -12px 0 11px;
+    }
+}
+@keyframes rippleOn {
+    0% {
+        @include opacity(0);
+    }
+    50% {
+        @include opacity(0.2);
+    }
+    100% {
+        @include opacity(0);
+    }
+}
+@keyframes rippleOff {
+    0% {
+        @include opacity(0);
+    }
+    50% {
+        @include opacity(0.2);
+    }
+    100% {
+        @include opacity(0);
+    }
+}
+/* Vertical Form */
+.vertical-form {
+    .account-form__group {
+        width: 100%;
+        margin-bottom: 15px;
+
+        &.no-margin-bottom {
+            margin-bottom: 0px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="search"],
+        input[type="url"],
+        input[type="number"],
+        select,
+        textarea {
+            display: block;
+            width: 100%;
+            @include padding(7 0);
+            outline: none;
+            @include font-size(13);
+            line-height: 1.54;
+            font-weight: $weightMedium;
+            color: $greyish;
+            height: auto;
+            text-align: left;
+            font-family: $primaryFont;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 0;
+            @include border-radius(0px);
+            border-bottom: 2px solid $offwhite;
+            @include transition(all 0.3s ease-out);
+            box-shadow: none;
+        }
+
+        .input__type {
+            position: relative;
+
+            &--icon {
+                position: absolute;
+                top: 50%;
+                right: 0;
+                @include translate(0, -50%);
+                color: $grey;
+            }
+        } 
+
+        .forgot__password {
+            &__link {
+                color: $greyish;
+                font-family: $weightRegular;
+                @include font-size(11);
+                line-height: normal;
+                @include margin-bottom(10);
+                letter-spacing: normal;
+                font-family: $primaryFont;
+                display: block;
+                font-style: italic;
+                opacity: 0.8;
+                text-decoration: underline;
+            }
+        }
+        .custom-select {
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
+
+            &:after {
+                content:'\f107';
+                font-family: $iconfont;
+                position: absolute;
+                right: 15px;
+                top: 5px;
+                display: inline-block;
+            }
+        }
+    }
+
+    .o-modal__action {
+        @include margin-top(40);
+    }
+
+    .help-block {
+        display: none;
+    }
+
+    .has-success {
+        .input__type--icon {
+            color: $mainColor;
+        }
+    }
+
+    .has-error {
+        .input__type--icon {
+            color: $error;
+        }
+    }
+}

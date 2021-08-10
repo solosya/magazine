@@ -1,0 +1,229 @@
+@mixin card-2-base() {
+    @include card-name("C2 mobile");
+
+    .c-cards-view {
+        @include flex-direction(column, vertical);
+
+        &__media {
+            width: 98px;
+            height: 130px;
+            &--video {
+                &:before {
+                    @include size(55px);
+                }
+            }
+        }
+
+        &__container {
+            @include calc(width, '100% - 112px');
+            margin-left: 14px;
+        }
+
+        &__info {
+            @include calc(height, '100% - 40px');
+
+        }
+        &__heading {
+            min-height: 66px;
+            max-height: 66px;
+        }
+
+        &.video {
+            .c-cards-view__media .video-icon {
+                @include size(40px);
+            }
+        }
+
+        &.without-image {
+            .c-cards-view__container {
+                width: 100%;
+                margin-left: 0px;
+                padding: 0px 20px 0;
+            }
+
+            .c-cards-view__description {
+                margin-bottom: 15px;
+                display: block;
+                max-height: 90px;
+                overflow: hidden;
+            }
+        }
+
+        &.social {
+
+            .social-icon {
+                @include size(30px);
+
+                &:before {
+                    @include font-size(13);
+                    line-height: 32px;
+                }
+            }
+
+            &.without-image {
+                .c-cards-view__container {
+                    padding-top: 40px;
+                }
+            }
+        }
+
+    }
+    &.design2 {
+        .c-cards-view {
+            &__heading {
+                @include font-size(22);
+                line-height: 1.3;
+                font-weight: $weightBold;
+            }
+            &__additional-info {
+                @include flexbox();
+            }
+        }
+    }
+}
+
+.card-2-mobile {
+    @media #{$mobile} {
+        @include card-2-base();
+    }
+}
+
+
+.card-2-tablet {
+
+    @media #{$tablet} {
+
+        @include card-2-base();
+        @include card-name("C2 tablet");
+    }
+}
+
+
+@mixin card-2-desktop-base {
+
+    @include card-2-base();
+    @include card-name("C2 desktop");
+
+    .c-cards-view {
+
+        @include flex-direction(column, vertical);
+        // min-height: 417px;
+
+        &__media {
+            width: 100%;
+            min-height: 220px;
+            background: $white none repeat scroll 0 0 !important;
+
+            img {
+                display: block;
+            }
+        }
+
+        &__container {
+            width: 100%;
+            margin-left: 0;
+        }
+
+        &__category {
+            margin-top:15px;
+        }
+
+        &__heading {
+            @include flex-height(78px);
+            @include font-size(22);
+        }
+
+        &__author {
+            margin-top:15px;
+        }
+
+
+
+        &.without-image {
+
+            .c-cards-view__container {
+            }
+
+            
+            .c-cards-view__category {
+                margin-bottom:60px;
+            }
+
+            .c-cards-view__heading {
+                height:84px;
+            }
+
+            .c-cards-view__description {
+                margin-top:10px;
+                margin-bottom: 15px;
+                display: block;
+                height: 160px;
+                max-height:none;
+                overflow: hidden;
+            }
+            .c-cards-view__author {
+                margin-top: 10px;
+                margin-bottom: 20px;
+            }
+
+        }
+
+
+    }
+
+    &.video {
+        .c-cards-view__media .video-icon {
+            @include size(70px);
+        }
+    }
+
+    &.social {
+        .social-icon {
+            @include size(50px);
+
+            &:before {
+                @include font-size(22);
+                line-height: 52px;
+            }
+        }
+
+        &.without-image {
+            .c-cards-view__container {
+                padding-top: 60px;
+            }
+        }
+    }
+}
+
+.card-2-desktop {
+    @media #{$desktop} {
+        @include card-2-desktop-base();
+    }
+}
+
+.card-2-desktop-up {
+    @media #{$desktop-up} {
+        @include card-2-desktop-base();
+    }
+}
+
+
+.card-2-desktop-lg {
+    @media #{$desktop-lg} {
+        @include card-2-desktop-base();
+        .c-cards-view {
+
+            &__media {
+                min-height: 260px;
+            }
+
+            &.without-image {
+                .c-cards-view__author {
+                    margin-top: 35px;
+                    margin-bottom: 20px;
+                }
+            }
+
+        }
+    }
+}

@@ -1,0 +1,26 @@
+<section>
+    <div class="row">
+        <div class="col-sm-9 section-header">
+            <div class="hk">
+                <h2>My Blogs</h2>
+                <p></p>
+            </div>
+        </div>
+
+        <div class="col-md-9 col-sm-5">
+            <div class="row">
+                <ul class="profile-list">
+                    {% if userOwnerBlogs | length > 0 and false %}
+                        {% for blog in userOwnerBlogs %}
+                            <li>
+                                <a href="{{blog.url}}">{{Html.encode(blog.title)}}</a>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class='no-data'>No blogs found.</p>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

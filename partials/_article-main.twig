@@ -1,0 +1,43 @@
+{% import "quotes.twig" as quotes %}
+
+{% set imageSize = "" %}
+{% if _User.isAdminUser() %}
+    {% set imageSize = "Width: " ~ params.imgWidth ~ " Height: " ~ params.imgHeight %}
+{% endif %}
+
+{% if params.hasMedia %}
+    <figure class="{{params.cardType}}c-cards-view__media {{params.videoClass}}" title="{{imageSize}}">
+        <picture>
+            <source media="(max-width: 767px) and (min-width: 501px)" srcset="{{params.imageMedium}}">
+            <source media="(max-width: 991px) and (min-width: 768px)" srcset="{{params.imageMedium}}">
+            <source media="(max-width: 500px)" srcset="{{params.imageSmall}}">
+
+            {% if params.lazyload == false %}
+                <img width="{{params.imgWidth}}" height="{{params.imgHeight}}" class="img-fluid" src="{{params.image}}">
+            {% else %}  
+            {# ADD LAZYLOAD  class="lazyload" src="{{params.placeholder}}" #}
+                <img width="{{params.imgWidth}}" height="{{params.imgHeight}}" class="img-fluid" src="{{params.image}}" data-original="{{params.articleImg}}">
+            {% endif %}
+            <div class="video-icon"></div>
+
+        </picture>
+    </figure>
+    
+
+{% endif %}
+
+<div class="social-icon"></div>
+
+<div class="{{params.cardType}}c-cards-view__container">
+
+    <div class="{{params.cardType}}c-cards-view__category">{{params.category}}</div>
+    
+    <h2 class="{{params.cardType}}c-cards-view__heading js-c-cards-view-heading j-truncate j-headline">{{ params.title }}</h2>
+    
+    <p class="{{params.cardType}}c-cards-view__description js-c-cards-view-description j-truncate j-excerpt">{{ quotes.smarten(params.content | raw) }}</p>
+
+    <div class="{{params.cardType}}c-cards-view__author">
+        <div class="{{params.cardType}}c-cards-view__author-name">{{ params.author }}</div>
+        <div class="{{params.cardType}}c-cards-view__time">{{params.publishDate}}</div>
+    </div>
+</div>

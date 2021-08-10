@@ -1,0 +1,303 @@
+{% import "partials/quotes.twig" as quotes %}
+{{ set(this, 'title', article.title) }}
+{{ this.registerLinkTag({rel:'amphtml', href:_AppHelper.getServerUrl(false)~'?amp=1'}) }}
+
+
+{% set networkData  = _Network.getNetworkData() %}
+{% set blogInfo     = _Blog.getBlog() %}
+{% set config       = _Network.getThemeConfig() %}
+
+{% set relatedArticles = [] %}
+{% set articleBlog = article.blog.title | lower %}
+
+{% set articleBlogInfo = _Blog.getBlog({'guid':article.blog['guid']}) %}
+
+
+{% set showPaywall = false %}
+{% set ArticleContent = article.content %}
+
+
+{% set pwstats = {} %}
+{% if not _User.isGuest() %}
+    {% set pwstats = _User.getPaywallStats(false) %}
+{% endif %}
+
+
+
+
+
+{% set paywallType = "" %}
+{% if  not _User.isAdminUser() and article.showPaywall == true %}
+
+    {% set showPaywall = true %}
+    
+    {# DETERMINE IF PAYWALL IS 'PAID' OR 'FREE' #}
+    {% if articleBlogInfo['paywallAllowSignupOnly'] == true %}
+        {# TURN FREE PAYWALL OFF FOR LOGGED IN USERS AND SET FREE PAYWALL TO SHOW #}
+        
+        {% if not _User.isGuest() %}
+            {% set showPaywall = false %}
+        {% else %}
+            {% set paywallType = "signup" %}
+        {% endif %}
+
+        
+    {% else %}
+        {# DETERMINE WHICH PAYWALL TO SHOW #}
+        
+        {% set paywallType = "subscribe" %}
+        
+
+        {# IF USER IS LOGGED IN #}
+        {% if not _User.isGuest() %} 
+
+            {% if pwstats['type'] == 'article' %}
+                {% set paywallType = "topup" %}
+            {% elseif pwstats['type'] == 'time' %}
+                {% set paywallType = "renew" %}
+            {% else %}
+                {% set paywallType = "upgrade" %}
+            {% endif %}
+
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+
+
+
+{% set trialToggle = false %}
+
+{% if showPaywall == true %}
+    {% set storySplit = ArticleContent | split('<p>')  %}
+    {% set para2_words = storySplit[2] | split(' ') | slice(0, 10) %}
+    {% set para2 = para2_words | join(' ') ~ '</p>'  %}
+    {% set ArticleContent = '<p>' ~ [storySplit[1], para2] | join('<p>') %}
+    {% set plans 		= networkData['paywallPlans'] %}
+    {% for plan in plans  %}
+        {% if plan.trial_status == "1" %}
+            {% set trialToggle = true %}
+        {% endif %}
+    {% endfor %}
+
+{% else %}
+    {# Only grab these if article is not paywalled #}
+    {# {% set relatedArticles = _Article.getPopularArticles({ blogId: article.blog.id, limit: 3, excludeArticleIds : [article.id], interval: 168 }) %} #}
+    {% set recentArticles = _Article.getRecentArticles({ limit: 5, excludeArticleIds : [article.id] }) %}
+{% endif %}
+
+
+
+
+
+{% set watermark = false %}
+{% if config['watermark']['settings'] is defined and config['watermark']['sections'][articleBlog|lower] is defined %}
+    {% set watermark = config['watermark']['settings'] %}
+{% endif %}
+
+
+
+
+{% set articleImg = false %}
+{% set featured = false %}
+{% if article.media|length > 0 %}
+    {% set articleImg = true %}
+    {% set featured = article.media[0].type %}
+{% endif %}
+
+
+
+{% set profileImg = _Media.getMediaUrl(article.createdBy['media'], 100, 100, {radius: 'max', gravity: 'face', 'crop': 'thumb', type: 'user'}) %}
+{% set publishDate = _AppHelper.getDefaultTimezoneDateTime(article.publishDate, 'F, Y') %}
+{% set updateDate = _AppHelper.getDefaultTimezoneDateTime(article.updatedDateTime,'F j, Y') %}
+
+
+{% set updated = false %}
+{% if article.publishedDateTime != article.updatedDateTime %}
+    {% set updatedAgo = _AppHelper.getSecondsSincePublished(article.updatedDateTime) %}
+    {% if updatedAgo < 86400 %}
+        {% set updateDate = _AppHelper.getRelativeTime(article.updatedDateTime) ~ " ago" %}
+    {% endif %}
+    {% set updated = true %}
+{% endif %}
+
+
+
+
+
+<main id="main" class="o-body-container o-body-container-md u-margin-top-60" role="main">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-12 col-lg-7 j-article-container">
+
+                <div class="c-article c-article-sm" >
+
+                
+
+
+                    {% if showPaywall == true %}
+                        {% set imageMargin = 'u-tablet-margin-top-60 u-mobile-margin-top-100 u-desktop-margin-top-80' %}
+                    {% else %}
+                        {% set imageMargin = 'u-tablet-margin-top-30 u-desktop-margin-top-50' %}
+                    {% endif %}
+
+                    <div class="c-article__main {{imageMargin}}">
+                        <div class="c-article__head">
+                            
+                            {% if _User.isAdminUser() %}
+                                    <a href="{{article.editUrl}}" target="_blank" class="c-article__edit-link">Edit article</a>
+                            {% endif %}
+
+
+                            <div class="c-article__category">
+                                {{article.label}}
+                            </div>
+                            <div class="c-article__title">
+                                {{ quotes.smarten(article.title) }}
+                            </div>
+                            <div class="c-article__posted-on">
+                                <time class="c-article__published">{{article.publishedDate}}</time>
+                                {% if updated %}
+                                    <time class="c-article__updated">Updated {{ updateDate | capitalize }}</time>
+                                {% endif %}
+
+                            </div>
+
+
+                            
+                                <div class="c-article__posted-by row">
+                                    <div class="c-article__author col-12 col-md">
+                                        <div class="c-article__avatar" style="background-image: url({{ profileImg }});"></div>
+                                        {% if config['hide-author'] is defined and config['hide-author'] %}
+                                            <p class="c-article__author-name">{{ article.createdBy['displayName'] }}</p>
+                                        {% else %}
+                                            <a class="c-article__author-name" href="{{_AppHelper.getUserProfileUrl(article.createdBy['username'])}}/posts">{{ article.createdBy['displayName'] }}</a>
+                                        {% endif %}
+                                    </div>
+
+                                    {% if article['createdBy']['coauthors'] %}
+                                        {% for author in article['createdBy']['coauthors'] %}
+                                            <div class="c-article__author col-12 col-md">
+                                                <div class="c-article__avatar" style="background-image: url({{ _Media.getMediaUrl(author['media'], 100, 100, {radius: 'max', gravity: 'face', 'crop': 'thumb', type: 'user'}) }});"></div>
+                                                {% if config['hide-author'] is defined and config['hide-author'] %}
+                                                    <p class="c-article__author-name" >{{ author['displayName'] }}</p>
+                                                {% else %}
+                                                    <a class="c-article__author-name" href="{{_AppHelper.getUserProfileUrl(author['username'])}}/posts">{{ author['displayName'] }}</a>
+                                                {% endif %}
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+
+                                </div>
+                        
+                        </div>
+
+
+
+
+                        {% if articleImg %} 
+
+                            <div class="gallery-container relative u-margin-bottom-50">
+                                {% set galleryStyle = 'article' %}
+                                {% if article.media|length > 1 %}
+                                    {% set galleryStyle = 'gallery' %}
+                                {% endif %}
+
+
+                                {% if article.media|length > 0 %}
+                                    {% set imageFeature = featured == 'image' ? true : false %}
+                                    {{this.render('partials/gallery.twig', {
+                                        media: article.media,
+                                        default: imageFeature,
+                                        watermark: watermark,
+                                        galleryStyle: galleryStyle,
+                                        showPaywall: showPaywall
+                                    }) | raw}}
+                                {% endif %}
+
+                            </div> 
+
+                        {% endif %}
+
+
+
+
+
+
+
+                        <div class="c-article__container c-article__container-sm">
+                                {{ ArticleContent | _resizeImages({'width': 600}) | raw }}
+                        </div>
+
+
+
+                        {% if showPaywall == true %}
+                            {{this.render('partials/article/paywall_article_notice_alt.twig', {networkData:networkData, paywallType:paywallType}) | raw}}
+                        {% endif %}
+
+                    </div>
+
+                    {% if showPaywall == false %}
+                        <!-- Disqus Comment Added -->
+                        {% if networkData.thirdPartyIntegrations['disqus'] | length > 0 and networkData.thirdPartyIntegrations['disqus']['shortName'] != '' %}
+                            {{this.render("partials/article/_disqus_comments.twig", {disqus: networkData.thirdPartyIntegrations['disqus'], userId: article.createdBy['id'], url:article.url, articleId: article.id}) | raw}}
+                        {% endif %}
+                    {% endif %}
+
+
+                </div>
+                <!-- End Article Page -->
+            </div>
+            <div class="col-12 offset-lg-1 col-lg-4">
+                <div class="o-body-container__right-layout j-article-sidebar">
+                    {% if config['inventory']['adSpace']['side-fix'][0] is defined %}
+                        <div class="j-adslot" id="{{config['inventory']['adSpace']['side-fix'][0]}}" data-adshape="side-fix"></div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+        {% if showPaywall == false %}
+            <div class="row c-related-articles u-desktop-margin-top-100">
+                <div class="col-12">
+                    <h1 class="c-related-articles__header" >Latest stories</h1>
+                </div>
+                
+                <div class="col-12 u-margin-top-30">
+                    <div class="row">
+                        {% for i in 0..3 if recentArticles[i] %}
+                            <div class="col-12 col-md-4 col-lg-3{% if i == 3 %} d-md-none d-lg-block{% endif %}">
+                                {{this.render('partials/_single-article.twig', {
+                                    article: recentArticles[i], 
+                                    imageSize: {width: 300, height: 180},
+                                    containerClass: 'card-5-mobile card-4-tablet card-4-desktop',
+                                    site:   site
+                                }) | raw}}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+
+
+
+
+    </div>
+    {% set theKeywords = '' %}
+    {% if article.keywords is defined and article.keywords != '' %}
+        {% set theKeywords = article.keywords %}
+    {% elseif blogInfo.keywords is defined and blogInfo.keywords != '' %}
+        {% set theKeywords = blogInfo.keywords %}
+    {% endif %}
+    <div class="j-keyword-cont" data-keywords="{{theKeywords}}"></div>
+</main>
+
+<script>
+    // main script is defered so event listener makes sure
+    // defered script is loaded before this runs
+    document.addEventListener("DOMContentLoaded", function(event) {
+        Acme.articleController = Acme.ArticleController();
+    });
+</script>

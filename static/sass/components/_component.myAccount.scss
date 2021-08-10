@@ -1,0 +1,252 @@
+.c-myAccount {
+    padding-right:0;
+    margin-bottom:35px;
+    
+   
+    
+    &__head, &__subhead {
+        line-height:1.3;
+        font-weight:$weightBold;
+        @include margin-bottom(30);
+    }
+    &__head {
+        color:$black;
+        @include font-size(28);
+        @include margin-bottom(20);
+    }
+    &__subhead {
+        color:$greyish;
+        @include font-size(15);
+        @include margin-bottom(20);
+    }
+    &__text {
+        color:$greyish;
+        @include font-size(14);
+        line-height:1.6;
+        @include margin-bottom(20);
+        font-family:$weightRegular!important;
+    }
+    
+    &__AddUsers {
+        @include flexbox;
+        position:relative;
+        margin-bottom:30px;
+        @include align-items(center);
+        @include align-content(flex-start);
+        @include justify-content(space-between);
+        @include flex-direction(row, horizontal);
+        
+        .c-myAccount__subhead {
+            margin-bottom:0;
+        }
+        
+    }
+
+    &__user-counts {
+        @include font-size(13);
+        top:-3px;
+        right:0px;
+        position:absolute;
+    }
+
+    // .horizontal-form {
+    //     width:100%;
+    // }
+    // .account-form__group {
+    //     @include flexbox;
+    //     @include align-items(flex-start);
+    //     @include align-content(flex-start);
+    //     @include justify-content(flex-start);
+    //     @include flex-direction(column, vertical);
+        
+    //     @include responsive(sm) {
+    //         @include align-items(center);
+    //         @include flex-direction(row, horizontal);
+    //     }
+        
+    //     &:last-child, &:only-child {
+    //         margin-bottom:0px;
+    //     }
+    // }
+    // .account-form__control-label {
+    //     width:100%;
+    //     flex:0 0 100%;
+    //     max-width:100%;
+    //     color: $greyish;
+    //     margin-bottom:7px;
+    //     @include font-size(14);
+    //     line-height:1.5;
+    //     font-weight:$weightBold;
+        
+    //     @include responsive(sm) {
+    //         width:130px;
+    //         flex:0 0 130px;
+    //         max-width:130px;
+    //         margin-bottom:0;
+    //     }
+    // }
+    // .account-form__input-text {
+    //     color:$black;
+    //     margin-bottom:0px;
+    //     @include font-size(14);
+    //     line-height:1.5;
+    //     font-weight:$weightRegular;
+    // }
+
+
+    
+    &__Search {
+        width:100%;
+        position:relative;
+        
+        .account-form__input-text {
+            color:$greyish;
+            @include font-size(17);
+            line-height:1.5;
+            font-style:italic;
+            padding-right:30px;
+            font-weight:$weightLight;
+            border:0px none!important;
+            border-bottom:1px solid $border!important;
+            @include border-radius(0 0 0 0!important);
+            @include box-shadow(none!important);
+            
+            &:focus {
+                border-bottom:1px solid $mainColor!important;
+            }
+        }
+        
+        &__btn {
+            top:0;
+            right:0;
+            cursor:pointer;
+            border:0px none;
+            position:absolute;
+            @include size(44px);
+            background-color:transparent;
+            background-image:url('../icons/search.svg');
+            background-position:center center;
+            background-repeat:no-repeat;
+            background-size:18px auto;
+        }
+        
+        &__Results {
+            left:0;
+            right:0;
+            top:0;
+            width:100%;
+            position:relative;
+            
+            ul {
+                margin:0;
+                padding:0;
+                list-style:none;
+                @include padding-top(14);
+                background-color:$white;
+            }
+        }
+        
+        // .close {
+        //     @extend .x-close;
+        // }
+            
+
+    }
+    &__helptext{
+        color: $mainColor;
+        font-size: rem(13);
+        font-weight: $weightRegular;
+        font-style: italic;
+        float: right;
+        >a{
+            color: $mainColor;
+            text-decoration: underline;
+        }
+        @media #{$mobile}{
+            margin-top: -10px;
+        }
+    }
+    &__Subscription{
+        @media #{$mobile}{
+            margin-bottom: 20px;
+        }
+    }
+}
+
+
+
+
+
+// .c-myAccount {
+//     .account-form__group.fullwidth {
+//         @include align-items(flex-start);
+//         @include align-content(flex-start);
+//         @include justify-content(flex-start);
+//         @include flex-direction(column, vertical!important);
+        
+//         @include responsive(sm) {
+            
+//         }
+            
+//         label {
+//             width:100%;
+//             flex:0 0 100%;
+//             max-width:100%;
+//             margin-bottom:10px;
+//         }
+//         .three-column {
+//             width:100%;
+//             @include flexbox;
+//             @include align-items(center);
+//             @include align-content(flex-start);
+//             @include justify-content(flex-start);
+//             @include flex-direction(row, horizontal);
+//         }
+//         .account-form__input-text {
+//             width:100%;
+//             max-height:44px;
+//         }
+//         .w490 {
+//             width:60%;
+//             flex:0 0 60%;
+//             max-width:60%;
+//             @include flexbox;
+            
+//             @include responsive(sm) {
+//                 width:60%;
+//                 flex:0 0 60%;
+//                 max-width:60%;
+//             }
+//         }
+//         .w85 {
+//             width:20%;
+//             flex:0 0 20%;
+//             max-width:20%;
+//             @include flexbox;
+//             padding-left:10px;
+            
+//             @include responsive(sm) {
+//                 width:20%;
+//                 flex:0 0 20%;
+//                 max-width:20%;
+//                 padding-left:15px;
+//             }
+//         }
+        
+//         .w450, .w70 {
+//             .account-form__input-text {
+//                 width:100%;
+//                 max-height:44px;
+//             }
+//         }
+//     }
+
+//     .c-myAccount__Subscription {
+//         .account-form__group {
+//             @include responsive(sm) {
+//                 @include align-items(flex-start);
+//             }
+//         }
+//     }
+// }
+

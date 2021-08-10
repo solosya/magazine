@@ -1,0 +1,33 @@
+/* Begin faqs style */
+
+.c-themefaqs {
+    $self: &;
+    &__quescate{
+        @include padding(7 0 4 0); 
+        color:$greyish;
+        &-head{
+            @include font-size(16);
+            font-weight: $weightBold;
+            color:$mainColor;
+            line-height: 1.25;
+            margin-bottom: 30px;
+        }
+        &-ques {
+            @include font-size(15);
+            font-weight: $weightBold;
+            letter-spacing: 0.5px;
+            margin-bottom: 17px;
+        }
+        &-ans {
+            padding-bottom: 7px; 
+            p {
+                @include font-size(15);
+                margin-bottom: 18px;
+                line-height: 1.6;
+                font-weight: $weightLight;
+            }
+        }
+    }
+}
+
+/* End article style */

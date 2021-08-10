@@ -1,0 +1,73 @@
+{% set link = _Blog.getHomeBlogSettings() %}
+{% set logo = networkData.templatePath~'/static/images/logo.svg'%}
+{% if networkData.logoMedia | length > 0 %}
+    {% set logo = _Media.getMediaUrl(networkData.secondaryLogoMedia, 650, 144, {'crop': 'fit'} )%}
+{% endif %}
+{% set footerMenu = _Menu.get({'menuType': 'header', 'menuGroupName': 'footer'}) %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 u-margin-top-30 u-margin-bottom-30">
+            <p class="c-footer-soucoast__statement">
+                The publishers of the South Coaster acknowledge Aboriginal and Torres Strait Islander Peoples and their cultural and spiritual connection to this land.<br />
+                Their stories are written in the land and hold great significance to Aboriginal and Torres Strait Islander peoples, from the mountains to the sea.
+            </p>
+        </div>
+    </div>
+</div>
+
+<footer class="c-footer-soucoast c-footer-soucoast-sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="c-footer-soucoast__container">
+                    <div class="row">
+                        <div class="col-12 col-lg-5">
+                            <a href="{{networkData.defaultBlogUrl}}" class="c-footer-soucoast__logo">
+                                <img src="{{logo}}" class="image-fluid"/>
+                            </a>
+
+                            <div class="c-footer-soucoast__addresses">
+                                {% if addresses.name != "" %}
+                                    <p class="c-footer-soucoast__addresses__content">{{addresses.name}}</p>
+                                {% endif %}
+                                {% if addresses.email != "" %}
+                                    <p class="c-footer-soucoast__addresses__content">{{addresses.email}}</p>
+                                {% endif %}
+                                <p class="c-footer-soucoast__addresses__content">{{addresses.address}}<br />{{addresses.city}}<br />{{addresses.state}} {{addresses.postcode}}</p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-12 col-lg-7 u-tablet-margin-top-40">
+                            <div class="row justify-content-end">
+
+                                {% set footercols = 0 %}
+                                {% for i in 0..3 if footerMenu | length > footercols %}
+                                    <div class="col-12 col-md-3  u-tablet-margin-bottom-40 u-mobile-margin-top-20">
+                                        <div class="c-footer-soucoast__navigation c-footer-soucoast__navigation-sm">
+                                            {{this.render('../_submenu_navigation.twig', {
+                                                items: footerMenu | slice(footercols, 4),
+                                                class: '',
+                                            }) | raw}}
+                                        </div>
+                                    </div>
+                                    {% set footercols = footercols + 4 %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+                <div class="c-footer-soucoast__bottom u-margin-top-80 u-tablet-margin-top-40">
+                    <div class="c-footer-soucoast__bottom__copyright">&copy; Copyright {{networkData.title}} {{ "now"|date("Y") }}</div>
+                    <a href="https://pagemasters.com" class="c-footer-soucoast__bottom__powered">DESIGNED AND POWERED BY PAGEMASTERS PUBLISH</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ networkData['styling']['customFooter'] | raw }}
+
+</footer>

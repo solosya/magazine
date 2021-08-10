@@ -1,0 +1,40 @@
+<section class="row">
+    <div class="col-sm-4"> 
+        <div class="bloggerImg {{site}}">
+            <div class="logo">
+                <img src="{{ logo }}">
+            </div>
+            <div class="content">
+                <p class="header">{{title}}</p>
+                <p class="local">Your local news</p>
+            </div>
+
+        </div>
+    </div>
+
+    {% for i in 0..1 if articles.feed.articles[i] %}
+        <div class="col-sm-4">                                            
+            {% if i == 0 %}
+                {{this.render('../_single-article.twig', {
+                    article:        articles.feed.articles[i], 
+                    imageSuppress:  true,
+                    site:           site,
+                    containerClass: 'card-blogger card-blogger-tablet card-blogger-mobile {{site}}'
+                }) | raw}}
+
+                <hr class="divide visible-xs-block">
+            {% else %}
+                {{this.render('../_single-article.twig', {
+                    article:        articles.feed.articles[i], 
+                    imageSuppress:  true,
+                    site:           site,
+                    containerClass: 'card-blogger card-blogger-tablet card-blogger-mobile {{site}} border__left'
+                }) | raw}}
+
+                <hr class="divide visible-xs-block">
+            {% endif %}
+        </div>
+        
+    {% endfor %}
+
+</section>

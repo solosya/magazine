@@ -1,0 +1,97 @@
+{{ set(this, 'title', 'User Profile') }}
+
+{% set networkData = _Network.getNetworkData() %}
+{% set limit = 10 %}
+
+{% set firstCount = userArticles | length %}
+
+
+
+{% set profileImage =_Media.getMediaUrl( user.media, 500, 500, {crop: 'thumb', gravity: 'face', type:'user'} ) %}
+
+<main class="o-body-container o-body-container-md u-margin-top-60">
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-12">
+                <div class="c-author c-author-md">
+                    <div class="c-author-left c-author-left-md">  
+
+                        <div class="c-author__avatar c-author__avatar-xs u-image-covered" style="background-repeat:none;background-image:url({{profileImage}});">&nbsp;</div>
+                        
+                        <div class="c-author__details c-author__details-xs">
+                            <h3 class="c-author__name c-author__name-xs c-author__name-md">{{user.firstname | raw}} <br> {{user.lastname | raw}}</h3>
+                            {# <ul class="c-author__social">
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="#"><i class="fa fa-youtube-play"></i></a></li>
+                            </ul> #}
+                            <p class="c-author__text c-author__text-md">{{Html.decode(user.bio) | raw}}</p>
+                        </div>
+
+                    </div>
+
+
+                    {# <div class="c-author-right c-author-right-md">
+                        
+                    </div> #}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div id="loadmore_section" class="col-md-8">
+
+                {% for i in 0..5 if userArticles[i] %}
+                    {{this.render('partials/_single-article.twig', {
+                        article: userArticles[i], 
+                        imageSize: {width:508, height:324},
+                        containerClass: 'card-5-mobile card-5-tablet card-5-desktop'
+                    }) | raw}}
+                {% endfor %}
+
+
+            </div>
+
+        </div>
+        {# {{dump(userArticles|length)}} #}
+
+
+        <div class="row">
+            <div class="col-md-8">
+                {% if userArticles|length >= limit %}
+                    <section class="">
+                        <div class="row">
+                            {{ this.render('partials/ajaxarticles_new.twig', {
+                                name            : "user-load",
+                                label           : "more",
+                                buttonClass     : "c-button c-button--rounded c-button--blue-bordered",
+                            }) | raw }}
+                        </div>
+                    </section>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    // main script is defered so event listener makes sure
+    // defered script is loaded before this runs
+    document.addEventListener("DOMContentLoaded", function(event) {
+
+        Acme.loadMore = new Acme.View.articleFeed({
+            model           : new Card(),
+            container       : 'loadmore_section',
+            offset          : 6,
+            limit           : {{limit}},
+            loadtype        : 'user_articles',
+            name            : 'user-load',
+            card_class      : 'card-5-mobile card-5-tablet card-5-desktop',
+        });
+
+    });
+</script>

@@ -1,0 +1,66 @@
+/* Begin page head style */
+.c-page-head {
+    @include flexbox();
+    @include justify-content(space-between);
+    @include align-items(center);
+    position: relative;
+    margin-bottom: 25px;
+
+    > div {
+        order:1;
+    }
+    &:after {
+        content: '';
+        display: block;
+        height: 1px;
+        background-color: $greyish;
+        @include opacity(0.5);
+        left: 15%;
+        z-index: 10;
+        order:2;
+        flex-grow:1;
+
+        @media #{$desktop-up} {
+            margin-top: 5px;
+        }
+    }
+
+    &__link {
+        background-color: unset;
+        color: $greyish;
+        font-style: italic;
+        line-height: 1;
+        @include font-size(11);
+        padding: 0;
+        padding-left: 6px;
+        order: 3;
+        &:hover,
+        &:focus {
+            color: $mainColor;
+        }
+    }
+    &__breaking{
+        position: absolute;
+        height: 53px;
+        left: 0;
+        right: 0;
+        background-color: $black;
+        margin-top: -80px;
+        &__head{
+            color: $white;
+            font-weight: $weightBold;
+            font-size: rem(28);
+            margin-top: 8px;
+        }
+    }
+
+
+
+    
+}
+
+.u-heading__large {
+    line-height: 1;
+}
+
+/* End page head style */

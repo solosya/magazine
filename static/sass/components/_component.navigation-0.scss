@@ -1,0 +1,253 @@
+/* Begin header style */
+
+
+
+.c-navigation-0 {
+    @include flexbox();
+    @include align-items(center);
+    // margin-top: 48px;
+    &__list {
+        display: none;
+        @include align-items(center);
+        padding: 0px;
+        margin: 0px;
+        flex-wrap: wrap;
+        li {
+            position: relative;
+            margin: 0 15px;
+
+            a {
+                text-transform: uppercase;
+                @include font-size(14);
+                letter-spacing: 1px;
+                line-height: 1.07;
+                font-weight: $weightMedium;
+                color: $black;
+                @include transition(all 0.3s ease);
+                white-space: nowrap;
+                
+                &.active {
+                    color: $mainColor;
+
+                    &:after {
+                        content: '';
+                        height:1px;
+                        width:15px;
+                        background:$greyish;
+                        position: absolute;
+                        left: 0;
+                        bottom: -3px;
+                    }
+                }
+
+                &:hover {
+                    color: $mainColor;
+                }
+            }
+
+            &.dropdown {
+                position:relative;
+                line-height: 20px;
+                .list-arrow {
+                    display:none;
+                }
+
+                .custom-menu {
+                    display: none;
+                    position: absolute;
+                    @include calc(top, '100% + 10px');
+                    left: auto;
+                    right: 0;
+                    @include box-shadow(4px 4px 6px 0 rgba($black, 0.07));
+                    background-color: $offwhite;
+                    border: none;
+                    @include border-radius(0);
+                    z-index: 999;
+                    min-width: 160px;
+                    padding: 0;
+                    
+                    &:before {
+                        content: '\f0d8';
+                        position: absolute;
+                        font-family: $iconfont;
+                        color: $offwhite;
+                        right: 10px;
+                        top: -23px;
+                        @include font-size(35);
+                        line-height: 1;
+
+
+                    }
+                    &:after {
+                        content: '';
+                        position: absolute;
+                        top: -15px;
+                        width: 100%;
+                        height: 15px;
+                    }
+
+                    li {
+                        width: 100%;
+                        text-align: right;
+                        margin: 0px;
+
+                        a {
+                            display: block;
+                            padding: 11px 20px;
+                            color: $black;
+                            text-transform: uppercase;
+                            @include font-size(14);
+                            line-height: 1.07;
+                            letter-spacing: 1px;
+
+                            &:hover,
+                            &:focus {
+                                background-color: $mainColor;
+                                color: $white;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.sub-dropdown {
+                .sub-custom-menu {
+                  display: none;
+                  position: absolute;
+                  top: 0;
+                  left: auto;
+                  right: 100%;
+                  padding: 0;
+                  @include box-shadow(4px 4px 6px 0 rgba($black, 0.07));
+                  background-color: $offwhite;
+                  border: none;
+                  @include border-radius(0);
+                  z-index: 999;
+                  min-width: 160px;
+        
+                  &:after {
+                    content: "";
+                    position: absolute;
+                    top: -15px;
+                    width: 100%;
+                    height: 15px;
+                  }
+        
+                  li {
+                    width: 100%;
+                    text-align: right;
+                    margin: 0px;
+        
+                    a {
+                      display: block;
+                      padding: 11px 20px;
+                      color: $black;
+                      text-transform: uppercase;
+                      @include font-size(14);
+                      line-height: 1.07;
+                      letter-spacing: 1px;
+        
+                      &:hover,
+                      &:focus {
+                        background-color: $mainColor;
+                        color: $white;
+                      }
+                    }
+                  }
+                }
+              }
+
+            &:hover,
+            &:focus {
+                &.dropdown {
+                    .custom-menu {
+                        display: block;
+                    }
+                }
+                &.sub-dropdown {
+                    .sub-custom-menu {
+                      display: block;
+                    }
+                  }
+            }
+        }
+    }
+
+    &__icons {
+        @include flexbox();
+        @include align-items(center);
+
+        &__menu {
+            width:25px;
+            height:20px;
+
+            @media #{$desktop-up} {
+                display:none;
+            }
+
+            &:hover {
+                cursor:pointer;
+            }
+        }
+
+
+        &__search {
+            color: #b1b1b1;
+            @include font-size(18);
+            cursor: pointer;
+            @include transition(all 0.3s ease);
+            background-image: url('../icons/search.svg');
+            background-repeat: no-repeat;
+            background-size:contain;
+            width:24px;
+            height: 24px;
+            margin-left:10px;
+            background-position-y: bottom;
+
+            &:hover {
+                color: $mainColor;
+            }
+
+            
+            @media #{$mobile} {
+                display:none;
+            }
+            
+            
+        }
+
+        &__navicon {
+            display: block;
+            margin-left: 15px;
+            color: #b1b1b1;
+            @include font-size(18);
+            cursor: pointer;
+            @include transition(all 0.3s ease);
+
+            &:hover {
+                color: $mainColor;
+            }
+        }
+    }
+
+
+    @include responsive(md) {
+        .c-navigation-0 {
+            &__list {
+                @include flexbox();
+            }
+
+            &__icons {
+                &__navicon {
+                    display: none;
+                }
+            }
+
+            &__search {
+                @include calc(width, '100% - 250px');
+            }
+        }
+    }
+}
+
+/* End header style */

@@ -1,0 +1,8 @@
+.c-related-articles {
+    &__header {
+        @include font-size(18);
+        text-align:center;
+        font-weight: $weightBold;
+        color: $mainColor;
+    }
+}

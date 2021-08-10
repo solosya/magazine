@@ -1,0 +1,69 @@
+.c-paywalled-cta {
+    position:relative;
+
+    &:before {
+        content: '';
+        display: block;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        padding: 30px 15px 5px;
+        background: -moz-linear-gradient(to bottom, transparent 0, rgba(255, 255, 255, 0.66) 40%, #fff 100%);
+        background: -webkit-linear-gradient(to bottom, transparent 0, rgba(255, 255, 255, 0.66) 40%, #fff 100%);
+        background: linear-gradient(to bottom,transparent 0,rgba(255,255,255, 0.1) 0,#fff 100%);
+
+        position: absolute;
+        top: -110px;
+        height: 110px;
+        width: 100%;
+    }
+
+    &__head {
+        @include font-size(28);
+        font-weight:$weightBold;
+        margin-bottom:15px;
+    }
+
+    &__options {
+        @include font-size(16);
+        display:block;
+        color:#b90303;
+        text-decoration: underline !important;
+        margin-bottom:31px;
+    }
+
+    &__link {
+        @include font-size(16);
+        text-decoration: underline;
+        color:#b90303;
+
+    }
+
+    &__action {
+        a {
+            position:relative;
+            @include font-size(16);
+            font-weight:$weightBold;
+
+            display:inline-block;
+            color: #1d3d73;
+            
+            &:not(:last-child) {
+                margin-right:20px;
+                &:after {
+                    content:"";
+                    display:block;
+                    width:2px;
+                    height:15px;
+                    background:green;
+                    position: absolute;
+                    top: 2px;
+                    right: -12px;
+
+                }
+            }
+        }
+    }
+
+
+}

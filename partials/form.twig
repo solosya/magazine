@@ -1,0 +1,96 @@
+ 
+
+<script src='https://www.google.com/recaptcha/api.js' async defer></script>
+    <script>
+    function contactEnable() {
+        $('#btnContact').prop('disabled', false); 
+        $('#btnContact').toggleClass('c-button--disabled'); 
+    }
+    </script>
+
+<div class="c-contact__formsection">
+    <div class="horizontal-form form-contact contact__form">
+        <form   action="{{_AppHelper.getContactFormUrl()}}" method="post" autocomplete="off">
+            <input type="hidden" name="_csrf" value="{{_AppHelper.getCsrfToken()}}" />
+            {# <input type="hidden" id="contactform-group" class="form-control" name="email_group" value="email advertising"> #}
+            {# <input type="hidden" id="contactform-admin" class="form-control" name="sendToNetworkAdmins" value="false"> #}
+
+            <div class="row">
+
+                {% if config['forms'][page]['fields'] is defined and config['forms'][page]['groups'] is defined %}
+                    {% for group in config['forms'][page]['groups'] %}
+                        <input type="hidden" id="{{group.id}}" class="form-control" name="{{group.name}}" value="{{group.value}}">
+                    {% endfor %}
+
+                    {% for input in config['forms'][page]['fields'] %}
+                        {% if input.id is defined and input.name is defined and input.type is defined and input.required is defined %}
+                            {% set inputID = input.id %}
+                            {% if input.id not in ['name','email','message'] %}  
+                                {% set inputID = 'formData['~input.id~']' %}
+                            {% endif %}
+                            <div class="col-12 u-margin-bottom-15">
+                                <div class="c-form__group c-form__group--horizontal">
+                                {% if input.type != "textarea" %}
+                                    <input id="{{inputID}}" class="c-form__input c-form__input--bordered c-account-form__input" name="{{inputID}}" placeholder="{{input.name}}">
+                                {% else %}
+                                    <textarea class="c-form__input c-form__input--bordered" id="{{input.id}}"  name="{{inputID}}" placeholder="{{input.name}}" aria-required="{{input.required}}" type="{{input.type}}"
+                                    style="min-height: 230px;"></textarea>
+                                {% endif %}
+                                    <div class="c-form__help-block"></div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <input type="hidden" id="contactform-group" class="form-control" name="email_group" value="contact">
+                    <input type="hidden" id="contactform-returnto" class="form-control" name="returnto" value="/contact">
+                    <div class="col-12 u-margin-bottom-15">
+                        <div class="c-form__group c-form__group--horizontal has-error">
+                            <input id="name" class="c-form__input c-form__input--bordered c-account-form__input" name="name" placeholder="Name" aria-required="true" type="text">
+                            <div class="c-form__help-block">Error Message here...</div>
+                        </div>
+                    </div>
+                    <div class="col-12 u-margin-bottom-15">
+                        <div class="c-form__group c-form__group--horizontal">
+                            <input id="email" class="c-form__input c-form__input--bordered c-account-form__input" name="email" placeholder="Email" aria-required="true" type="text">
+                            <div class="c-form__help-block"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12 u-margin-bottom-15">
+                        <div class="c-form__group c-form__group--horizontal">
+                            <textarea class="c-form__input c-form__input--bordered" id="message"  name="message" placeholder="Message" aria-required="true" type="text"
+                            style="min-height: 230px;"></textarea>
+                            <div class="c-form__help-block"></div>
+                            
+                        </div>
+                    </div>
+                {% endif %}                
+                {% if _Network.getCaptchaSiteKey() is defined and _Network.getCaptchaSiteKey() is not empty %}
+                    <div class="col-12 u-margin-bottom-15">
+                        <div class="g-recaptcha" data-sitekey="{{_Network.getCaptchaSiteKey()}}" data-callback="contactEnable" style="padding-bottom:30px;"></div>
+                        <div class="captchaContainer">
+                            <div class="captchaMessage"></div>
+                        </div>
+                    </div>
+                {% else %}     
+                    <div class="col-12 u-margin-bottom-15">      
+                        <div class="account-modal__content_container">
+                            <div class="account-modal__content_item-container">
+                                <div class="account-modal__input-container">
+                                    <div class="account-modal__input_content captcha">
+                                        {{_AppForm.captcha({class: 'account-modal__input account-modal__input--captcha', placeholder: 'Enter the text shown above'}) | raw }}
+                                    </div>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <div class="col-12 u-margin-bottom-15">
+                    <input name="" id="btnContact" disabled type="submit" value="Submit" class="c-button c-button--rounded c-button--blue c-button--disabled" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

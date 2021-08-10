@@ -1,0 +1,80 @@
+.c-altsite {
+   
+    &__item{
+        height: 224px;
+        display: block;
+        position: relative;
+        @media #{$tablet}{       
+            height: 244px;       
+        }
+        
+    }
+    &__subscribe{
+        font-size: rem(18);
+        font-weight: $weightMedium;
+        line-height: 2.56;
+        text-align: center;
+        color:$greyish;
+    }
+    &__head{
+        font-size: rem(28);
+        font-weight: $weightBold;
+        line-height: 1.07;
+        text-align: center;
+        color:$black;
+        height: 62px;
+        overflow: hidden;
+    }
+    &__view{
+        font-size: rem(14);
+        font-weight: $weightRegular;
+        line-height: 0.93;
+        text-align: center;
+        color:$mainColor;
+        text-decoration: underline;
+        font-style: italic;
+        margin-top: 33px;
+    }
+    &__icon{
+        width: max-content;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+       >svg{
+           width: 48px;
+           height: 48px;
+           >path{
+               fill:$grey;
+           }
+       } 
+    }
+
+    @media #{$desktop-up}{
+        
+        border-right: 1px solid $greyish;
+        &:last-child{
+            border-right: none;
+        }
+    }
+    
+
+    @media #{$mobile}{
+        margin-top: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid $greyish;
+        &:last-child{
+            border-bottom: none;
+        }
+    }
+
+    @media #{$tablet-up}{
+        margin-top: 40px;
+    }
+
+    &:hover{
+        >a>.c-altsite__item>.c-altsite__icon>svg>path{
+            fill: $mainColor;
+        }
+    }
+}
+

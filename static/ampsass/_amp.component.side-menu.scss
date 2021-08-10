@@ -1,0 +1,55 @@
+amp-sidebar {
+    background: #e7e7e7;
+    width: 100%;
+}
+amp-sidebar .close__button {
+    @include flexbox();
+    @include justify-content(flex-end);
+    
+    >div {
+        display: block;
+        margin: 10px;
+        // width: 100%;
+        text-align: right;
+        cursor: pointer;
+    }
+}
+.sidebar-menu{
+    padding: 0px;
+    border-bottom: 1px solid #ccc;
+}
+
+.sidebar-menu h4, .sidebar-menu .sidebar-item {
+    font-family: var(--main-font);
+
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    color: #6b757d;
+    font-weight: 400;
+    font-size: 16px;
+    display: block;
+    padding: 20px 15px;
+    // padding: 20px 0 20px 0;
+}
+.sidebar-menu .sidebar-item:hover, .sidebar-menu .sidebar-item:focus, .sidebar-menu .sidebar-item:active, .sidebar-menu h4:hover, .sidebar-menu h4:focus, .sidebar-menu h4:active {
+    color: #e25e6d;
+}
+.sidebar-menu h4 + ul {
+    padding-bottom: 8px;
+}
+.sidebar-menu h4 i {
+    float: right;
+    padding-top: 3px;
+}
+.sidebar-menu ul li a {
+    color: #6b757d;
+    font-size: 14px;
+    display: block;
+    padding: 8px 15px;
+}
+.sidebar-menu ul li a:hover, .sidebar-menu ul li a:focus, .sidebar-menu ul li a:active {
+    color: #e25e6d;
+}
+.sidebar-menu ul li a i {
+    padding-right: 8px;
+}

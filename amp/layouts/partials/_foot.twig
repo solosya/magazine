@@ -1,0 +1,88 @@
+{% set link = _Blog.getHomeBlogSettings() %}
+{% set logo = networkData.templatePath~'/static/images/logo.svg'%}
+
+
+{% set logoWidth = 142 %}
+{% set logoHeight = 35 %}
+
+{% if config['logo2'] is defined and config['logo2']['mobile'] is defined %}
+    {% if config['logo2']['mobile']['width'] is defined %}
+        {% set logoWidth = config['logo2']['mobile']['width'] %}
+
+        {% if config['logo2']['mobile']['height'] is not defined %}
+            {% set logoHeight = 0 %}
+        {% endif %}
+    {% endif %}
+
+    {% if config['logo2']['mobile']['height'] is defined %}
+        {% set logoHeight = config['logo2']['mobile']['height'] %}
+
+        {% if config['logo2']['mobile']['width'] is not defined %}
+            {% set logoWidth = 0 %}
+        {% endif %}
+
+    {% endif %}
+{% endif %}
+
+{# {% set log = _AppHelper.log(networkData.secondaryLogoMedia) %} #}
+
+{% if networkData.secondaryLogoMedia | length > 0 %}
+    {% set logo = _Media.getMediaUrl(networkData.secondaryLogoMedia, logoWidth, logoHeight, {'crop': 'fit'} ) %}
+{% endif %}
+
+
+{% set footerMenu = _Menu.get({'menuType': 'header', 'menuGroupName': 'footer'}) %}
+{% set config       = _Network.getThemeConfig() %}
+
+
+<footer class="c-footer c-footer-sm">
+    <div class="c-footer__container">
+        <a href="{{networkData.defaultBlogUrl}}" class="c-footer__logo">
+            <amp-img layout="fixed" width="{{logoWidth}}" height="{{logoHeight}}" src="{{logo}}" class="image-fluid"></amp-img>
+        </a>
+
+        
+        {% if config['footer-icons'] is defined %}
+            <div class="c-footer__icons">
+                {% for icon in config['footer-icons'] %}
+                    <a href="{{icon.link}}">
+                        <amp-img layout="responsive" class="c-footer__icon" src="{{icon.src}}" style="width:{{icon.width}};" ></amp-img>
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="c-footer__addresses d-none d-lg-block">
+            {% if addresses.name != "" %}
+                <p class="c-footer__addresses__content">{{addresses.name}}</p>
+            {% endif %}
+            {% if addresses.email != "" %}
+                <p class="c-footer__addresses__content">{{addresses.email}}</p>
+            {% endif %}
+            <p class="c-footer__addresses__content">{{addresses.address}}<br />{{addresses.city}}<br />{{addresses.state}} {{addresses.postcode}}</p>
+        </div>
+
+
+                    
+
+
+        {% set footercols = 0 %}
+        {% for i in 0..3 if footerMenu | length > footercols %}
+            <div class="c-footer__navigation">
+                {{this.render('../../../layouts/partials/_submenu_navigation.twig', {
+                    items: footerMenu | slice(footercols, 4),
+                    class: '',
+                }) | raw}}
+            </div>
+            {% set footercols = footercols + 4 %}
+        {% endfor %}
+
+
+        <div class="c-footer__bottom">
+            <div class="c-footer__bottom__copyright">&copy; Copyright {{networkData.title}} 2019</div>
+            <a href="https://aapstudio.com.au" class="c-footer__bottom__powered">POWERED BY PAGEMASTERS</a>
+        </div>
+
+
+    </div>
+</footer>

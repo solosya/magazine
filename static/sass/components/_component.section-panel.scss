@@ -1,0 +1,11 @@
+/* section page  style */
+
+.c-section-panel__background {
+    @include padding(25 0);
+    background:rgba(185,185,185,.2);
+    @media #{$desktop-up} {
+        @include margin(30 0 0 0);
+    }
+}
+
+/* End section page  style */

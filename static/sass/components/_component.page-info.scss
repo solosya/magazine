@@ -1,0 +1,23 @@
+.c-page-info {
+    &__title{
+        @include font-size(28);
+        font-weight: $weightBold;
+        color: $black;
+        margin-bottom: 23px;
+
+    }
+    &__discription {
+        p {
+            @include font-size(13);
+            color: $greyish;
+            line-height:1.54;
+            margin-bottom:18px;
+
+        }
+    }
+    &__column-title {
+        @include font-size(22);
+        color:$black;
+        font-weight: $weightRegular;
+    }
+}

@@ -1,0 +1,89 @@
+{{ set(this, 'title', 'Contact Us') }} 
+{% set networkData = _Network.getNetworkData() %}
+{% set config      = _Network.getThemeConfig() %}
+{% set flash = _AppHelper.getFlashMessages() %}
+
+{% set error = false %}
+{% set success = false %}
+
+{% if flash['error'] is defined %} 
+    {% set error = true %}
+{% endif %}
+
+{% if flash['success'] is defined %} 
+    {% set success = true %}
+{% endif %}
+
+{% set messages = "" %}
+{% for m in flash %}
+    {% set messages = messages ~ m %}
+{% endfor %}
+
+    
+
+
+
+    <main id="main" class="u-margin-top-60" role="main">
+        
+        <div class="o-body-container o-body-container-md">
+            <div class="c-contact">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-lg-7">
+
+                            <div class="c-contact-container">
+
+
+                                {% if success  %}
+
+                                    <div class="c-messagebox u-bg-offwhite">
+                                        <div class="c-messagebox__title">Message sent.</div>
+                                        <div class="c-messagebox__text">
+                                            {{messages | raw}}
+                                            {# <p>Thank you for getting in touch with The News Regional Victoria. Your message has been sent. We will endeavour to respond within 48 hours. 
+                                            If you do not recieve a reply contact the head office via mail at 200 Theroad Road, Suburb 2222.</p> #}
+                                        </div>
+                                        {# <div class="text-center">
+                                            <button name="" class="c-button c-button--rounded c-button--blue c-button--inline u-mt--50">Log in</button>
+                                        </div> #}
+                                    </div>
+
+                                {% else %}
+
+                                    {% if error %}
+                                        <p class="c-error__message"> {{messages | raw}} </p>
+                                    {% endif %}
+
+
+
+                                    <div class="c-page-info">
+                                        <div class="c-page-info__title">Contact us</div>
+                                        <div class="c-page-info__discription">
+                                            {# <p>Fill out the form below and we will get back to you as soon as we are able.</p> #}
+                                        </div>
+                                    </div>
+
+                                    {{ this.render('partials/form.twig', {
+                                        page   : this.title,
+                                        config : config
+                                    }) | raw }}
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+                        
+                        <div class="col-12 offset-lg-1 col-lg-4">
+                            <div class="o-body-container__right-layout d-none d-lg-block">                                
+                                {% if config['inventory']['adSpace']['hpage'][0] is defined %}
+                                    <div class="j-adslot" id="{{config['inventory']['adSpace']['hpage'][0]}}" data-adshape="hpage"></div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+

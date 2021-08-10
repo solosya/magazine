@@ -1,0 +1,60 @@
+.advertisment {
+    width: min-content;
+    margin: auto;
+    &__head {
+        >div{
+            margin-top:30px;
+        }
+    }
+    &__mrec{
+        &-1,&-2,&-3,&-4{
+            margin-bottom: 30px;
+            min-width: 300px;
+        }
+    }
+    &__banner{
+        &-head,&-1,&-2,&-3,&-4{
+            @media #{$desktop-up}{
+                min-width: 728px;
+            }
+            @media #{$tablet}{
+                min-width: 728px;
+            }
+            @media #{$mobile}{
+                min-width: 300px;
+            }
+        }
+    }
+    &__side-fix {
+        &-1{
+            margin-right: 0;
+            margin-left: auto;
+            @media #{$up-to-desktop}{
+                margin-right: auto;
+            }
+        }
+        &--fixed{
+            position: fixed;
+            top: 135px;
+            margin: auto 9.5px;
+        }
+        &--top{
+            position: absolute;
+            top: 0;
+            margin: auto 9.5px;
+        }
+        &--bottom{
+            position: absolute;
+            bottom: 0;
+            margin: auto 9.5px;
+            
+        }
+    }
+    >a{
+        >img{
+            max-width: max-content;
+            height: auto;
+            width: max-content;
+        }
+    }
+}

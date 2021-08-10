@@ -1,0 +1,191 @@
+{{ set(this, 'title', _Blog.getBlogTitle()) }}
+
+{% cache 'indexCache_1' 300 %}
+
+
+{% set networkData  = _Network.getNetworkData() %}
+{% set layoutTitle  = _Page.getLayoutTitle() | lower | replace({' ': '_'}) %}
+{% set blogData     = _Blog.getBlog() %}
+{% set homeBlog     = blogData['title'] | lower %}
+{% set config       = _Network.getThemeConfig() %}
+{% set layout       = blogData.layout %}
+{% set dev          = _AppHelper.getApplicationEnv() == 'DEV' ? false : false %}
+
+{% set bannerSpots  = [3,5] %}
+{% set blogFeeds    = {} %}
+{% set panels       = [] %}
+{% set breaking = {} %}
+
+
+
+{# *******************************************************
+            CONFIG OPTIONS SET IN PLATFORM
+******************************************************* #}
+
+{% if config['active'] is not defined or config['active'] == true %}
+
+    {% if config['page']['index']['sections'] is defined %}
+
+        {% set panels = config['page']['index']['sections'] %}
+
+        {% set sectionOrder = panels | keys %}
+
+        {% set blogFeeds = {} %}
+
+        {% for i, panel in panels %}
+
+            {% if panel['articleOrder'] is defined %}
+
+                {# If a panel has multiple blogs we get the count of items to fetch from iterating
+                over the articleOrder array #}
+                {% for blogName in panel['articleOrder'] %}
+
+                    {% if blogFeeds[blogName] is not defined %}
+                        {% set blogFeeds = blogFeeds | merge({ (blogName): { "limit" : 1} }) %}
+                    {% else %}
+
+                        {% set count = blogFeeds[blogName].limit %}
+
+                        {% set blogFeeds = blogFeeds | merge({ (blogName): { "limit" : count + 1} }) %}
+                    {% endif %}
+                {% endfor %}
+
+
+
+            {# If a panel has a single blog we get the count of items to fetch from checking the articleCount key #}
+            {% else %}
+
+                {% set blogName = panel['blog'] %}
+
+                {% if panel['articleCount'] is defined %}
+
+                    {% set count = panel['articleCount'] %}
+                    
+                    {% if blogFeeds[blogName] is not defined or blogFeeds[blogName].limit < count %}
+                        {% set blogFeeds = blogFeeds | merge({ (blogName): { "limit" : count} }) %}
+                    {% endif %}
+
+                {% endif %}
+            {% endif %}
+
+        {% endfor %}
+        
+    {% endif %}
+
+
+
+    {% if layoutTitle == 'index_breaking_news' %}
+        {% if config['page']['index']['breaking-news'] is defined %}
+            {% set breaking = config['page']['index']['breaking-news'] %}
+            {% set blogFeeds = blogFeeds | merge({
+                (breaking.section) : { 
+                    "limit" : breaking.limit
+                    } 
+                }) %}
+        {% endif %}
+    {% endif %}
+
+    {% if config['inventory'][homeBlog]['bannerSpots'] is defined %}
+        {% set bannerSpots = config['inventory'][homeBlog]['bannerSpots'] %}
+    {% endif %}
+
+{% endif %}
+
+
+
+
+{# <div class="clearfix"></div> #}
+
+
+<main id="main" class="site-main" role="main" data-layout="{{layoutTitle}}">
+
+
+{# *******************************************************
+                Fetch all needed feeds
+******************************************************* #}
+{% for key in blogFeeds | keys %}
+
+    {% set break = false %}
+    {% for blog in networkData.networkBlogs if not break %}
+
+
+        {# FOR DEV  #}
+        {% if dev %}
+            {% set blogFeeds = blogFeeds | merge({
+                (key) : { 
+                    'feed' : _Blog.getBlogFeed({'limit': 2, 'offset': 0}), 
+                    'link' : blog.link 
+                    } 
+                }) %}
+        {% endif %}
+
+
+        {# FOR PRODUCTION #}
+        {% if not dev and blog.title | lower == key | lower %}
+        {# {% if blog.title | lower == key | lower %} #}
+            {% set feed = _Blog.getBlogFeed({
+                'offset' : 0, 
+                'blogid' : blog.guid,
+                'limit'  : blogFeeds[key]['limit']
+                })
+            %}
+
+            {% set blogFeeds = blogFeeds | merge({
+                (key) : {
+                    'feed'      : feed,
+                    'link'      : blog.link
+                    }
+                }) %}
+            {% set break = true %}
+        {% endif %}
+
+    {% endfor %}
+{% endfor %}
+
+
+    {# *******************************************************
+                        RENDER PANELS
+    ******************************************************* #}
+
+    
+
+    {% set bannerNo = 1 %}
+    {% for pagesection in panels | keys %}
+
+        {% if panels[pagesection]['active'] is not defined or panels[pagesection]['active'] == true %}
+
+
+            {% set params = {
+                'networkData' : networkData,
+                'blogFeeds'   : blogFeeds,
+                'blogData'    : blogData,
+                'config'      : panels[pagesection],
+                'dev'         : dev
+            } %}
+
+        {% if breaking.partial is defined and "00" in panels[pagesection]['template'] %}
+            {% set params = params | merge({'config' : breaking.partial }) %}
+        {% endif %}
+
+            {{this.render('render.twig', params) | raw}} 
+
+            {% if loop.index in bannerSpots %}
+                {% if config['inventory']['adSpace']['banner'][bannerNo] is defined %}
+                    <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][bannerNo]}}" data-adshape="banner"></div>
+                {% endif %}
+                {% set bannerNo = bannerNo + 1 %}
+            {% endif %}
+
+
+        {% endif %}
+
+    {% endfor %}
+
+
+    <div class="j-keyword-cont" data-keywords="{{blogData.keywords}}"></div>
+</main><!-- .site-main -->
+
+
+
+
+{% endcache %}

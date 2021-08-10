@@ -1,0 +1,73 @@
+{% if paywallType == "subscribe" or paywallType == "renew" %}
+
+
+    <div class="c-paywalled-cta">
+        <div class="c-paywalled-cta__head">
+            Read the full story on {{networkData.title}}
+        </div>
+        
+        <a href="{{networkData.defaultBlogUrl}}/subscriptions#subscriptions" class="c-paywalled-cta__options">View our subscription options</a>
+
+
+        <div class="c-paywalled-cta__action">
+            <a id="articleSigninBtn" href="javascript:;" class="">Log in</a>
+            <a href="{{networkData.defaultBlogUrl}}/subscriptions" class="">Subscribe</a>
+            {# {% if trialToggle %}
+                <a href="{{networkData.defaultBlogUrl}}/subscriptions" class="c-button c-button--rounded c-button--blue-bordered">Start Free Trial</a>
+            {% endif %} #}
+        </div>
+
+    </div>
+
+
+{% elseif paywallType == "topup"  %}
+
+
+    <div class="c-paywalled-cta">
+        <div class="c-paywalled-cta__head">
+            Time to top up! You’ve reached your article limit.
+        </div>
+        
+        <a href="{{networkData.defaultBlogUrl}}/user/edit-profile" class="c-paywalled-cta__link">Visit your My Account page to buy more articles.</a>
+    </div>
+
+
+
+{% elseif paywallType == "upgrade"  %}
+
+    <div class="c-paywalled-cta">
+        <div class="c-paywalled-cta__head">
+            To keep reading, upgrade your plan. 
+        </div>
+        
+        <a href="{{networkData.defaultBlogUrl}}/user/edit-profile" class="c-paywalled-cta__link">Visit your My Account page to buy more articles.</a>
+    </div>
+
+
+
+
+
+{% elseif paywallType == "signup"  %}
+
+
+
+    <div class="c-paywalled-cta">
+        <div class="c-paywalled-cta__head">
+            To keep reading, sign up for a free account.
+        </div>
+        
+        <a href="{{networkData.defaultBlogUrl}}/subscriptions#subscriptions" class="c-paywalled-cta__options">View our subscription options</a>
+
+
+        <div class="c-paywalled-cta__action">
+            <a id="articleSigninBtn" href="javascript:;" class="">Log in</a>
+            <a href="{{networkData.defaultBlogUrl}}/subscriptions" class="">Subscribe</a>
+            {# {% if trialToggle %}
+                <a href="{{networkData.defaultBlogUrl}}/subscriptions" class="c-button c-button--rounded c-button--blue-bordered">Start Free Trial</a>
+            {% endif %} #}
+        </div>
+
+    </div>
+
+{% endif %}
+

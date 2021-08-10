@@ -1,0 +1,11 @@
+.c-forgot-modal {
+
+    &__description {
+        @include font-size(13);
+        color:$greyish;
+        width:65%;
+        margin:auto;
+        margin-bottom:30px;
+    }
+}
+

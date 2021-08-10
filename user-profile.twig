@@ -1,0 +1,123 @@
+{% set networkData = _Network.getNetworkData() %}
+{% set site        = networkData.title | lower | split(" ")[0]%}
+
+
+<main id="main" class="site-main" role="main">
+    <article class="article-main">
+        <div class="container">
+            <div class="content">
+                <p>Oops! you got lost. Click <a href="{{networkData.defaultBlogUrl}}">here</a> to return to the homepage.</p>
+            </div>
+        </div><!-- .container -->
+    </article><!-- .article-main -->
+</main><!-- .site-main -->
+
+
+{# <main class="o-body-container o-body-container-md">
+    {{ set(this, 'title', 'User Profile') }}
+
+    {% set profileImage =_Media.getMediaUrl(userDetails.media, 500, 500, {crop: 'thumb', gravity: 'face', type:'user'} )%}
+    {{this.registerJs("$('.loginModal').loginModal({});")}}
+
+    {% set myFollowers = _User.getFollowers(userDetails.guid) %}
+    {% set myFollowings = _User.getFollowings(userDetails.guid) %}
+    {% set myBlogs = _User.getBlogsFollowedByUser(userDetails.guid) %}
+
+    <!-- Begin Container -->
+    <section class="container">
+        <div class="row">
+            <!-- Begin User Profile -->
+
+
+            <div class="col-9 col-lg-6">
+                <div class="c-myAccount c-myAccount-xs">
+                    <h2 class="c-myAccount__head">My Account</h2>
+                    <h4 class="c-myAccount__subhead">My details</h4>
+
+                    <form id="profile-form" class="horizontal-form form-contact contact__form label__inline" action="#" method="post" autocomplete="off">
+                        <div class="form-group form-group-sm has-error">
+                            <label class="control-label control-label-sm" for="first-name">First name</label>
+                            <input id="first-name" class="input__text" name="first-name" placeholder="Full Name" aria-required="true" type="text">
+                            <div class="help-block">Please enter your first name</div>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            <label class="control-label control-label-sm" for="last-name">Last name</label>
+                            <input id="last-name" class="input__text" name="last-name" placeholder="Last Name" aria-required="true" type="text">
+                            <div class="help-block"></div>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            <label class="control-label control-label-sm" for="email">Email</label>
+                            <input id="email" class="input__text" name="email" placeholder="email" aria-required="true" type="text" value="cheal@aap.com.au">
+                            <div class="help-block"></div>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            <label class="control-label control-label-sm" for="password">Password</label>
+                            <input id="password" class="input__text" name="password" placeholder="Password" aria-required="true" type="password">
+                            <div class="help-block"></div>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            <label class="control-label control-label-sm" for="verifypassword">Verify password</label>
+                            <input id="verifypassword" class="input__text" name="verifypassword" placeholder="Set new password" aria-required="true" type="password">
+                            <div class="help-block"></div>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            <label class="control-label control-label-sm" for="organisation">Organisation</label>
+                            <input id="organisation" class="input__text" name="organisation" placeholder="AAP Publish" aria-required="true" type="text">
+                            <div class="help-block"></div>
+                        </div>
+                        
+                        <div class="form-group form-group-sm">
+                            <div class="button-set">
+                                <label><input id="alerts" name="alerts" type="checkbox" class="validate[required]"><span><!-- fake radio --></span> Send me daily email alerts</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group no-margin-bottom">
+                            <button type="submit" id="btnContact" class="c-button c-button--rounded c-button--blue c-button--blue-bordered c-button-disabled" name="contact-button">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="col-profile-left col-sm-4 col-xs-12">
+                <!-- Begin User Profile Sidebar -->
+                <div class="profile-sidebar">
+                    <div class="userprofile-sidebar-inner">
+                        <img src="{{profileImage}}" class="img-responsive">
+                        <div class="inner-descr">
+                            <h2 class="user-name">{{Html.encode(userDetails.firstname)}} {{Html.encode(userDetails.lastname)}}</h2>
+                            
+
+                            <p class="bio">{{Html.decode(userDetails.bio) | raw}}</p>
+                            <div class="user-social">
+                                <a href="mailto:{{userDetails.email}}" class="share-icon email-icon" style="padding-left: 12px;"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //End User Profile Sidebar -->
+            </div>
+
+
+            <div class="col-profile-right col-sm-8 col-xs-12 profile-details">
+            
+                
+                {% if 'dairy' not in (networkData.title | lower) %}
+                    {{this.render('partials/user-profile/_user_blogs.twig', {userOwnerBlogs : userOwnerBlogs}) | raw }} 
+                {% endif %}
+
+                {{this.render('partials/user-profile/_recent_articles.twig', {
+                    myArticles : myArticles, 
+                    site:site,
+                    articleCount: 0 }) | raw }}
+
+            </div>
+        </div>
+    </section>
+    <!-- //End Container -->
+</main> #}

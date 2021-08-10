@@ -1,0 +1,81 @@
+{% set articleCount = 0 %}
+{% set eventCount = 0 %}
+{% set cardIndex = 0 %}
+
+
+<div class="row" data-section="01">
+    <div class="col-12">
+        <div class="c-page-head c-page-head-xs">
+            <div class="u-heading__large u-heading__large-xs u-pr--6">{{title}}</div>
+            <a href="{{link}}" class="c-page-head__link">View all</a>
+        </div>
+    </div>
+
+
+    <div class="col-12 col-lg-9">
+        {{this.render('../_single-article.twig', {
+            article: articles[articleCount], 
+            position: (articleCount+1),
+            imageSize: {width: 720, height: 420},
+            containerClass: "card-1-mobile card-1-tablet card-1-desktop",
+            timeSuppress: timeSuppress
+        }) | raw}}
+        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+    </div>
+    
+    {% set date = date() %}
+    {% set events = _Event.getEvents({"limit": limit, "showOnGoingOnly": 1}) %}
+    <div class="col-12 col-lg-3 d-none d-lg-block c-events">
+        <div class="c-events-panel c-events-panel-xs">
+            <h4 class="c-events-panel__head c-events-panel__head-xs">Upcoming Events</h4>
+            <div class="c-events-panel__details">
+                {% set hideontab = ['','','',' d-md-none d-lg-block'] %}                
+                {% for i in 0..3 if events[i] %}
+                    {{this.render('../_single-event-list.twig', {
+                        event: events[i], 
+                        imageSuppress: 'true',
+                        containerClass: "event-card-2-mobile event-card-2-tablet event-card-2-desktop" ~ hideontab[i],
+                        timeSuppress: timeSuppress
+                    }) | raw}}
+                    {% set eventCount = (dev) ? eventCount : eventCount + 1 %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div> <!-- row -->
+
+<div class="row">
+    {% for i in 0..3 if articles[articleCount] %}
+        
+        <div class="col-12 col-md-4 col-lg-3{% if i == 3 %} d-md-none d-lg-block{% endif %}">
+            {{this.render('../_single-article.twig', {
+                article: articles[articleCount], 
+                position: (articleCount+1),
+                imageSize: {width: 300, height: 260},
+                containerClass: "card-5-mobile card-4-tablet card-2-desktop card-2-desktop-lg",
+                timeSuppress: timeSuppress
+            }) | raw}}
+            {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+        </div>
+    {% endfor %}  
+    <div class="col-12 d-lg-none c-events">
+        <div class="c-events-panel c-events-panel-xs">
+            <h4 class="c-events-panel__head c-events-panel__head-xs">Upcoming Events</h4>
+            <div class="row c-events-panel__details">                    
+                {% for i in 0..3 if events[i] %}
+                    <div class="col-12 col-md-4">
+                        {{this.render('../_single-event-list.twig', {
+                            event: events[i], 
+                            imageSuppress: 'true',
+                            containerClass: "event-card-2-mobile event-card-2-tablet event-card-2-desktop",
+                            timeSuppress: timeSuppress
+                        }) | raw}}
+                        {% set eventCount = (dev) ? eventCount : eventCount + 1 %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div> <!-- row -->
+
+

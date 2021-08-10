@@ -1,0 +1,64 @@
+.spinner-modal {
+    position:fixed;
+    top:0;
+    width:100%;
+    height:100%;
+    z-index:1001;
+    background: rgba(0,0,0,0.7);
+}
+
+.spinner-modal__window {
+    margin: auto auto;
+    width:468px;
+    background:white;
+    padding:30px 50px;
+    border-radius:3px;
+    @media #{$media-ipadSmall} {
+        width:auto;
+        margin-top: 10px;
+    }
+}
+// 172.17.102.39
+.spinner-modal__container {
+    position:relative;
+    margin:auto;
+}
+
+
+
+.spinner-modal__header {
+    overflow:auto;
+    padding-bottom:11px;
+    border-bottom:1px solid color(lightgrey);
+    margin-bottom: 20px;
+}
+    .spinner-modal__title {
+    font-family: $font-family-sans-serif;
+        float: left;
+        font-size: rem(16);
+        font-weight:600;
+        margin:0;
+        margin-right:20px;
+}
+
+    .spinner-modal__close {
+        display:block;
+        float:right;
+        height:30px;
+        width:30px;
+        background:url("../icons/cross-black.svg");
+        background-repeat:no-repeat;
+
+    }
+
+.spinner-modal__content-window {
+    flex-grow:1;
+    display:flex;
+    padding-top:30px;
+    position:relative;
+    padding-right: 40px;
+    @media #{$up-to-desktop} {
+        padding-right: 0;
+    }
+}
+

@@ -1,0 +1,14 @@
+/* section page  style */
+
+.c-sectionwrapper {
+    @include padding(0);
+}
+
+.o-body-container__forvideo {
+   .c-sectionwrapper {
+     @include padding(36 0 50 0);
+    }
+    
+}
+
+/* End section page  style */

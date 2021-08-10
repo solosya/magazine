@@ -1,0 +1,67 @@
+/* Begin page head style */
+.card-plan {
+    padding:20px;
+    // height:100%;
+    border-radius: 8px;
+    background-color: $grey;
+    text-align: center;
+
+    &__name {
+        color:$black;
+        @include font-size(28);
+        @include flex-height(66px);
+        @include margin-bottom(14);
+        font-weight: 600;
+        text-align: center;
+    }
+    &__users {
+        @include font-size(18);
+        text-align: center;
+    }
+    &__price {
+        @include font-size(40);
+        @include margin-top(20);
+        @include margin-bottom(40);
+        font-weight: $weightLight;
+    }
+
+
+    &__details {
+        list-style:none;
+        @include margin(0);
+        @include padding(0);
+        @include margin-bottom(15);
+        width: 100%;
+        
+        li {
+            color: $greyish;
+            position: relative;
+            @include font-size(18);
+            font-weight:$weightMedium;
+            line-height: 1.47;
+            @include padding(10 15 10 50);
+            //border-bottom: 1px solid rgba($greyish,0.3);
+            text-align: left;
+            &:last-child {
+                border-bottom: 0px none;
+            }
+            
+            &:before {
+                top: 17px;
+                left: 25px;
+                height: 12px;
+                width: 16px;
+                background-image: url(../icons/tick.svg?v=1);
+                color: $blue;
+                content:'';
+                position: absolute;
+                @include font-size(15);
+            }
+        }
+    }
+
+
+
+}
+
+

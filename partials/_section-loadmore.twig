@@ -1,0 +1,125 @@
+{% set cardTypes = cardType is defined ? cardType : "" %}
+
+{# please make sure sectionNumber, loadMoreClass and totalCards are set at the top of this file #}
+<div class="row" id="loadmore_section_{{sectionNumber}}"></div>
+
+{# {% if articles|length >= cardCount %} #}
+<div class="">
+    {{ this.render('/partials/ajaxarticles_new.twig', {
+        name            : "section-load-" ~ sectionNumber,
+        label           : "+ Load more",
+        buttonClass     : "c-loadmore",
+    }) | raw }}
+
+
+    <a  class = "load_less c-loadmore" 
+        href  = "#section-{{sectionNumber}}"
+        id    = "less-section-load-{{sectionNumber}}"
+        style = "display:none"
+        data-section="loadmore_section_{{sectionNumber}}" 
+    >- Show less</a>
+</div>
+{# {% endif %} #}
+
+<script>
+    // main script is defered so event listener makes sure
+    // defered script is loaded before this runs
+    document.addEventListener("DOMContentLoaded", function() {
+
+
+
+        Card.prototype.bindLightbox = function() {
+
+            $('article.{{contentType}}').unbind().on('click', function (e) {
+                
+                e.preventDefault();
+                var csrfToken = $('meta[name="csrf-token"]').attr("content");
+                
+                var blogTitle = $(this).parent().data('blog-title');
+
+                Acme.LightBox = new Acme.lightBox('modal', 'lightbox-modal');
+                Acme.LightBox.render(null, blogTitle, '<div class="spinner" style="position:relative;height:70px;margin-top:30px;margin-bottom:30px"></div>');
+
+                var isSocial = $(this).parent().data('social');
+                var action = 'POST';
+
+                if (isSocial) {
+                    var url = '/api/social/get-social-post';
+                    var blogGuid = $(this).parent().data('blog-guid');
+                    var postGuid = $(this).parent().data('guid');
+                    var payload = {blog_guid: blogGuid, guid: postGuid, _csrf: csrfToken}
+                } else {
+                    var url = '/api/article/get-article';
+                    var articleId = $(this).parent().data('id');
+                    var payload = {articleId: articleId, _csrf: csrfToken}
+                    action = 'GET';
+                }
+
+                if (!isRequestSent) {
+
+                    $.ajax({
+                        type: action,
+                        url: _appJsConfig.appHostName + url,
+                        dataType: 'json',
+                        data: payload,
+                        success: function (data, textStatus, jqXHR) {
+
+                            data.hasMediaVideo = false;
+                            if (data.media['type'] === 'video') {
+                                data.hasMediaVideo = true;
+                            }
+                            
+                            if (data.source == 'youtube') {
+                                var watch = data.media.videoUrl.split("=");
+                                data.media.videoUrl = "https://www.youtube.com/embed/" + watch[1];
+                            }
+                            
+                            data.templatePath = _appJsConfig.templatePath;
+
+                            var article = cardController.renderCard(data, {
+                                cardClass : "acme-card-10-mobile acme-card-10-tablet acme-card-10-desktop",
+                                type : "acme-",
+                                content: "full",
+                                imageOriginal: true
+                            });
+
+                            Acme.LightBox.renderPreLayout(article);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(errorThrown, textStatus, jqXHR);
+                            isRequestSent = false;
+                        },
+                        beforeSend: function (jqXHR, settings) {
+                            isRequestSent = true;
+                        },
+                        complete: function (jqXHR, textStatus) {
+                            isRequestSent = false;
+                        }
+                    });
+                }
+            });
+        }
+        var cardController = new Card();
+
+
+
+
+        var params = {
+            model           : cardController,
+            container       : 'loadmore_section_{{sectionNumber}}',
+            offset          : 0,
+            limit           : {{ limit }},
+            label           : "+ Load more",
+            name            : 'section-load-{{sectionNumber}}',
+            blogid          : "{{ blogId }}",
+            card_class      : "{{cardClass}}",
+            before          : "{{before}}",
+            after           : "{{after}}",
+            non_pinned      : {{cardCount}},
+            cardType        : "{{cardTypes}}",
+            lightbox        : "{{contentType}}"
+        };
+
+        Acme.articleFeeds["loadmore_section_{{sectionNumber}}"] = new Acme.View.articleFeed(params);
+    });
+</script>

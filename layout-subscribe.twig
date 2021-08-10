@@ -1,0 +1,372 @@
+{{ set(this, 'title', _Blog.getBlogTitle()) }}
+{% set networkData = _Network.getNetworkData() %}
+{% set plans = networkData['paywallPlans'] %}
+{% set blogData		= _Blog.getBlog() %}
+{% set config = _Network.getThemeConfig() %}
+
+{% set plan = false %}
+{% set trial = false %}
+{% set code = false %}
+{% set signup = false %}
+{% set paypal = false %}
+{% set trialPeriod = '14' %} {# 14 days is default in the platform #}
+
+{% set url = _AppHelper.getParsedUrl() %}
+{% set params = url['query'] %}
+
+{# c54b5f8d-f9b5-4b59-b8ca-555f822d0448 #}
+
+
+
+{% set break = false %}
+{% for k, p in params  %}
+
+    {% if k == 'plan' %}
+        {% for pl in plans %}
+            {% if pl.guid == p %}
+                {% set plan = pl %}
+                {% if plan['type'] == 'signup' %}
+                    {% set signup = true %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% if k == 'trial' %}
+        {% if p == 'true' and plan['trial_status'] == '1' %}
+            {% set trial = true %}
+            {% set trialPeriod = plan['trial_period'] %}
+        {% endif %}
+    {% endif %}
+
+    {% if k == 'code' %}
+        {% if p == 'true' %}
+            {% set code = true %}
+        {% endif %}
+    {% endif %}
+
+    {% if k == 'paypal' %}
+        {% if p == 'true' %}
+            {% set code = true %}
+            {% set paypal = true %}
+        {% endif %}
+    {% endif %}
+
+
+{% endfor %}
+
+{% set blogScreen = false %} 
+{% if blogData.media.thumb.path != "" %}
+    {% set blogScreen = true %} 
+    {% set screenImgMedium = _Media.getMediaUrl(blogData.media.thumb,  767,        0,      {'crop': 'fill', 'gravity': 'faces'} ) %}
+    {% set screenImg       = _Media.getMediaUrl(blogData.media.thumb,    0,        0,      {'crop': 'fill', 'gravity': 'faces'} ) %}
+{% endif %}
+
+
+{% set subscribeFields = [] %}
+{% set fields = {} %}
+{% if config['forms']['subscribe']['fields'] is defined %}
+    {% set subscribeFields = config['forms']['subscribe']['fields'] %}
+{% endif %}
+
+
+
+<main id="main" class="o-body-container o-body-container-md u-margin-top-50" role="main">
+    <div id="stripekey" class="hidden" >{{networkData['stripe_publishable_key']}}</div>
+    <div class="container">
+
+        {% if plan != false  %}
+
+            {# The first payment is due on DD Month 20XX unless cancelled. #}
+            {% set val = plan.plan_value / 100 %}
+            {% if val == 19.89 %}
+                {% set val = 19.90 %}
+            {% endif %}
+            {% set planPrice = plan.currency|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"}) ~ val|number_format(2, '.', ',') %}
+            {% if plan.type == 'signup' %}
+                {% set planPrice = 'Free' %}
+            {% endif %}
+
+            {% set frequency = plan.period_count > 1 ? plan.period_count : ""  %}
+
+            {% set planPeriod = plan.period %}
+            {% if plan.period_count > 1 %}
+                {% set planPeriod = plan.period ~ 's' %}
+            {% endif %}
+
+            {% set frequency = frequency ~ " " ~ planPeriod  %}
+
+            {# {% set now = _AppHelper.getCurrentTimestampBasedOnTimezone() %}
+                        {% set log = _AppHelper.log(now) %} #}
+
+            {# {% set publishDate = _AppHelper.getDefaultTimezoneDateTime(article.publishDate, 'Y-m-d') %} #}
+
+
+
+            <div class="row">
+                
+                <div class="col-12 col-lg-7">
+                    <div class="c-subscribe c-subscribe-xs">
+
+                        {% if trial %}
+                            <h2 class="c-subscribe__head">Start your {{trialPeriod}}-day free trial now</h2>
+                            <div class="c-subscribe__text">
+                                The free trial requires registration with a valid credit card.
+                            </div>
+                        {% else %}
+                            <h2 class="c-subscribe__head">Subscribe now</h2>
+                        {% endif %}
+
+
+
+                        {% if config['subscribe-notice'] is defined %}
+                            {% set link = false %}
+                            {% if config['subscribe-notice']['link'] is defined %}
+                                {% set link = config['subscribe-notice']['link'] %}
+                            {% endif %}
+                            <div class="subscribe-multi-notice">
+                                <img class="subscribe-multi-notice__img" src="{{networkData.templatePath}}/static/icons/alert.svg" /> 
+                                <p class="subscribe-multi-notice__p">Already a Farming Extra free subscriber? <br class="d-block d-xl-none" /> Stop and  
+                                {% if link %}
+                                    <a class="subscribe-multi-notice__link" href="{{link}}">click here to add YPCT to your account.</a>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+                        
+                        <h4 class="c-subscribe__subhead">Your information</h4>
+                        
+                        <form id="subscribeform" class="horizontal-form form-contact contact__form" action="#" method="post" autocomplete="off"
+                            data-planprice="{{planPrice}}"
+                            data-planperiodcount="{{plan.period_count}}"
+                            data-planperiod="{{plan.period}}"
+                            data-trialperiod="{{trialPeriod}}"
+                            >
+                            <input type="hidden" class="" name="planid" id="planid" value="{{plan.guid}}">
+                            <input type="hidden" class="" name="trial" id="trial" value="{{trial}}">
+                            <input type="hidden" class="" name="signup" id="signup" value="{{signup}}">
+                            <input type="hidden" class="" name="paypal" id="paypal" value="{{paypal}}">
+
+
+                            <div class="form-group form-group-sm has-error u-margin-bottom-15">
+                                <input id="email" class="input__text" name="email" placeholder="" aria-required="true" type="email">
+                                <label for="email" class="input__label">Email</label>
+                                <input id="email-confirm" class="input__text" name="email-confirm" placeholder="email-confirm" aria-required="true" type="email">
+                                <div class="help-block"></div>
+                            </div>
+                            
+                            <div class="form-group form-group-sm u-margin-bottom-15">
+                                <input id="firstname" class="input__text" name="firstname" placeholder="" aria-required="true" type="text">
+                                <label for="firstname" class="input__label">First Name</label>
+                                <div class="help-block"></div>
+                            </div>
+                            
+                            <div class="form-group form-group-sm u-margin-bottom-15">
+                                <input id="lastname" class="input__text" name="lastname" placeholder="" aria-required="true" type="text">
+                                <label for="lastname" class="input__label">Last Name</label>
+                                <div class="help-block"></div>
+                            </div>
+                            
+                            <div class="form-group form-group-sm u-margin-bottom-15">
+                                <input id="password" class="input__text" name="password" placeholder="" aria-required="true" type="password" value="">
+                                <label for="password" class="input__label" title="Passwords must be at least six characters and include upper case, lower case and digit.">
+                                    Password <span>(must be at least six characters and include upper case, lower case and digit.)</span>
+                                </label>
+                                <div class="help-block"></div>
+                            </div>
+                            
+                            <div class="form-group form-group-sm u-margin-bottom-15">
+                                <input id="verifypassword" class="input__text" name="verifypassword" placeholder="" aria-required="true" type="password">
+                                <label for="verifypassword" class="input__label">Password verify</label>
+                                <div class="help-block"></div>
+                            </div>
+
+                            {% for field in subscribeFields %}
+                                {% set required = field.required ? "true" : "false" %}
+                                <div class="form-group form-group-sm u-margin-bottom-15">
+                                    <input type="text" class="input__text articleExtendedData j-form-elem" name="{{field.name}}" id="{{field.name}}" aria-required="{{required}}" value="" placeholder="">
+                                    <label for="{{field.name}}" class="input__label">{{field.label}}</label>
+                                    <div class="help-block"></div>
+                                </div>
+                            {% endfor %}
+
+                            {# {% if showAddress %}
+                            <div class="form-group form-group-sm u-margin-bottom-15">
+                                <input type="text" class="input__text articleExtendedData j-form-elem" name="address1" id="address1" aria-required="true" value="" placeholder="">
+                                <label for="address1" class="input__label">Street Address</label>
+                                <div class="help-block"></div>
+                            </div>
+
+
+                            <div class="form-group form-group-sm u-margin-bottom-15">
+                                <input type="text" class="input__text articleExtendedData j-form-elem" name="address2" id="address2"  value="" placeholder="">
+                                <label for="address2" class="input__label">Street address line 2 (optional)</label>
+                                <div class="help-block"></div>
+                            </div>
+
+                            <div class="form-group form-group-sm u-margin-bottom-15">
+                                <input type="text" class="input__text articleExtendedData j-form-elem" name="city" id="city" aria-required="true" value="" placeholder="">
+                                <label for="city" class="input__label">City / Town</label>
+                                <div class="help-block"></div>
+                            </div>
+
+                            <div class="form-group form-group-sm u-margin-bottom-15">
+                                <input type="text" class="input__text articleExtendedData j-form-elem" name="postcode" id="postcode" aria-required="true" value="" placeholder="">
+                                <label for="postcode" class="input__label">Postcode</label>
+                                <div class="help-block"></div>
+                            </div>
+                            {% endif %} #}
+
+                            <div class="form-group form-group-sm u-margin-bottom-15">
+                                <input id="organisation" class="input__text" name="organisation" placeholder="" aria-required="true" type="text">
+                                <label for="organisation" class="input__label">Organisation (optional)</label>
+                                <div class="help-block"></div>
+                            </div>
+                            
+                            <div class="form-group form-group-sm u-margin-bottom-15">
+
+                            {% if trial %}
+                                <div class="button-set c-checkbox u-margin-bottom-15">
+                                    <input id="changeterms" name="changeterms" type="checkbox" class="c-checkbox__input validate[required]" /> 
+                                    <label class="c-checkbox__label" for="changeterms">
+                                        <span class="c-checkbox__button"></span>
+                                        I agree to my card being charged {{planPrice}} every {{frequency}} at the end of the {{trialPeriod}}-day free trial period. 
+                                    </Label>
+                                </div>
+
+                                <div class="button-set c-checkbox u-margin-bottom-15">
+                                    <input id="cancelterms" name="cancelterms" type="checkbox" class="c-checkbox__input validate[required]" /> 
+                                    <label class="c-checkbox__label" for="cancelterms">
+                                        <span class="c-checkbox__button"></span>
+                                        I understand I can cancel for free before the end of the trial in My Account page, and I will be emailed a payment reminder 7 days before the end of the free trial period. I understand I can cancel my paid subscription at any time in My Account page.
+                                    </label>
+                                </div>
+                            {% endif %}
+
+
+                                <div class="button-set c-checkbox u-margin-bottom-15">
+                                    <input id="terms" name="terms" type="checkbox" class="c-checkbox__input validate[required]" />
+                                    <label class="c-checkbox__label u-padding-top-3" for="terms">
+                                        <span class="c-checkbox__button"></span>
+                                        I agree to the  <strong> <a href="{{networkData.defaultBlogUrl}}/privacy-policy" target="_blank">Terms of Service</a></strong>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                        </form>
+
+                        <div class="c-subscribe__subscription" style="margin-top:30px;">
+                            {% if signup == false %}
+                            <h4 class="c-subscribe__subhead">Payment details</h4>
+                            {% endif %}
+                            <div class="form-group fullwidth">
+                                
+                                {% if  code %}
+                                    <form action="/charge" method="post" id="payment-form">
+                                        <div class="form-row ">
+                                            <label for="code-redeem">Gift code </label>
+                                            <input type="text" class="articleExtendedData" name="code-redeem" id="code-redeem" value="" placeholder="0a1b-2c3d-4e5f">
+                                        </div>
+                                        
+                                        <div class="form-group" style="margin-top:30px;">
+                                            <button type="submit" id="subscribe" class="c-button c-button--rounded c-button--blue">Subscribe</button>
+                                        </div>
+                                    </form>
+
+                                {% else %}
+                                    {% if  signup == false %}
+                                    <form action="/charge" method="post" id="payment-form" class="stripe-form">
+                                        <div class="" style="min-width:100%">
+                                            <div id="card-element"><!-- a Stripe Element will be inserted here. --></div>
+                                            <!-- Used to display form errors -->
+                                            <div id="card-errors" class="c-account-form__errorText" role="alert"></div>
+                                        </div>
+
+
+                                        {% if config['subscribe-notice'] is defined %}
+                                            {% set link = false %}
+                                            {% if config['subscribe-notice']['link'] is defined %}
+                                                {% set link = config['subscribe-notice']['link'] %}
+                                            {% endif %}
+                                            <p class="subscribe-multi-notice__bottom-p">*If you have a Farming Extra account with this email address already, 
+                                            
+                                            {% if link %}
+                                                <a class="subscribe-multi-notice__link-bottom" href="{{link}}">click here to add YPCT to your account.</a>
+                                            {% endif %}
+                                            </p>
+                                        {% endif %}
+
+                                        <div class="form-group" style="margin-top:30px;">
+                                            <button type="submit" id="subscribe" class="c-button c-button--rounded c-button--blue">Subscribe</button>
+                                        </div>
+                                    </form>
+                                    {% else %}
+                                    <form action="/charge" method="post" id="payment-form">
+                                        
+                                        <div class="form-group" style="margin-top:30px;">
+                                            <button type="submit" id="subscribe" class="c-button c-button--rounded c-button--blue">Subscribe</button>
+                                        </div>
+                                    </form>
+                                    {% endif %}
+                                {% endif %}
+                                                
+                            </div>
+
+                        </div>
+                            
+                    </div>
+                </div>
+
+
+
+                <div class="offset-xl-2 offset-lg-1 col-12 col-lg-4 col-xl-3">
+                    <div class="o-body-container--right-layout">
+                        <div class="c-subscribe__sidebar c-subscribe__sidebar-xs">
+                            <picture class="c-subscribe__Device c-subscribe__Device-xs">
+                                {% if blogScreen %}
+                                <img src="{{screenImg}}" srcset="{{screenImgMedium}} 1x, {{screenImg}} 2x" class="img-fluid">
+                            {% else %}
+                                <img src="{{networkData.templatePath}}/static/images/device.png?ver=3" srcset="{{networkData.templatePath}}/static/images/device.png?ver=3 1x, {{networkData.templatePath}}/static/images/device@2x.png?ver=3 2x, {{networkData.templatePath}}/static/images/device@3x.png?ver=3 3x" class="img-fluid">
+                            {% endif %}
+                            </picture>
+
+                            {% set uc = plan.user_count %}
+
+                            <div class="c-orderSummary">
+                                <h4 class="c-orderSummary__title">Order summary</h4>
+                                <div class="c-orderSummary__price">{{planPrice}}</div>
+                                <p class="c-orderSummary__name">{{plan.plan_name}}</p>
+                                <div class="c-orderSummary__details">
+                                    <p>What's included:</p>
+                                    <ul>
+                                        <li>{{(plan.description|replace({';': '</li><li>'}))|raw}}</li>
+                                    </ul>
+                                </div>
+                                <a href="{{networkData.defaultBlogUrl}}/subscriptions" class="btn-change">Change subscription</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="col-12 ">
+                    <h1>You need to choose a plan from the subscriptions screen</h1>
+                </div>
+            </div>
+        {% endif %}
+
+
+    </div>
+    <div class="j-keyword-cont" data-keywords="{{blogData.keywords}}"></div>
+</main>
+
+
+<script>
+    // main script is defered so event listener makes sure
+    // defered script is loaded before this runs
+    document.addEventListener("DOMContentLoaded", function() {
+        var signin = new Acme.Signin('signinForm', '#signin');
+    });
+</script>

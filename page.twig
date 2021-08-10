@@ -1,0 +1,42 @@
+{% set config       = _Network.getThemeConfig() %}
+
+{{ set(this, 'title', page.title | raw) }}
+
+
+
+<main id="main" class="o-body-container o-body-container-md u-margin-top-60" role="main">
+    <!-- Begin Container -->
+    <div class="page_section" style="height:100%">
+        <section class="container" >
+            <!-- Begin Terms -->
+            <div class="content-wrap clearfix" style="height:100%">
+                <div class="row" style="height:100%">
+                    <div class="col-12 col-lg-7 j-article-container" style="height:100%; min-height:600px;">
+
+                        {% if _User.isAdminUser() and page.editUrl is defined %}
+                            <a href="{{page.editUrl}}" target="_blank">Edit</a>
+                        {% endif %}
+
+                        <div class="content_area is-wrapper clearfix page-content c-article__container">
+                            {{page.content | raw}}
+                        </div>
+                        {% if config['forms'][this.title] is defined %}
+                            {{ this.render('partials/form.twig', {
+                                page   : this.title,
+                                config : config
+                            }) | raw }}
+                        {% endif %}
+                    </div>
+                    <div class="col-12 offset-lg-1 col-lg-4">
+                        <div class="o-body-container__right-layout j-article-sidebar ">
+                            {% if config['inventory']['adSpace']['hpage'][0] is defined %}
+                                <div class="j-adslot" id="{{config['inventory']['adSpace']['hpage'][0]}}" data-adshape="hpage"></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="j-keyword-cont" data-keywords="{{page.keywords}}"></div>
+    </div>
+</main>

@@ -1,0 +1,144 @@
+{% set type = type is defined ? type : "image" %}
+{% set galleryStyle = galleryStyle is defined ? galleryStyle  : "article" %}
+{% set owl      = '' %}
+{% set owlClass = '' %}
+
+{% set imgWidth  = imageSize.width  is defined ? imageSize.width  : 745 %}
+{% set imgHeight = imageSize.height is defined ? imageSize.height : 497 %}
+{% set gravity   = 'faces' %}
+{% set mobImgHeight = imageSize.height is defined ? imageSize.height : 250 %}
+
+
+{# For gallery pages, we want images to be seen full height and maintain aspect ratio,
+with width taken up with borders on the side #}
+{% if galleryStyle == "gallery" %} 
+    {% set imgWidth = 0 %}
+    {% set imgHeight = 515 %}
+    {% set gravity = 'auto' %}
+    {% set mobImgHeight = 250 %} 
+{% elseif galleryStyle == "property" %}
+    {% set imgWidth = 0 %}
+    {% set imgHeight = 497 %}
+    {% set gravity = 'auto' %}
+    {% set mobImgHeight = 250 %}
+{% endif %}
+
+{% set cloudinaryParams = {'crop': 'fill', 'gravity': gravity} %}
+
+
+{% if showPaywall is defined and showPaywall == true %}
+    {% set media = [media[0]] %}
+{% endif %} 
+
+
+
+{% if ( media | length > 1 ) %}
+    {% set owl = "owl-gallery-" ~ type %}
+    {% set owlClass = 'owl-carousel owl-pub-theme owl-carousel__base'%}
+{% endif %}
+
+{# {% set defaultClass = default is defined and default == true ? "default" : "" %} #}
+
+{# Used for the article gallery to add some caption html #}
+{% set caption = html is defined and html != '' ? html : false %}
+
+
+
+
+{# <div id="{{owl}}" class="o-media js-media o-media-sm article-gallery owl-gallery-{{type}} {{owlClass}} {{defaultClass}}" data-slider-id="1" data-default="{{default}}"> #}
+<div id="{{owl}}" class="article-gallery owl-gallery-{{type}} {{owlClass}}" data-slider-id="1" data-default="{{default}}">
+    {% for image in media %}
+
+        {% if watermark is defined and watermark != false %}
+
+            {% set wmHeight = (image.width * (watermark.height / 100))|number_format(0,'','') %}
+            {% set wmWidth = (image.width  * (watermark.width / 100))|number_format(0,'','')  %}
+            {% set cloudinaryParams = cloudinaryParams | merge(
+                {'watermark' : {'x':watermark.x,'y':watermark.y, 'width':wmWidth, 'height':wmHeight }}
+            ) %}
+        {% endif %}
+
+        {% set articleImgSmall  = _Media.getMediaUrl(image,  0,        250,      cloudinaryParams ) %}
+        {% set articleImgMedium = _Media.getMediaUrl(image,  0,        500,      cloudinaryParams ) %}
+        {% set articleImg       = _Media.getMediaUrl(image, imgWidth, imgHeight, cloudinaryParams ) %}
+
+
+        <figure class="article-gallery__image article-gallery__image-{{galleryStyle}}" data-hash="{{loop.index}}">
+                
+            {% if image.type == 'image' or image.type == 'doc'%} 
+                <div class="article-gallery__img-container article-gallery__img-container-{{galleryStyle}}">
+                    <picture>
+                        <source media="(max-width: 728px) and (min-width: 501px)" srcset="{{articleImgMedium}}">
+                        <source media="(max-width: 295px)" srcset="{{articleImgSmall}}">
+                        <img class="article-gallery__img" src="{{articleImg}}">
+                    </picture>
+                </div>
+            {% endif %}                
+            
+            
+            {% if image.type == 'video' %} 
+                
+                {% set mediaUrl = "" %}
+                
+                {% if image.isSystemVideo == 'TRUE'%}
+                    
+
+                    {% set mediaUrl = _Media.getMediaVideoUrl(image, 0, 0,{resource_type: 'video',  format: 'mp4' }) | replace({'upload/': 'upload/q_auto,vc_h265/'})  %}
+                    {% set mediaUrl2 = _Media.getMediaVideoUrl(image, 0, 0,{resource_type: 'video', format: 'webm'}) | replace({'upload/': 'upload/q_auto,vc_vp9/'})  %}
+                    {% set mediaUrl3 = _Media.getMediaVideoUrl(image, 0, 0,{resource_type: 'video', format: 'mp4' }) | replace({'upload/': 'upload/q_auto,vc_auto/'})  %}
+
+                    <video controls class="article-video" poster="{{articleImg}}">
+                        <source src="{{mediaUrl}}" type="video/mp4; codecs=hevc" />
+                        <source src="{{mediaUrl2}}" type="video/webm" />
+                        <source src="{{mediaUrl3}}" type="video/mp4" />
+                    </video>
+
+                
+                {% else %}
+
+                    {% if image.source == 'youtube' %}
+                        {% set mediaUrl = "//www.youtube.com/embed/" ~ image.videoId ~ '?enablejsapi=1&version=3&playerapiid=ytplayer' %}
+                    
+                    {% elseif image.source == 'vimeo' %}
+                        {% set mediaUrl = "//player.vimeo.com/video/" ~ image.videoId  %}
+                        {{this.registerJsFile("https://player.vimeo.com/api/player.js")}}
+                    
+                    {% elseif image.source == 'brightcove' %}
+
+                        {% set videoId      = image.videoId | split("::")[0]  %}
+                        {% set accountID    = image.videoId | split("::")[1]  %}
+                        {% set playerID     = image.videoId | split("::")[2]  %}
+                        {% if playerID == '' %}
+                            {% set playerID = 'default' %}
+                        {% endif %}
+                        {% set mediaUrl = "//players.brightcove.net/" ~ accountID ~ "/" ~ playerID ~ "_default/index.html?videoId=" ~ videoId ~ "&playsinline"  %}
+                    {% endif %}
+
+
+                    <iframe src="{{mediaUrl}}" 
+                        class="external-article-video"
+                        data-source={{image.source}}
+                        allowfullscreen
+                        webkitallowfullscreen
+                        mozallowfullscreen
+                        style="width: 100%; height: 100%; top: 0px; bottom: 0px; right: 0px; left: 0px;">
+                    </iframe>
+    
+                {% endif %}
+
+            {% endif %}
+
+
+
+
+            <figcaption class="article-gallery__caption" style="float:unset;">
+                <p class="">{{image.caption | raw }}</p>
+            </figcaption>
+
+        </figure>
+
+
+
+    {% endfor %}
+</div>
+

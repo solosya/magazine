@@ -1,0 +1,15 @@
+
+{% macro smarten(text) %}
+    {{ text	| preg_replace("/^'/", '&lsquo;')
+    		| preg_replace('/^"/', '&ldquo;') 
+    		| preg_replace("/([ .,…;>])'(?=[^>]*(<|$))/", '$1&lsquo;')
+			| preg_replace('/([ .,…;>])"(?=[^>]*(<|$))/', '$1&ldquo;') 
+    		| preg_replace('/"(?=[^>]*(<|$))/', '&rdquo;') 
+    		| preg_replace("/'(?=[^>]*(<|$))/", '&rsquo;') 
+    		| preg_replace("/&lsquo;&rsquo;(?=[^>]*(<|$))/", '&lsquo;&lsquo;')
+    		| preg_replace("/&lsquo;&rdquo;(?=[^>]*(<|$))/", '&lsquo;&ldquo;')
+    		| preg_replace("/&ldquo;&rsquo;(?=[^>]*(<|$))/", '&ldquo;&lsquo;')
+    		| preg_replace("/&ldquo;&rdquo;(?=[^>]*(<|$))/", '&ldquo;&ldquo;')
+    		| raw }}
+{% endmacro %}
+

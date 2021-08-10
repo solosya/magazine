@@ -1,0 +1,196 @@
+{% set networkData = _Network.getNetworkData() %}
+{% set plans 		= networkData['paywallPlans'] %}
+{% set blogData		= _Blog.getBlog() %}
+{% set blogName      = blogData.title %}
+{% set config       = _Network.getThemeConfig() %}
+
+{# separate plans by currency #}
+{# {% for plan in plans %}
+    {% if plan.currency | lower == 'usd' and 'School' not in plan.name %}
+        {% set usd = usd|merge([plan]) %}
+    {% endif %}
+    {% if plan.currency | lower == 'aud' and 'School' not in plan.name %}
+        {% set aus = aus|merge([plan]) %}
+    {% endif %}
+    {% if plan.currency | lower == 'gbp' and 'School' not in plan.name %}
+        {% set gbp = gbp|merge([plan]) %}
+    {% endif %}
+{% endfor %} #}
+
+
+{# {% set ui_plans = aus | slice(0,4) %} #}
+{% set blogCover = false %}   
+{% set blogScreen = false %} 
+{% if blogData.media.cover.path != "" %}
+    {% set blogCover = true %}   
+    {% set coverImgSmall  = _Media.getMediaUrl(blogData.media.cover,  767,        0,      {'crop': 'fill', 'gravity': 'faces'} ) %}
+    {% set coverImgMedium = _Media.getMediaUrl(blogData.media.cover,  991,        0,      {'crop': 'fill', 'gravity': 'faces'} ) %}
+    {% set coverImg       = _Media.getMediaUrl(blogData.media.cover, 2000,        0,      {'crop': 'fill', 'gravity': 'faces'} ) %}
+     {# {% set coverImg       = blogData.media.cover.path %} #}
+{% endif %}
+{% if blogData.media.thumb.path != "" %}
+    {% set blogScreen = true %} 
+    {% set screenImgMedium = _Media.getMediaUrl(blogData.media.thumb,  767,        0,      {'crop': 'fill', 'gravity': 'faces'} ) %}
+    {% set screenImg       = _Media.getMediaUrl(blogData.media.thumb,    0,        0,      {'crop': 'fill', 'gravity': 'faces'} ) %}
+{% endif %}
+
+
+{# {{this.registerJs("var signin = new Acme.Signin('signinForm', '#signin');")}} #}
+{# {{this.registerJs("var signup = new Acme.Signup();")}} #}
+
+{% set subscribeText = 'Subscribe now to<br class="hidden-xs">' ~ networkData.title %}
+{% set signupText = 'Sign up now for unlimited access to the latest local news, sport and special features.' %}
+
+{% if config['subscriptions'] is defined %}
+    {% if config['subscriptions']['subscribe'] is defined and config['subscriptions']['subscribe'] != "" %}
+        {% set subscribeText = config['subscriptions']['subscribe'] %}
+    {% endif %}
+    {% if config['subscriptions']['signup'] is defined and config['subscriptions']['signup'] != "" %}
+        {% set signupText = config['subscriptions']['signup'] %}
+    {% endif %}
+{% endif %}
+
+<main id="main" class="site-main u-desktop-margin-top-40" role="main">
+   
+    <div class="o-media-hero relative">
+        <figure class="o-media-slider">
+        <picture class="image-cover">
+            {% if blogCover %}
+                <!--[if IE 9]><video style="display:none;"><![endif]-->
+                <source 
+                        media="(max-width:767px)"
+                        sizes="100vw"
+                        srcset="{{coverImgMedium}}" />
+                <source 
+                        media="(min-width:768px)"
+                        sizes="33.3vw"
+                        srcset="{{coverImg}}" />
+                <!--[if IE 9]></video><![endif]-->
+                <img class="image-cover" sizes="(min-width:601px) 33vw, 200vw" srcset="{{coverImgMedium}} 767w, {{coverImg}} 1200w" alt="Banner Image" />
+            {% else %}
+                <!--[if IE 9]><video style="display:none;"><![endif]-->
+                <source 
+                        media="(max-width:767px)"
+                        sizes="100vw"
+                        srcset="{{networkData.templatePath}}/static/images/banner/slide_02_Mobile.jpg 2x" />
+                <source 
+                        media="(min-width:768px)"
+                        sizes="33.3vw"
+                        srcset="{{networkData.templatePath}}/static/images/banner/slide_02.jpg 1x" />
+                <!--[if IE 9]></video><![endif]-->
+                <img class="image-cover" sizes="(min-width:601px) 33vw, 100vw" srcset="{{networkData.templatePath}}/static/images/banner/slide_02_Mobile.jpg 767w, {{networkData.templatePath}}/static/images/banner/slide_02.jpg 1200w" alt="Banner Image" />
+            {% endif %}
+        </picture>
+        <div class="o-media-hero_overlay">
+            <div class="o-media-hero_caption">
+                <div class="o-media-hero_caption_balance">
+                    <div class="container">
+                        <div class="o-media-hero_caption_wrapper">
+                            <h2 class="o-media-hero_text text">{{subscribeText|raw}}</h2>
+                            <p>{{signupText|raw}}</p>
+                            <div class="o-media-hero_button-set">
+                                    <a class="c-button c-button--rounded c-button--blue" href="#subscriptions">View plans</a> 
+
+                                    <a class="c-button c-button--rounded c-button--blue u-margin-left-20" id="articleSigninBtn" style="cursor:pointer;">Log in</a> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </figure>
+    </div>
+    <!-- End Hero Banner -->
+
+    <div class="clearfix"></div>
+
+    <div class="o-body-container o-body-container-md">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="c-payhead c-payhead-md">
+                        <div class="c-payhead-left c-payhead-left-md">
+                            {{blogData.shortDescription|raw}}
+
+                            {# <h3 class="c-payhead__head"><strong class="c-payhead__head--color">Donec ginibus an naset</strong> trices nasieo me naehs res ir loremia seriol perlionek</h3>
+                            <p class="c-payhead__text">Spendisse ultrices pharetra id at nullar onec ginibus ultrices nasieo nesr meiair naeos trices pharetra id at nullar onec ginibus ultrices nasieo nesr meiair naeos trices pharetra id at nullar onec ginibus.</p> #}
+                        </div>
+                        <div class="c-payhead-right c-payhead-right-md">
+                            <picture class="c-payhead__Device c-payhead__Device-md">
+                            {% if blogScreen %}
+                                <img src="{{screenImg}}" srcset="{{screenImgMedium}} 1x, {{screenImg}} 2x" class="img-fluid">
+                            {% else %}
+                                <img src="{{networkData.templatePath}}/static/images/device.png?ver=2" srcset="{{networkData.templatePath}}/static/images/device.png?ver=2 1x, {{networkData.templatePath}}/static/images/device@2x.png?ver=2 2x, {{networkData.templatePath}}/static/images/device@3x.png?ver=2 3x" class="img-fluid">
+                            {% endif %}
+                            </picture>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="subscriptions" class="row">
+                <div class="col-12">
+                        
+                    <div class="c-paysub">
+                            
+                        <div class="c-paysub__head">Choose a subscription: </div>
+
+                        <div class="c-paysub__cards row justify-content-center">
+                        {% for plan in plans  %}
+                            {% set val = plan.plan_value / 100 %}
+                            {% set planPrice = plan.currency|replace({"AUD": "$", "NZD": "$", "GBP": "£", "USD": "$", "EUR": "€"}) ~ val|number_format(2, '.', ',') %}
+
+
+                            <div class="col-12 col-md-6 col-lg-4 col-xl-3 u-margin-bottom-30">
+                                <div class="card-plan">
+                                    <h1 class="card-plan__name">{{plan.plan_name}}</h1>
+                                    {% if plan.type != 'signup' %}
+                                        <h3 class="card-plan__price">{{planPrice}}</h3>
+                                    {% endif %}
+                                    
+                                    <ul class="card-plan__details">
+                                        {% if plan.description | length > 0 %}
+                                            <li>{{(plan.description|replace({';': '</li><li>'}))|raw}}</li>
+                                        {% endif %}
+                                    </ul>
+
+                                    
+                                    
+                                    {% if plan.trial_status == "1" %}
+                                        <a href="{{networkData.defaultBlogUrl}}/subscribe?plan={{plan.guid}}&amp;trial=true" class="c-button c-button__plan c-button__center c-button--rounded c-button--blue c-button--subscribe"><p style="margin-top:-7px;">Subscribe</p><p class="c-button__trial">Includes a free {{plan.trial_period}} day trial</p></a>
+                                    {% else %}
+                                        <a href="{{networkData.defaultBlogUrl}}/subscribe?plan={{plan.guid}}" class="c-button c-button__plan c-button__center c-button--rounded c-button--blue c-button--subscribe">Subscribe</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if config['altSites'] is defined %}
+                <div class="row justify-content-center">
+                    {% for site in config['altSites'] %}
+                        <div class="col-12 col-md-6 col-lg-3 c-altsite">
+                            <a href="{{site.url}}">
+                                <div class="c-altsite__item">
+                                    <p class="c-altsite__subscribe">SUBSCRIBE TO</p>
+                                    <h3 class="c-altsite__head">{{site.sitename}}</h3>
+                                    <div class="c-altsite__icon">{{ this.render('partials/icons.twig', {icon: 'cirarrow'} ) | raw }}</div>
+                                    <p class="c-altsite__view">View subscriptions</p>
+                                </div>
+                            </a>
+                           
+                        </div>
+                        
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="j-keyword-cont" data-keywords="{{blogData.keywords}}"></div>
+</main>
+
+
+

@@ -1,0 +1,85 @@
+.acme-modal {
+    position:fixed;
+    top:0;
+    width:100%;
+    height:100%;
+    z-index:1001;
+    background: rgba(0,0,0,0.7);
+}
+
+.acme-modal__window {
+    display:flex;
+    position:relative;
+    margin: auto auto;
+    width:70%;
+    height:500px;
+    max-width:900px;
+    max-height:500px;
+    // height:400px;
+    background:white;
+    border-radius:3px;
+    @media #{$up-to-desktop} {
+        height:50%;
+    }
+    @media #{$mobile} {
+        height:40%;
+        width:90%;
+    }
+
+}
+// 172.17.102.39
+.acme-modal__container {
+    position:absolute;
+    display:flex;
+    flex-direction: column;
+    top:20px;
+    bottom:20px;
+    left:20px;
+    right:20px;
+    margin:auto;
+}
+
+
+
+.acme-modal__header {
+    flex-shrink:0; 
+    overflow:auto;
+    min-height:30px;
+    margin-bottom: 5px;
+}
+    .acme-modal__title {
+        float: left;
+        font-size: rem(15);
+        font-weight:600;
+        margin:0;
+    }
+
+    .acme-modal__close {
+        display:block;
+        color:black;
+        float:right;
+        height:15px;
+        width:15px;
+        padding:5px;
+        background:url("../icons/cross-black.svg");
+        background-repeat:no-repeat;
+        background-size: contain;
+       
+        @media #{$up-to-desktop} {
+            margin-top: 10px;
+            height:15px;
+            width:15px;
+        }
+
+    }
+
+.acme-modal__content-window {
+    flex-grow:1;
+    display:flex;
+    position:relative;
+    padding-right: 40px;
+    @media #{$up-to-desktop} {
+        padding-right: 0;
+    }
+}
+

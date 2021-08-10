@@ -1,0 +1,347 @@
+/* Begin page head style */
+@mixin shrink {
+    height: 34px;
+    outline: none;
+    margin-top:10px;
+    border: solid 1px $vimeo;
+}
+
+@mixin shrinkLabel {
+    top: -6px;
+    margin-left:5px;
+    @include font-size(12);
+    width: auto;
+    overflow: auto;
+
+}
+
+
+
+.c-subscribe {
+    padding-right:0;
+    margin-bottom:35px;
+    
+    @include responsive(xs) {
+        padding-right:50px;
+        margin-bottom:0px;
+    }
+    
+    .hr {
+        width:100%;
+        font-size:0;
+        margin:30px 0;
+        display:inline-block;
+        border-top:1px solid $border;
+        hr {
+            display:none;
+        }
+    }
+    
+    &__head, &__subhead {
+        line-height:1.3;
+        font-weight:$weightBold;
+        @include margin-bottom(30);
+    }
+    &__head {
+        color:$black;
+        @include font-size(28);
+        @include margin-bottom(20);
+    }
+    &__subhead {
+        color:$greyish;
+        @include font-size(15);
+        @include margin-bottom(20);
+    }
+    &__text {
+        color:$greyish;
+        @include font-size(14);
+        line-height:1.6;
+        @include margin-bottom(20);
+        font-family:$weightRegular!important;
+    }
+    
+    &__AddUsers {
+        @include flexbox;
+        position:relative;
+        margin-bottom:30px;
+        @include align-items(center);
+        @include align-content(flex-start);
+        @include justify-content(space-between);
+        @include flex-direction(row, horizontal);
+        
+        .c-myAccount__subhead {
+            margin-bottom:0;
+        }
+        
+        &__Elements {
+            top:-3px;
+            right:0px;
+            position:absolute;
+        }
+    }
+    &__checkbox {
+        @include font-size(13);
+        span {
+            margin-right:7px;
+        }
+        a {
+            color:black;
+        }
+    }
+    .horizontal-form {
+        width:100%;
+        
+        .form-group {
+            position:relative;
+            @include flexbox;
+            @include align-items(flex-start);
+            @include align-content(flex-start);
+            @include justify-content(flex-start);
+            @include flex-direction(column, vertical);
+            
+            @include responsive(sm) {
+                @include align-items(flex-start);
+                @include flex-direction(column, vertical);
+            }
+            
+            &:last-child, &:only-child {
+                margin-bottom:0px;
+            }
+            
+            .control-label {
+                width:100%;
+                flex:0 0 100%;
+                max-width:100%;
+                color: $greyish;
+                margin-bottom:7px;
+                @include font-size(14);
+                line-height:1.5;
+                font-weight:$weightBold;
+                
+                @include responsive(sm) {
+                    width:130px;
+                    flex:0 0 130px;
+                    max-width:130px;
+                    margin-bottom:0;
+                }
+            }
+            .email-confirm {//this is just for the anti bot
+                display: none !important;
+            }
+    
+            .input__text {
+                color:$black;
+                margin-bottom:0px;
+                @include font-size(14);
+                line-height:1.5;
+                font-weight:$weightRegular;
+                height: 44px;
+                width: 100%;
+                border-radius: 6px;
+                border: solid 1px #e7e7e7;
+                padding: 10px 15px;
+                transition: 300ms ease all;
+
+                &.shrink ~ .input__label {
+                    @include shrinkLabel();
+                }
+                &.shrink {
+                    @include shrink();
+                }
+                &:focus {
+                    @include shrink();
+                }
+                &:focus ~ .input__label {
+                    @include shrinkLabel();
+                }
+              
+                &.formError {
+                    border-color:$error;
+        
+                    + div {
+                        display:block;
+                    }
+                }
+        
+
+            }
+            
+
+            .input__label {
+                color:$darkergrey;
+                @include font-size(14);
+                font-weight:$weightRegular;
+                position:absolute;
+                top: 14px;
+                margin-left:15px;
+                transition: 300ms ease all;
+                white-space: nowrap;
+                width: 94%;
+                overflow: hidden;
+                >span {
+                    @include font-size(11);
+                }
+            }
+
+
+            .btn-cancel {
+                float:right;
+                color:$mainColor;
+                text-align:right;
+                @include font-size(14);
+                line-height:1.5;
+                font-weight:$weightMedium;
+                font-style:italic;
+            }
+        }
+    }
+    
+    &__sidebar {
+        // background-color:$mainColor;
+        
+        @media #{$desktop-up}{
+            &:after {
+                content: '';
+                top: 0px;
+                left: -10px;
+                width: 1px;
+                background: $offwhite;
+                height: 100%;
+                position: absolute;
+            }
+    
+            }
+
+        &:before {
+            content:'';
+            top:150px;
+            left:0px;
+            z-index:-1;
+            position:absolute;
+            background-color: $grey;
+            width:calc(100% - 0px);
+            height:calc(100% - 170px);
+            @media #{$tablet}{
+                display: none;
+            }
+        }
+            
+        @include responsive(xs) {
+            &:before {
+                left:21px;
+                width:calc(100% - 43px);
+                height:calc(100% - 170px);
+            }
+        }
+    }
+    
+    &__Device {
+        width:100%;
+        margin:0px auto;
+        max-width:310px;
+        @include flexbox;
+        position:relative;
+        @include align-items(center);
+        @include align-content(center);
+        @include justify-content(center);
+        
+        @include responsive(xs) {
+            width:auto;
+            max-width:340px;
+        }
+        
+        .img-fluid {
+            width:100%;
+            max-width:100%;
+            
+            @include responsive(xs) {
+                width:auto;
+                max-width:100%;
+            }
+        }
+        @media #{$tablet}{
+            position: absolute;
+            left: 0;
+            width: 320px;
+            margin-top: 0;
+        }
+    }
+}
+
+
+.c-subscribe {
+    .horizontal-form {
+        .form-group.fullwidth {
+            @include align-items(flex-start);
+            @include align-content(flex-start);
+            @include justify-content(flex-start);
+            @include flex-direction(column, vertical!important);
+            
+            @include responsive(sm) {
+                
+            }
+                
+            label {
+                width:100%;
+                flex:0 0 100%;
+                max-width:100%;
+                margin-bottom:10px;
+            }
+            .three-column {
+                width:100%;
+                @include flexbox;
+                @include align-items(center);
+                @include align-content(flex-start);
+                @include justify-content(flex-start);
+                @include flex-direction(row, horizontal);
+            }
+            .input__text {
+                width:100%;
+                max-height:44px;
+            }
+            .w490 {
+                width:60%;
+                flex:0 0 60%;
+                max-width:60%;
+                @include flexbox;
+                
+                @include responsive(sm) {
+                    width:60%;
+                    flex:0 0 60%;
+                    max-width:60%;
+                }
+            }
+            .w85 {
+                width:20%;
+                flex:0 0 20%;
+                max-width:20%;
+                @include flexbox;
+                padding-left:10px;
+                
+                @include responsive(sm) {
+                    width:20%;
+                    flex:0 0 20%;
+                    max-width:20%;
+                    padding-left:15px;
+                }
+            }
+            
+            .w450, .w70 {
+                .input__text {
+                    width:100%;
+                    max-height:44px;
+                }
+            }
+        }
+    
+        .c-Subscribe__Subscription {
+            .form-group {
+                @include responsive(sm) {
+                    @include align-items(flex-start);
+                }
+            }
+        }
+    }
+}
+
+/* End page head style */

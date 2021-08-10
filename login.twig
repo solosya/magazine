@@ -1,0 +1,83 @@
+{{ set(this, 'title', 'Login / Signup') }}
+{% set networkData   = _Network.getNetworkData() %}
+
+{# {% if not _User.isGuest() %}
+    {% set redir = _Page.setHttpRedirects(
+        {
+            '|^/.*|': networkData.defaultBlogUrl,
+            
+        }, false) 
+    %} 
+{% endif %} #}
+
+
+
+<section class="container u-margin-top-100 u-margin-bottom-100">
+    <div class="row u-flex-center">
+        <div class="col-6">
+            <h1 class="u-margin-bottom-10"> Sign in</h1>
+            <form name="loginForm" id="loginForm" class="login-form active" action="javascript:void(0);" method="post" accept-charset="UTF-8" autocomplete="off"> 
+                <input id="loginName" class="" type="text" name="username" placeholder="Email address" value="" /> 
+                <input id="loginPass" class="" type="password" name="password" placeholder="Password" value="" /> 
+                <div class="remember"> 
+                    <p class="layout u-hide" data-layout="forgot" class="">Forgot password</p> 
+                </div> 
+                
+                <div class="js-login-error active u-hide"> 
+                    <div class="login-form__error_text">Invalid Email or Password</div> 
+                </div> 
+                
+                <button id="signinTwig" type="submit" class="c-button c-button--rounded c-button--blue signin">SIGN IN</button> 
+                
+                <p class="u-no-margin u-margin-top-15 login-form-faq u-hide">Trouble signing in? <a class="login-form-faq__link" href="'+_appJsConfig.appHostName +'/faq" target="_blank">Read our FAQ</a></p> 
+                <div class="reset"> 
+                    <p class="layout u-hide" data-layout="forgot" class="">Set my password</p> 
+                </div> 
+                
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    // main script is defered so event listener makes sure
+    // defered script is loaded before this runs
+    document.addEventListener("DOMContentLoaded", function(event) {
+        var redirect = "";
+
+        var articleUrl = decodeURIComponent(window.location.search);
+        if ( articleUrl.indexOf("?url=") === 0) {
+            var redirect = "/" + articleUrl.substring(5);
+        }
+
+        $('#signinTwig').on('click', function(e) {
+
+            var $elem = $(e.target);
+            $('.js-login-error').addClass('u-hide');
+            if ($elem.hasClass('signin')) {
+                $elem.text('').addClass('spinner');
+                e.preventDefault();
+                var formData = {};
+
+                $.each($('#loginForm').serializeArray(), function () {
+                    formData[this.name] = this.value.trim();
+                });
+
+                // rememberMe sets flag to store login for 30 days in cookie
+                formData['rememberMe'] = 1;
+                Acme.server.create('/api/auth/login', formData).done(function(r) {
+                    if (r.success === 1) {
+                        window.location.replace(_appJsConfig.appHostName + redirect); 
+                    } else {
+                        $elem.text("Sign in")
+                            .removeClass('spinner');
+                        $('.message').removeClass('hide');
+                        $('.js-login-error').removeClass('u-hide');
+                    }
+                }).fail(function(r) { console.log(r);});
+            }
+        });
+
+    });
+
+</script>

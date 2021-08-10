@@ -1,0 +1,22 @@
+.c-error {
+
+    background-color: $offwhite;
+    text-align: center;
+    height: 550px;
+    padding-top:60px;
+
+    &__title {
+        color: $blackred;
+        @include font-size(22);
+        font-weight: $weightBold;
+    }
+
+    &__message {
+        @include font-size(13);
+        margin-top: 23px;
+    }
+    &__button {
+        margin-top: 85px;
+    }
+
+}

@@ -1,0 +1,86 @@
+
+{% set limit = 3 %}
+{% set articles = _Search.searchArticles({'limit': limit, 'offset': 0, 'search': search, 'sortBy': 'published'}) %}
+{% set config   = _Network.getThemeConfig() %}
+
+
+{% set firstCount = articles | length %}
+
+{% set networkData = _Network.getNetworkData() %}
+
+
+
+<!-- used to index each article as we loop over throughout the template -->
+{% set articleCount = 0 %}
+
+<main id="main" class="o-body-container o-body-container-md searchPage u-margin-top-60" role="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-7 j-article-container">
+                <div class="c-search">
+                    <div class="c-search__head">
+                        {% set resultString = firstCount < 2 ? 'result' : 'results' %}
+                        Showing <span>{{firstCount}}</span>  {{resultString}} for '<span class="c-search__name">{{search | raw}}</span>'
+                    </div>
+
+                    <div id="results" style="min-height:600px;">
+                    {% for article in articles %}
+
+                        {{this.render('partials/_single-article.twig', {
+                            article: article, 
+                            containerClass: "card-5-mobile card-5-tablet card-5-desktop"
+                        }) | raw}}
+
+                    {% endfor %}
+                    </div>
+    
+
+                    {% if articles|length >= limit %}
+                        <section class="">
+                            <div class="row">
+                                {{ this.render('partials/ajaxarticles_new.twig', {
+                                    name            : "search-load",
+                                    label           : "more",
+                                    buttonClass     : "",
+                                }) | raw }}
+                            </div>
+                        </section>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <div class="col-12 offset-md-1 col-md-4">
+                <div class="o-body-container__right-layout j-article-sidebar">
+                    {% if config['inventory']['adSpace']['side-fix'][0] is defined %}
+                        <div class="j-adslot" id="{{config['inventory']['adSpace']['side-fix'][0]}}" data-adshape="side-fix"></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main><!-- .site-main -->
+
+
+
+<script>
+    // main script is defered so event listener makes sure
+    // defered script is loaded before this runs
+    document.addEventListener("DOMContentLoaded", function(event) {
+        
+        Acme.loadMore = new Acme.View.articleFeed({
+            model           : new Card(),
+            container       : 'results',
+            infinite        : true,
+            limit           : {{limit}},
+            loadtype        : 'api/search',
+            searchterm      : "{{search}}",
+            name            : 'search-load', //name of the search button
+            card_class      : 'card-5-mobile card-5-tablet card-5-desktop'
+        });
+    });
+</script>
+

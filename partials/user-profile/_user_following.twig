@@ -1,0 +1,62 @@
+<section>
+    <div class="row">
+        <div class="col-sm-9 section-header">
+            <div class="hk">
+                <h2>Following</h2>
+                <p></p>
+            </div>
+        </div>
+
+        <div class="tabbable tabbable-custom">
+            <ul class="nav nav-tabs">
+                <li><a href="#FollowingWriters" data-toggle="tab">Writers</a></li>
+                <li class="active"><a href="#FollowingBlogs" data-toggle="tab">Blogs</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="FollowingBlogs">
+                    <div class="portlet-body">
+                        <ul class="profile-list">
+                            {% if myBlogs | length > 0 %}
+                                {% for following in myBlogs %}
+                                    <li>
+                                        <span>
+                                            <span class="fs16">{{Html.encode(following.blog['title'])}}</span>
+                                            <span class="email-spacer">{{following.blog['url']}}</span>
+                                        </span>
+                                    </li>
+                                    {% endfor %}
+                            {% else %}
+                                <li class="no-data">User is not following any blogs.</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="FollowingWriters">
+                    <div class="portlet-body">
+                        <ul class="profile-list">
+                            {% if myFollowings | length > 0 %}
+                                {% for following in myFollowings %}
+                                    <li>
+                                        <span>
+                                            {% set followingUserName = following.following['username'] %}
+                                            <a class="email-spacer" href="{{_AppHelper.getUserProfileUrl(followingUserName)}}">{{Html.encode(following.following['name'])}}</a>
+                                        </span>
+                                    </li>
+                                    {% endfor %}
+                            {% else %}
+                                <li class="no-data">User is not following any writers.</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# <div class="daily-ten clearfix">
+    <header class="sub-header">Following</header>
+    
+</div> #}

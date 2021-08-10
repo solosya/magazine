@@ -1,0 +1,65 @@
+
+
+{% for parentItem in menu %}
+    {% set activeClass = (parentItem.link == _AppHelper.getServerUrl()) ? 'active' : ''%}
+    {% set externalClass = (parentItem.isExternal) ? 'external-link' : '' %}
+    {% set children = parentItem.children is defined and parentItem.children | length > 0  %}
+
+    <li class="dropdown">
+        <a  class="{{activeClass}} {{externalClass}} "
+            href="{{parentItem.link | raw}}"
+            {% if parentItem.target != "" %} 
+                target="{{parentItem.target}}"
+            {% endif %} 
+        >
+            {% if parentItem.label != "" %}
+                {{parentItem.label}}
+            {% elseif parentItem.blogTitle != "" %}
+                {{parentItem.blogTitle}}
+            {% elseif parentItem.pageTitle != "" %}
+                {{parentItem.pageTitle}}
+            {% endif %}
+
+        </a>
+    
+
+        {% if children %}
+
+            <div class="list-arrow-container">
+                <div class="list-arrow"><span class="o-arrow"></span></div>
+            </div>
+
+
+            <ul class="custom-menu">
+                {% for childItem in parentItem.children %}
+                    {% set externalClass = (childItem.isExternal) ? 'external-link' : '' %}
+                    {% set activeClass = (childItem.link == _AppHelper.getServerUrl()) ? 'active' : ''%}
+                    {% set subChildren = childItem.children is defined and childItem.children | length > 0 %}
+
+                    <li class="{% if subChildren %} sub-dropdown {% endif %}">
+                        <a class="{{activeClass}} {{externalClass}} two" href="{{childItem.link |raw}}" {% if childItem.target != "" %}target="{{childItem.target}}"{% endif %}>
+                            {{ ((childItem.label is empty) ? ((childItem.pageTitle is empty) ? childItem.blogTitle : childItem.pageTitle) : childItem.label)}}
+                        </a>
+                    
+                        {% if subChildren %}  
+                            <div class="subList-arrow-container">
+                                <div class="list-arrow"><span class="o-arrow"></span></div>
+                            </div>
+                            <ul class="sub-custom-menu">
+                                {% for subChildItems in childItem.children %}
+                                    {% set subExternalClass = (subChildItems.isExternal) ? 'external-link' : '' %}
+                                    {% set subActiveClass = (subChildItems.link == _AppHelper.getServerUrl()) ? 'active' : ''%}
+                                    <li>
+                                        <a {% if subChildItems.isExternal %} target="_blank" {% endif %} class="{{subActiveClass}} {{subExternalClass}} two" href="{{subChildItems.link |raw}}" {% if subChildItems.target != "" %}target="{{subChildItems.target}}"{% endif %}>
+                                            {{ ((subChildItems.label is empty) ? ((subChildItems.pageTitle is empty) ? subChildItems.blogTitle : subChildItems.pageTitle) : subChildItems.label)}}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </li>
+{% endfor %}

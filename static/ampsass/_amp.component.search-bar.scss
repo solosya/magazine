@@ -1,0 +1,85 @@
+.c-search-bar {
+    // position: absolute;
+    background: $white;
+    @include calc(width, '100% - 0px');
+    height: 50px;
+    @include flexbox();
+    // @include justify-content(flex-end);
+    @include align-items(center);
+    left: auto;
+
+    transition: all 0.5s ease;
+
+    &-1,&-2{
+        z-index: 99;
+        height: 50px;
+        padding: 5px;
+        box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.15);
+    }
+
+    &__open {
+        margin-top:0;
+    }
+
+    &__form {
+        display:flex;
+        margin-top:5px;
+        margin-bottom:5px;
+        padding: 0 15px;
+        width:100%;
+    }
+    &__submit {
+        border:none;
+        background-color:red;
+        background-image: url('../icons/search.svg');
+        background-repeat: no-repeat;
+        background-size:contain;
+        width:24px;
+        height: 35px;
+        margin-top:3px;
+        margin-right:5px;
+        background-position-y: center;
+    }
+
+    &__close {
+        height:20px;
+        width:20px;
+        position: relative;
+        top: 10px;
+        margin-left: 25px;
+        &:hover {
+            cursor:pointer;
+        }
+        &-1,&-2{
+            top: 8px;
+            margin-right: 10px;
+        }
+    }
+
+
+    &__input {
+        font-family: var(--main-font);
+
+        width: 100%;
+        @include font-size(20);
+        border-radius:0;
+        border: none;
+        //border-bottom: 1px solid $offwhite;
+        padding: 0;
+        height: 40px;
+        &:focus {
+            outline: none;
+        }
+    }
+    &__button{
+        min-width: 70px;
+        // margin-right: 15px;
+    }
+    &__icon{
+        >svg{
+            height: 20px;
+            margin-top: 10px;
+            margin-right: 5px;
+        }
+    }
+}

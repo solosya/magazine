@@ -1,0 +1,19 @@
+{{ set(this, 'title', "Thank You") }}
+{% set config       = _Network.getThemeConfig() %}
+<div class="login-page">
+    <div class="container">
+        <div class="tab-content">
+            <div class="row">
+                <div class="col-12 col-lg-7 u-margin-top-50 u-margin-bottom-60" style="min-height:500px;">
+                    <h4 class="helper-text">Success! Your password has been set. </h4>
+                    <a href="{{networkData.defaultBlogUrl}}/" class="c-button c-button--rounded c-button--blue u-margin-top-30 u-color--white">Home</a>
+                </div>
+                {# <div class="col-12 offset-lg-1 col-lg-4">
+                    {% if config['inventory']['adSpace']['side-fix'][0] is defined %}
+                        <div class="j-adslot" id="{{config['inventory']['adSpace']['side-fix'][0]}}" data-adshape="side-fix"></div>
+                    {% endif %}
+                </div> #}
+            </div>
+        </div>
+    </div>
+</div>

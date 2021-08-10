@@ -1,0 +1,129 @@
+/* Begin page head style */
+.c-placelisting {
+   padding-right:0%;
+   @include padding-bottom(60);
+    & .c-formnotice {
+        @include padding-bottom(27);
+    }
+    &__paydiscription {
+        @include font-size(15);
+        color:$greyish;
+        line-height: 1.47; 
+        font-weight:$weightRegular;
+        @include padding-bottom(25);
+    }
+
+    &__cost {
+        margin-bottom:7px;
+        font-weight:$weightMedium;
+
+    }
+
+
+    @include responsive(md) {
+        padding-right:10%;  
+    }
+   
+}
+.c-selectedition {
+    $this: &;
+    @include flexbox();
+    @include flex-direction (column, vertical);
+    
+    border-top:1px $border solid;
+    border-bottom:1px $border solid;
+    @include padding(9 0);
+    @include margin-bottom(14);
+    &__list {
+        width:$viewportSize;
+        @include padding(26 10);
+        text-align: center;
+        border-left:none;
+        border-top:1px $border solid;
+        &-title {
+            @include font-size(22);  
+            color:$greyish;
+            @include margin-bottom(15);
+            span { 
+               display: block;
+                color: $black;
+                @include font-size(15);  
+                font-weight:$weightMedium;
+                @include padding-top(6);
+            }
+        }
+        &-deadline {
+            @include font-size(15);  
+            color:$greyish; 
+            font-style: italic;
+            line-height: 1.47;
+            @include padding-bottom(12);
+        }
+
+        &:first-child {
+            border:none;
+        }
+    }
+    @include responsive(sm) {
+        @include flex-direction (row, horizontal);
+        #{$this}__list {
+            width: 50%;
+            border-left:1px $border solid;
+            border-top:none;
+            &:first-child {
+                border-left:none;
+            }
+        }
+    }
+}
+
+.c-selectissuedate {
+    .button-set {
+        border-top:1px $border solid; 
+        @include padding(20 0);
+        &:last-child {
+            border-bottom:1px $border solid;   
+        }
+    }
+}
+
+// .c-viewprice {
+//     @include font-size(15);
+//     color:$black;
+//     line-height: 1.47;
+//     @include padding-right(120);
+//     span {
+//         display: block;
+//         @include margin-bottom(11);
+//         @include font-size(16);
+//         font-weight:$weightMedium;
+//     }
+
+// }
+// .c-approximatecost {
+//     @include flexbox();
+//     @include align-items (center);
+//     &__content {
+//         @include font-size(15);
+//         color:$greyish;
+//         line-height: 1.47;
+//         @include padding-left(15);
+//     }
+// }
+
+
+.c-formrequirement {
+    @include font-size(12);
+
+    color:$greyish;
+    &__head {
+        line-height: 1.5;
+        font-weight: $weightBold;
+    }
+    &__list {
+        li {
+            font-weight: $weightRegular; 
+            line-height: 1.5;
+        }
+    }
+}

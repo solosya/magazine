@@ -1,0 +1,81 @@
+
+{% set pinTitle = 'Pin Article' %}
+{% set pinTxt   = 'Pin' %}
+{% set pinClass = '' %}
+{% set isPinned = 0 %}
+{% set editSocial = '' %}
+
+{% if article.isPinned == 1 %}
+    {% set isPinned = 1 %}
+    {% set pinTitle = 'Un-Pin Article' %}
+    {% set pinTxt   = 'Un-Pin' %}
+    {% set pinClass = 'selected' %}
+{% endif %}
+
+{% set type = (type == 'article') ? 0 : 1 %}
+
+{% if type == 0 %}
+    {% set id   =  article.articleId %}
+    {% set guid =  article.guid %}
+
+{% else %}
+    {% set id   =  article.socialId %}
+    {% set guid =  article.social.guid %}
+    {% set editSocial = 'j-editSocialPost' %}
+{% endif %}
+
+
+<div class="btn_overlay articleMenu">
+    
+    {# HIDE BUTTON #}
+    <button title           = "Hide" 
+            data-guid       = "{{guid}}" 
+            class           = "btnhide social-tooltip HideBlogArticle" 
+            type            = "button" 
+            data-social     = "{{type}}">
+        <i class            = "fa fa-eye-slash"></i><span class="u-display-none">Hide</span>
+    </button>
+
+
+
+
+    {# EDIT BUTTON #}
+    <button 
+            {% if type == 1 %}
+                data-url    = "/admin/social-funnel/update-social?guid={{article.social.blog['guid']}}&socialguid={{guid}}"
+            {% else %}
+                onclick     = "window.open('{{article.editUrl}}', '_blank'); return false;" 
+            {% endif %}
+
+            title           = "Edit" 
+            class           = "btnhide social-tooltip {{editSocial}}" 
+            type            = "button" >
+
+        <i class ="fa fa-edit"></i><span class="u-display-none">Edit</span>
+    </button>
+    
+ 
+
+
+    {# PIN BUTTON #}
+    <button data-position   = "{{position}}" 
+            data-social     = "{{type}}" 
+            data-id         = "{{id}}" 
+            title           = "{{pinTitle}}" 
+            class           = "btnhide social-tooltip PinArticleBtn {{pinClass}}" 
+            type            = "button" 
+            data-status     = "{{isPinned}}">
+        <i class            = "fa fa-thumb-tack"></i><span class="u-display-none">{{pinTxt}}</span>
+    </button>
+
+
+    {# Live BUTTON #}
+    {# <button data-id         = "{{id}}" 
+            title           = "Live edit" 
+            class           = "btnhide social-tooltip liveArticleBtn {{pinClass}}" 
+            type            = "button">
+        <i class            = "fa fa-pencil"></i><span class="u-display-none">Live edit</span>
+    </button> #}
+
+
+</div>

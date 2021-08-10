@@ -1,0 +1,16 @@
+{% set message = "PROFILE UPDATED SUCCESFULLY" %}
+
+{% for key,message in _AppHelper.getFlashMessages() %}
+    
+    {% set textStyle = "--error" %}
+    {% if key == 'success'%}
+        {% set textStyle = "--success" %}
+    {% endif %}
+
+    <div class="profile-message profile-message{{textStyle}}" role="alert">
+        <a id="message-close" class="profile-message__close" href="#"></a>
+        <p class="profile-message__text">{{message | raw }}</p>
+    </div>
+
+
+{% endfor %}

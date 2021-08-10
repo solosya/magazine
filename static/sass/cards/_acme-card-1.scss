@@ -1,0 +1,191 @@
+@mixin acme-card-1-base() {
+    background: $white;
+
+    .acme-c-cards-view {
+        @include flex-direction(row, horizontal);
+        @include flex-height(162px);
+        
+        &__media {
+            @include flex-width(143px);
+            img {
+                height:100%;
+            }
+        }   
+
+
+        &__container {
+            @include flexbox();
+            @include flex-direction(column, vertical);
+            padding: 15px 10px 15px 20px;
+        }
+
+        &__category {
+            @include font-size(11);
+            margin-bottom: 5px;
+            order: 1;
+            flex-grow:0;
+            margin-top: 15px;
+        }
+
+        &__heading {
+            @include font-size(18);
+            @include flex-height(81px);
+            order: 2;
+        }
+        &__description {
+            display: none;
+            margin-top: 5px;
+            order: 3;
+            // @include flex-height(40px);
+        }
+
+        &__author {
+            display:none;
+            // order: 2;
+            // margin-bottom: 20px;
+        }
+        &__time {
+            @include font-size(15);
+            font-weight: $weightMedium;
+            display:none;
+        }
+
+        &.video {
+            .c-cards-view__media .video-icon {
+                @include size(40px);
+            }
+        }
+
+        &.without-image {
+            .acme-c-cards-view {
+                &__container {
+                    width: 100%;
+                    padding: 15px 15px 15px 20px;
+                }
+
+                &__category {
+                    margin-bottom:8px;
+                }
+
+                &__description {
+                    margin-bottom: 15px;
+                    display: block;
+                    @include flex-height(50px);
+                    overflow: hidden;
+                }
+                &__heading{
+                    @include flex-height(54px);
+                }
+
+                &__author {
+                    display:none;
+                    // margin-bottom:10px;
+                }    
+
+            }
+        }
+    }
+}
+
+.acme-card-1-mobile {
+    @media #{$mobile} {
+        @include acme-card-1-base();
+        @include card-name("acme 1 mobile");
+        .acme-c-cards-view {
+            height: 162px;
+        }
+    }
+}
+
+
+.acme-card-1-tablet {
+    @media #{$tablet} {
+        @include card-name("acme 1 tablet");
+        @include acme-card-1-base();
+
+        .acme-c-cards-view {
+
+            &__media {
+                @include flex-width(167px);
+            }   
+        }
+
+    }
+}
+
+.acme-card-1-desktop {
+    @media #{$desktop-up} {
+        @include card-name("acme 1 desktop");
+        @include acme-card-1-base();
+
+        
+        .acme-c-cards-view {
+            @include flex-height(280px);
+
+            @include flex-direction(column, vertical);
+
+
+            &__container {
+                order: 1;
+                min-height: 133px;
+            }
+            &__media {
+                order: 2;
+                @include flex-height(135px);
+                min-width:100%;
+                max-width:100%;
+                // @include flex-width(167px);
+            }   
+            &__heading {
+                @include font-size(22);
+                @include flex-height(66px);
+            }
+
+            &__description {
+                    display:none;
+            }
+
+            &__author {
+                display:none;
+            }
+
+
+            &.without-image {
+                .acme-c-cards-view {
+                    
+                    &__heading {
+                        margin-bottom:20px;
+                    }
+        
+
+                    &__description {
+                        display:block;
+                        @include flex-height(90px);
+                    }
+        
+                    &__author {
+                        display:none;
+                    }
+        
+                }
+            }
+    
+
+        }
+
+    }
+    @media #{$desktop-lg} {
+        .acme-c-cards-view {
+            @include flex-height(325px);
+
+            &__media {
+                @include flex-height(192px);
+               
+            }   
+        }
+    }
+}
+
+
+
+

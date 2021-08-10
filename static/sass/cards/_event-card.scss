@@ -1,0 +1,156 @@
+@mixin base-event-card {
+    .c-eventcards-view {
+        position: relative;
+        @include flexbox();
+        @include margin-bottom(40);
+        @include calc(height, '100% - 40px');
+    
+
+        &__date {
+            display:none;
+        }
+
+        &__media {
+            width: 254px;
+            height: 175px;
+            @include margin-bottom(0);
+            overflow: hidden;
+        }
+    
+        &__container {
+            @include margin-left(20);
+            @include padding-right(0);
+            @include calc(width, '100% - 254px');
+        }
+    
+        &__info {
+            @include padding-right(80);
+            @include calc(height, '100% - 45px');
+        }
+    
+        &__category {
+            color: $mainColor;
+            font-weight: $weightMedium;
+            @include font-size(12);
+            letter-spacing: 0.87px;
+            line-height: 1.25;
+            text-transform: uppercase;
+            @include margin-bottom(8);
+        }
+    
+        &__heading {
+            color: $black;
+            @include font-size(20);
+            font-weight: $weightRegular;
+            line-height: 1.35;
+            overflow: hidden;
+            @include margin-bottom(5);
+        }
+        &__description {
+            display:none;
+        }
+    
+        &__day {
+            color: $mainColor;
+            font-weight: $weightBold;
+            @include font-size(14);
+            line-height: 1.4;
+            @include margin-bottom(2);
+            font-style: italic;
+        }
+    
+        &__time {
+            color: $greyish;
+            font-weight: $weightRegular;
+            @include font-size(13);
+            line-height: 1.5;
+            @include margin-bottom(2);
+            font-style: italic;
+        }
+
+        &__time-venue {
+            display:none;
+        }
+    
+        &__author {
+            @include margin-top(12);
+            border-top: 1px solid rgba($greyish, 0.3);
+            @include flexbox();
+            @include justify-content(space-between);
+            @include align-items(center);
+            @include padding(7 0 8);
+    
+            &__name {
+                color: $greyish;
+                font-style: italic;
+                font-family: $primaryFont;
+                font-weight: $weightRegular;
+                @include font-size(13);
+                line-height: 1.5;
+                position: absolute;
+                margin-left: 30px;
+            }
+        }
+
+        &__icon{
+            &--pin{
+                float: left;
+                >svg{
+                    height: 27px;
+                }
+            }
+        }
+    
+        &.u-without-image {
+            background-color: rgba($white, 1);
+    
+            .c-eventcards-view {
+                &__media {
+                    display: none;
+                }
+    
+                &__container {
+                    @include margin-left(0);
+                    @include padding-right(10);
+                    @include calc(width, '100% - 0px');
+                }
+    
+                &__heading {
+                    min-height: inherit;
+                    max-height: 100px;
+                }
+            }
+        }
+    
+    
+        @media (max-width:600px) {
+            .c-eventcards-view {
+                &__media {
+                    width: 120px;
+                    height: 180px;
+                }
+    
+                &__container {
+                    @include margin-left(20);
+                    @include padding-right(0);
+                    @include calc(width, '100% - 120px');
+                }
+            }
+        }
+    
+        @media screen and (min-width:601px) and (max-width:767px) {
+            .c-eventcards-view {
+                &__media {
+                    width: 150px;
+                    height: 180px;
+                }
+    
+                &__container {
+                    @include margin-left(20);
+                    @include padding-right(0);
+                    @include calc(width, '100% - 150px');
+                }
+            }
+        }
+    }
+}

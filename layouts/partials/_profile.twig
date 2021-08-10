@@ -1,0 +1,70 @@
+{% if not _User.isGuest() %}
+
+    {% set user = _User.getUser() %}
+
+    <div class="content">
+
+
+      <a href="javscript:void(0)" class="user__login" id="profile">
+        {{ (user.firstname ~" "~ user.lastname) | truncate(15) | title}}
+      </a>
+
+      <div id="header__menu">
+        <div class="profile__menu">
+             {% if user.profileMedia.id != '' %}
+                    {% set profileImg = _Media.getMediaUrl(user.profileMedia, 80, 80, {radius: 'max', gravity: 'face', 'crop': 'thumb', type: 'user'}) %}
+                {% else %}
+                    {% set profileImg = network.templatePath ~ "/static/images/icons/profile.svg" %}
+                {% endif %}
+          <div class="profile__menu-image" style="background-image: url({{ profileImg }})"></div>
+          <div class="profile__menu-content">
+            <div class="profile__menu-name">{{ (user.firstname ~" "~ user.lastname) | truncate(15) | title}}</div>
+            <div class="profile__menu-email">{{user.email | truncate(23)}}</div>
+            <a href="{{_AppHelper.buildUrl('user/my-news')}}" class="profile__menu-button">My News</a>
+          </div>
+          <ul class="profile__menu-navigation">
+              {% if _User.isAdminUser() %}
+                  <li><a class="profile__menu-navigation-link" href="https://{{network.defaultDomain['domain']}}/admin" target="_blank">Admin</a></li>
+              {% endif %}
+              <li><a class="profile__menu-navigation-link" href="{{blogUrl}}/profile/{{user.username}}">View Profile</a></li>
+              <li><a class="profile__menu-navigation-link" href="https://{{network.defaultDomain['domain']}}/user/edit-profile">Settings</a></li>
+              <li><a class="profile__menu-navigation-link" href="{{_AppHelper.getLogoffUrl()}}">Sign Out</a></li>
+          </ul>
+        </div>
+      </div>
+
+
+      <div class="menu">
+          <ul>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Contact</a></li>
+          </ul>
+      </div>
+      <div class="social-links">
+          <a href="#" class="icon facebook"><span class="sr-only">Facebook</span></a>
+          <a href="#" class="icon twitter"><span class="sr-only">Twitter</span></a>
+          <a href="#" class="icon tumblr"><span class="sr-only">Tumblr</span></a>
+          <a href="#" class="icon instagram"><span class="sr-only">Instagram</span></a>
+        </div>
+      </div>
+
+{% else %}      
+
+      <div class="content">
+
+
+        <div class="menu">
+            <ul>
+                <li><a href="{{_AppHelper.getLoginUrl()}}">Login</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+        <div class="social-links">
+            <a href="#" class="icon facebook"><span class="sr-only">Facebook</span></a>
+            <a href="#" class="icon twitter"><span class="sr-only">Twitter</span></a>
+            <a href="#" class="icon tumblr"><span class="sr-only">Tumblr</span></a>
+            <a href="#" class="icon instagram"><span class="sr-only">Instagram</span></a>
+          </div>
+        </div>
+{% endif %}      

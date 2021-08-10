@@ -1,0 +1,147 @@
+@mixin card-3-base() {
+    @include card-name("C3 mobile");
+
+    .c-cards-view {
+        @include flex-direction(column, vertical);
+        min-height: 326px;
+
+        &__media {
+            width: 98px;
+            height: 130px;
+            &--video {
+                &:before {
+                    @include size(55px);
+                }
+            }
+        }
+
+        &__container {
+            @include calc(width, '100% - 112px');
+            margin-left: 14px;
+        }
+
+        &__info {
+            @include calc(height, '100% - 40px');
+
+        }
+        &__heading {
+            @include flex-height(66px);
+        }
+
+
+        &.without-image {
+            .c-cards-view__container {
+                width: 100%;
+                margin-left: 0px;
+                padding: 0px 20px 0;
+            }
+
+            .c-cards-view__category {
+                margin-top: 36px;
+                margin-bottom: 24px;
+            }
+
+
+            .c-cards-view__heading {
+                height: 55px;
+            }
+
+            .c-cards-view__description {
+                margin-bottom: 15px;
+                display: block;
+                height:100px;
+                max-height: 100px;
+                overflow: hidden;
+            }
+            .c-cards-view__author {
+                margin-top:55px;
+            }
+
+        }
+
+        &.social {
+            .social-icon {
+                @include size(30px);
+
+                &:before {
+                    @include font-size(13);
+                    line-height: 32px;
+                }
+            }
+
+            &.without-image {
+                .c-cards-view__container {
+                    padding-top: 40px;
+                }
+            }
+        }
+
+    }
+    &.design2 {
+        .c-cards-view {
+            &__heading {
+                @include font-size(18);
+                line-height: 1.3;
+                font-weight: $weightBold;
+            }
+            &__additional-info {
+                @include flexbox();
+            }
+
+            &.without-image {
+                .c-cards-view__container {
+                
+                }
+                .c-cards-view__heading {
+                    max-height:none;
+                    height:70px;
+
+                }
+                .c-cards-view__description {
+                    max-height:none;
+                    height:160px;
+                }
+
+            }
+    
+
+        }
+    }
+}
+
+.card-3-mobile {
+    @media #{$mobile} {
+        @include card-3-base();
+    }
+}
+
+
+.card-3-tablet {
+
+    @media #{$tablet} {
+        
+        @include card-3-base();
+        @include card-name("C3 tablet");
+        // .c-cards-view {
+
+        //     &__container {
+        //         width: auto;
+        //     margin-left: 14px;
+        //     }
+        // }
+    }
+}
+
+
+.card-3-desktop {
+
+    @media #{$desktop-up} {
+
+        @include card-3-base();
+        @include card-name("C3 desktop");
+    }
+}
+
+
+
+

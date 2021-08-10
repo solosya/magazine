@@ -1,0 +1,59 @@
+//=================================
+// RESET
+//=================================
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+main, article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+button {
+    &:focus {
+        outline:none;
+    }
+}
+
+
+a {
+    color: #384362;
+    text-decoration: none;
+    outline: none;
+    -webkit-transition: color 0.4s, background-color 0.4s, border-color 0.4s;
+    transition: color 0.4s, background-color 0.4s, border-color 0.4s;
+    border: none;
+}
+
+a:hover, a:focus, a:active {
+    // color: #e25e6d;
+    text-decoration: none ;
+    -webkit-transition: color 0.4s, background-color 0.4s, border-color 0.4s;
+    transition: color 0.4s, background-color 0.4s, border-color 0.4s;
+    outline: none;
+}

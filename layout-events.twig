@@ -1,0 +1,123 @@
+{{ set(this, 'title', _Blog.getBlogTitle()) }}
+{% set networkData = _Network.getNetworkData() %}
+{% set blogInfo = _Blog.getBlog() %}
+
+
+{% set limit = 50 %}
+{% set date = date() %}
+{% set events = _Event.getEvents({"limit": limit, "showOnGoingOnly": 1}) %}
+{% set config       = _Network.getThemeConfig() %}
+
+
+{% set firstCount = events | length %}
+
+
+
+
+<!-- used to index each article as we loop over throughout the template -->
+{% set eventCount = _AppHelper.getApplicationEnv() == 'DEV' ? 0 : 0 %}
+{% set dev = _AppHelper.getApplicationEnv() == 'DEV' ? false : false %}
+
+
+    <main id="main" class="site-main" role="main">
+        <div class="container u-margin-top-60 u-margin-bottom-60">
+            <section class="row">
+                <div class="col-12">
+                    <div class="c-events__main">
+                        <div class="c-page-head c-page-head-xs">
+                            <div class="u-heading__large u-heading__large-xs u-pr--6 u-bg-white">{{this.title}}</div>
+                            {% if not _User.isGuest() %}
+                                <a href="{{networkData.defaultBlogUrl}}/event-form" class="c-page-head__link d-none d-md-block">Submit an event</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {# {% if not _User.isGuest() %} #}
+                        {# <a class="c-button c-button--rounded c-button--blue d-md-none u-margin-bottom-30" href="{{networkData.defaultBlogUrl}}/event-form">Submit an Event</a> #}
+                    {# {% endif %} #}
+                </div>
+                
+
+            </section>
+
+            {% set monthDivider = '' %}
+
+            <section class="middle">
+                <div class="row row-space maincards">
+                    <div class="col-12 col-lg-7">
+                        {% for i in 0..49 if events[eventCount] %}
+
+                            {% set eventMonth = _AppHelper.getDateTimeBasedOnTimezone(events[eventCount].startDate, 'F') %}
+                            {% if monthDivider != eventMonth %}
+                                <p class="c-events__head c-events__head-xs">{{ eventMonth }}</p>
+                                {% set monthDivider = eventMonth %}
+                            {% endif %}
+
+                            {{this.render('partials/_single-event.twig', {
+                                event: events[eventCount], 
+                                position: eventCount + 1, 
+                                imageSize: {width:300},
+                                containerClass: 'event-card-1__desktop event-card-1__tablet event-card-1__mobile',
+                            }) | raw}}
+                            {% set eventCount = (dev) ? eventCount : eventCount + 1 %}
+                        {% endfor %}
+                    </div>
+
+
+                    <div class="col-12 offset-lg-1 col-lg-4 d-md-none d-lg-block c-events">
+                        <div class="c-events-panel c-events-panel-xs">
+                            <h4 class="c-events-panel__head c-events-panel__head-xs">Upcoming Events</h4>
+                            <div class="c-events-panel__details">
+                                
+                                {% for i in 0..3 if events[i] %}
+
+                                    {{this.render('partials/_single-event-list.twig', {
+                                        event: events[i], 
+                                        imageSuppress: 'true',
+                                        containerClass: "event-card-2-mobile event-card-2-tablet event-card-2-desktop"
+                                    }) | raw}}
+                               
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                        <div class="">
+                            {% if config['inventory']['adSpace']['side-fix'][0] is defined %}
+                                <div class="j-adslot" id="{{config['inventory']['adSpace']['side-fix'][0]}}" data-adshape="side-fix"></div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </section>
+
+            <div class="col-lg-1 visible-lg-block"></div>            
+        </div>
+        <div class="j-keyword-cont" data-keywords="{{blogInfo.keywords}}"></div>
+    </main><!-- .site-main -->
+
+
+
+{# <script>
+    // main script is defered so event listener makes sure
+    // defered script is loaded before this runs
+    document.addEventListener("DOMContentLoaded", function() {
+
+
+        Acme.loadMore = new Acme.View.articleFeed({
+            model           : new Card(),
+            container       : 'loadmore',
+            infinite        : true,
+            label           : false,
+            limit           : 50,
+            offset          : 50,
+            name            : 'section-load', //name of the search button
+            card_class      : 'col-12 col-md-3 card-4-mobile card-2-tablet card-1-desktop card-2-desktop-lg',
+            non_pinned      : {{eventCount}}
+
+        });
+
+    });
+</script>
+ #}

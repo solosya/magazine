@@ -1,0 +1,111 @@
+/* Begin page head style */
+.c-pagination {
+    @include flexbox();
+    @include justify-content(space-between);
+    @include align-items(center);
+    position:relative;
+    @include margin-bottom(55);
+    
+    &:before {
+        display:none;
+    }
+    
+    &__lists {
+        margin:0;
+        padding:0;
+        list-style:none;
+        @include flexbox();
+        
+        > li {
+            @include margin-left(1);
+            
+            &:first-child {
+                @include margin-left(0);
+            }
+        }
+    }
+    
+    &__prev, &__next {
+        color:$greyish;
+        @include font-size(20);
+        @include padding(2 0);
+        &:hover, &.active {
+            color:$mainColor;
+        }
+    }
+    &__prev {
+        @include margin-right(10);
+    }
+    &__next {
+        @include margin-left(10);
+    }
+    
+    &__links {
+        display:block;
+        color:$greyish;
+        @include padding(2 8);
+        @include border-radius(5px);
+    }
+    
+    &__buttonwrap {
+        position:relative;
+        &:before {
+            top:0;
+            z-index:10;
+            left:-20px;
+            content:'';
+            width:30px;
+            height:100%;
+            position:absolute;
+            background-color:$white;
+        }
+    }
+    
+    &__button {
+        z-index:11;
+        color:$white;
+        position:relative;
+        background-color:$mainColor;
+        @include font-size(11);
+        line-height:1;
+        @include padding(7 15);
+        @include border-radius(20px);
+        text-transform:uppercase;
+        font-weight:$weightMedium;
+
+        &:hover, &:focus {
+            color:$white;
+            background-color:lightness($mainColor, 0.82);
+        }
+    }
+    
+    a.c-pagination__links {
+        @include padding(2 10);
+        &:hover, &.active {
+            color:$mainColor;
+            @include box-shadow(inset 0 0 3px 1px rgba($black ,0.1));
+        }
+    }
+
+    @include responsive(xs) {
+        @include margin-bottom(25);
+        
+        .c-pagination__button {
+            z-index:99;
+            @include font-size(13);
+            line-height: 1;
+            @include padding(12 20);
+
+            &:hover, &:focus {
+                color:$white;
+                background-color:lightness($mainColor, 0.82);
+            }
+        }
+    }
+
+    .u-heading__large {
+        line-height: 1;
+    }
+}
+
+/* End page head style */

@@ -1,0 +1,251 @@
+
+.weather-panel {
+	font-family: $font-family-sans-serif;
+    height: 100%;
+	display: flex;
+	flex-direction: row;
+    position:relative;
+    align-items: center;
+
+    @media #{$desktop-up}{
+        // padding-left: 20px;
+        // padding-right: 20px;
+    }
+
+    &__location {
+        margin:0;
+        font-family: $font-family-sans-serif;        
+        @include font-size(12);
+        @include margin-right(10);
+        line-height: 1.6rem;
+        text-transform: uppercase;
+        font-weight: normal;
+        white-space:nowrap;
+        &-1{
+            color: white;
+        }
+    }
+
+    &__date {
+        font-family: $font-family-sans-serif;
+        @include font-size(12);
+        font-weight: bold;
+    }
+
+    &__temperature {
+        font-family: $font-family-sans-serif;
+        color:$mainColor;
+        @include font-size(22);
+        font-weight: bold;
+        @include margin-right(10);
+        &-1{
+            color: white;
+        }
+    }
+    &__description {
+        color:$greyish;
+        font-style: italic;
+        font-family: $font-family-sans-serif;
+        @include font-size(11);
+        line-height: 1.6rem;
+        font-weight: normal;
+        @include margin-right(10);
+        &-1{
+            color: white;
+        }
+        @media #{$mobile}{
+            display:none;
+        }
+
+    }
+
+    &__wind {
+        font-family: $font-family-sans-serif;
+        color:color(darkgrey);
+        @include font-size(11);
+        font-weight: normal;
+        &-1{
+            color: white;
+        }
+    }
+
+    &__icon {
+        vertical-align:top;
+        margin: 0px;
+        margin-left: 0px;
+        padding-left: 6px;
+        margin-right:20px;
+        padding-right: 8px;
+        position: relative;
+        height: 26px !important;
+        width: 48px !important;
+        background-repeat: no-repeat;
+
+        @media #{$mobile}{
+            margin-right:0;
+        }
+
+        > .svg-fill {
+            width:100%;
+            height:100%;
+            stroke: $mainColor;
+            fill: #fff;
+        }
+        &-1{
+            > .svg-fill {
+                stroke: $white;
+    	        fill: $mainColor;
+            }
+        }
+    }
+
+    &__pulldown-icon {
+        width:8px;
+        height:8px;
+        position:relative;
+        color:white;
+        &:hover {
+            cursor: pointer;
+        }
+        @include transition(transform 0.2s ease-in);
+        
+        &--active {
+            transform: rotate(180deg);
+        }
+
+        transform: rotate(90deg);
+    }
+}
+
+
+.weather-dropdown {
+    position: absolute;
+    top:68px;
+    right:0;
+    width: 100%;
+    z-index: 999;
+    background: white;
+	display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 50px;
+    padding-top:0;
+    opacity:1;
+    @include transition(opacity 0.3s ease-out);
+
+    &-1,&-2{
+        box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.15);
+    }
+    &-2{
+        top: 35px;
+        right: -16px;
+        padding: 20px;
+        left: 20px;
+    }
+    &-1{
+        top: 27px;
+        left: 0px;
+    }
+
+    @media #{$mobile} {
+        top:105px;
+    }
+    @media #{$tablet} {
+        width: 330px;
+    }
+    @media #{$desktop} {
+        width: 335px;
+    }
+    @media #{$desktop-lg} {
+        width: 335px;
+    }
+
+
+
+    &__wind {
+        text-align:right;
+        @include font-size(11);
+        font-style:italic;
+        margin-bottom:40px;
+    }
+
+
+    &__container {
+        display:flex;
+        height: 44px;
+        border-bottom: 1px solid $offwhite;
+        align-items: center;
+    }
+    
+
+    &__day {
+        flex:2;
+        font-family: $font-family-sans-serif;
+        @include font-size(13);
+    }
+
+    &__icon {
+        flex:1;
+        vertical-align:top;
+        margin: 0px;
+        margin-left: 0px;
+        padding-left: 6px;
+        margin-right:8px;
+        position: relative;
+        height: 26px !important;
+        width: 48px !important;
+        background-repeat: no-repeat;
+
+        @media #{$mobile}{
+            margin-right:0;
+        }
+
+        > .svg-fill {
+            width:100%;
+            height:100%;
+            stroke: $mainColor;
+            fill: #fff;
+
+        }
+        &-1{
+            > .svg-fill {
+                stroke: $white;
+    	        fill: $mainColor;
+            }
+        }
+    }
+
+    &__temperature {
+        //flex:0;
+        font-family: $font-family-sans-serif;
+        color:$mainColor;
+        @include font-size(13);
+        font-weight: bold;
+        // @include margin-right(10);
+    }
+
+    &__description {
+        flex:1;
+        font-family: $font-family-sans-serif;
+        font-style: italic;
+        color:$greyish;
+        @include font-size(11);
+        line-height: 1.6rem;
+        font-weight: normal;
+        min-width: 70px;
+        text-align: right;
+
+        @media #{$mobile}{
+            display:none;
+        }
+    }
+}
+
+.hidden {
+    // display: none;
+    opacity:0;
+    top:-500px;
+
+}

@@ -1,0 +1,60 @@
+.signin-modal {
+    position:fixed;
+    top:0;
+    width:100%;
+    height:100%;
+    z-index:1001;
+    background: rgba(0,0,0,0.7);
+}
+
+.signin-modal__window {
+    margin: auto auto;
+    width:468px;
+    background:white;
+    padding:0 25px 20px 25px;
+    border-radius:3px;
+    text-align: center;
+    @media #{$media-ipadSmall} {
+        width:auto;
+    }
+}
+
+.signin-modal__container {
+    position:relative;
+    margin:auto;
+}
+
+.signin-modal__header {
+    // max-width:94%;
+    min-height: 30px;
+    margin-top: 10px;
+    padding-bottom:15px;
+    position:relative;
+    .popupVideo__headerlogo {
+        display: none;
+    }
+
+}
+.signin-modal__title {
+    @include font-size(22);
+    text-align:center;
+    font-weight: $weightRegular;
+    // margin-bottom:28px;
+}
+
+.signin-modal__close {
+    display:block;
+    position:absolute;
+    top: 8px;
+    right: 0;
+    height:20px;
+    width:20px;
+    background:url("../icons/cross-black.svg");
+    background-repeat:no-repeat;
+    cursor: pointer;
+
+}
+
+.signin-modal__content-window {
+}
+

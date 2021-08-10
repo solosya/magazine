@@ -1,0 +1,88 @@
+{{ set(this, 'title', 'My News') }}
+
+{% set limit = 30 %}
+{% set userPosts = _User.getUserFeed({limit: limit, offset: 0}) %}
+
+{{this.registerJs("UserArticlesController.load();")}}
+<div class="section section__local my-news">
+    <div class="">
+        <div class="section__header-container">
+            <div class="section__left">
+                <h3 class="sub-heading">My News</h3>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section__content">
+        {% if userPosts|length > 0 %}
+            <div class="row">
+                    {% if userPosts[0] is defined %}
+                            {{this.render('partials/_single-article.twig', {article: userPosts[0], containerClass: 'card-lg'}) | raw}}
+                    {% endif %}
+                </div>
+            <div class="row">
+                {% for i in 1..4 %}
+                    {% if userPosts[i] is defined %}
+                        {{this.render('partials/_single-article.twig', {article: userPosts[i], containerClass: 'col-sm-3 card-sm'}) | raw}}
+                    {% endif %}
+                {% endfor %}
+
+                {% for i in 5..8 %}
+                    {% if userPosts[i] is defined %}
+                        {{this.render('partials/_single-article.twig', {article: userPosts[i], containerClass: 'col-sm-3 card-sm'}) | raw}}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="row">
+                {% for i in 9..12 %}
+                    {% if userPosts[i] is defined %}
+                        {{this.render('partials/_single-article.twig', {article: userPosts[i], containerClass: 'col-sm-3 card-sm'}) | raw}}
+                    {% endif %}
+                {% endfor %}
+                {% for i in 13..16 %}
+                    {% if userPosts[i] is defined %}
+                        {{this.render('partials/_single-article.twig', {article: userPosts[i], containerClass: 'col-sm-3 card-sm'}) | raw}}
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="row">
+                {% for i in 17..20 %}
+                    {% if userPosts[i] is defined %}
+                        {{this.render('partials/_single-article.twig', {article: userPosts[i], containerClass: 'col-sm-3 card-sm'}) | raw}}
+                    {% endif %}
+                {% endfor %}
+
+                {% for i in 21..24 %}
+                    {% if userPosts[i] is defined %}
+                        {{this.render('partials/_single-article.twig', {article: userPosts[i], containerClass: 'col-sm-3 card-sm'}) | raw}}
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="row">
+                {% for i in 25..28 %}
+                    {% if userPosts[i] is defined %}
+                        {{this.render('partials/_single-article.twig', {article: userPosts[i], containerClass: 'col-sm-3 card-sm'}) | raw}}
+                    {% endif %}
+                {% endfor %}
+                {% for i in 29..32 %}
+                    {% if userPosts[i] is defined %}
+                        {{this.render('partials/_single-article.twig', {article: userPosts[i], containerClass: 'col-sm-3 card-sm'}) | raw}}
+                    {% endif %}
+                {% endfor %}      
+            </div>
+            {% if userPosts | length >= limit %}       
+                <div class="LoadMyArticles" data-page="1" ></div>
+                <a href="javascript:void(0)" class="section__link loadMoreMyArticles">Load more <i class="fa fa-refresh"></i></a>
+            {% endif %}     
+        {% else %}
+            <div class="row ">
+                <div class="col-md-12 col-xs-12">
+                    <p class="no-data text-center">To get a customised feed of content follow channels, authors or blogs in the network</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+

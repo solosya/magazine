@@ -1,0 +1,28 @@
+{% import "quotes.twig" as quotes %}
+
+{% set imageSize = "" %}
+{% if _User.isAdminUser() %}
+    {% set imageSize = "Width: " ~ params.imgWidth ~ " Height: " ~ params.imgHeight %}
+{% endif %}
+
+{% if params.hasMedia %}
+    <figure class="{{params.cardType}}c-cards-view__media {{params.videoClass}}" title="{{imageSize}}">
+        <amp-img width="{{params.imgWidth}}" height="{{params.imgHeight}}" class="img-fluid" src="{{params.image}}" layout="fill"></amp-img>
+    </figure>
+{% endif %}
+
+<div class="social-icon"></div>
+
+<div class="{{params.cardType}}c-cards-view__container">
+
+    <div class="{{params.cardType}}c-cards-view__category">{{params.category}}</div>
+    
+    <h2 class="{{params.cardType}}c-cards-view__heading js-c-cards-view-heading j-truncate j-headline">{{ params.title }}</h2>
+    
+    <p class="{{params.cardType}}c-cards-view__description js-c-cards-view-description j-truncate j-excerpt">{{ quotes.smarten(params.content | raw) }}</p>
+
+    <div class="{{params.cardType}}c-cards-view__author">
+        <div class="{{params.cardType}}c-cards-view__author-name">{{ params.author }}</div>
+        <div class="{{params.cardType}}c-cards-view__time">{{params.publishDate}}</div>
+    </div>
+</div>

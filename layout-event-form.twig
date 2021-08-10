@@ -1,0 +1,150 @@
+{{ set(this, 'title', _Blog.getBlogTitle()) }}
+
+{% set networkData = _Network.getNetworkData() %}
+{% set blogData    = _Blog.getBlog() %}
+{% set eventBlogId  = blogData.additionalInfo['publishto'] %}
+
+{% set limit = 10 %}
+
+{% set user = false %}
+
+{{this.registerJsFile("https://maps.googleapis.com/maps/api/js?key=AIzaSyCRILYoQMiSjf_1Q_DhL199ha5w410AOLU")}}
+
+
+{% set userScript = "" %}
+{% if not _User.isGuest %} 
+    {% set user = _User.getUser() %}
+    {% set userScript = "window.Acme.currentUser = '" ~ user.guid ~ "';" %}
+{% endif %} 
+
+{% set userArticlesArr = [] %}
+
+
+<!-- used to index each article as we loop over throughout the template -->
+{% set articleCount = 0 %}
+{% set dev = _AppHelper.getApplicationEnv() == 'DEV' ? true : false %}
+
+
+
+<main id="main" class="o-body-container o-body-container-md u-margin-top-60" role="main">
+        
+    <div class="c-submitevent">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-7 j-article-container">
+                <div class="c-submitevent-container">
+                    <div class="c-page-info">
+                    <div class="c-page-info__title">Submit an event</div>
+                    <div class="c-page-info__discription">
+                        <p>Optio ipidus imillenda perferum quas simoluptur. Nam etus aut laborate ventior am ad qui sam exceped minum quis imperumque parum, 
+                    si cusandam audigni hillaut re nihillo riasit eum neuarum si cusandam audigctat. </p>
+                    </div>
+                </div>
+
+
+
+                <div class="c-event-form">
+                    <div class="">
+                        <form action="#" method="post" autocomplete="off">
+                            <div class="row">
+
+                                {# NAME #}
+                                <div class="col-12 c-form__group u-margin-bottom-15">
+                                    <input id="event-name" class="c-form__input c-form__input--bordered articleExtendedData" name="event-name" placeholder="Name of event*" aria-required="true" type="text">
+                                    <div class="c-form__help-block"></div>
+                                </div>
+
+                                {# START DATE #}
+                                <div class="col-12 c-form__group u-margin-bottom-15 col-md-split col-lg-split">
+                                    <input type="text" class="c-form__input c-form__input--bordered articleExtendedData" name="start_date" id="start_date" value="" placeholder="Start date*">
+                                    <div class="c-form__help-block"></div>
+                                </div>
+
+                                {# END DATE #}
+                                <div class="col-12 c-form__group u-margin-bottom-15 col-md-split col-lg-split">
+                                    <input type="text" class="c-form__input c-form__input--bordered articleExtendedData" name="end_date" id="end_date" value="" placeholder="End date">
+                                    <div class="c-form__help-block"></div>
+                                </div>
+
+
+                                {# ADDRESS #}
+                                <div class="col-12 c-form__group u-margin-bottom-15">
+                                    <input id="address" class="c-form__input c-form__input--bordered articleExtendedData" name="address" placeholder="Address*" aria-required="true" type="text">
+                                    <div class="c-form__help-block"></div>
+                                </div>
+                                
+
+                                {# SUBURB #}
+                                <div class="col-12 col-md-split col-lg-split c-form__group u-margin-bottom-15">
+                                    <input id="suburb" class="c-form__input c-form__input--bordered " name="suburb" placeholder="Suburb" aria-required="true" type="text">
+                                    <div class="c-form__help-block"></div>
+                                </div>
+
+                                {# STATE #}
+                                <div class="col-12 col-md-split col-lg-split c-form__group u-margin-bottom-15">
+                                    <input id="state" class="c-form__input c-form__input--bordered articleExtendedData" name="state" placeholder="State*" aria-required="true" type="text">
+                                    <div class="c-form__help-block"></div>
+                                </div>
+
+
+                                {# CONTACT #}
+                                <div class="col-12 c-form__group u-margin-bottom-15">
+                                    <input id="contact-name" class="c-form__input c-form__input--bordered articleExtendedData" name="contactname" placeholder="Contact name" aria-required="true" type="text">
+                                    <div class="c-form__help-block"></div>
+                                </div>
+
+                                {# DESCRIPTION #}
+                                <div class="col-12 c-form__group u-margin-bottom-15">
+                                    <textarea id="description"  name="description" class="c-form__input c-form__input--bordered c-event-form_description articleExtendedData" placeholder="Event description*" aria-required="true" type="text"></textarea>
+                                    <div class="c-form__help-block"></div>
+                                </div>
+
+
+                                {# UPLOAD PHOTO #}
+                                <div class="col-12 c-form__group u-margin-bottom-15">
+                                    <div id="uploadFileBtn" data-imgcls="images" data-id="imageArray" class="c-upload-image u-margin-bottom-50">
+                                        <p class="c-upload-image__label" >Upload image </p>
+                                        <p class="c-upload-image__restrictions" >JPEG Maximum 5MB </p>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-3 col-lg-2 c-form__group u-margin-bottom-15">
+                                    <button type="submit" id="" class="c-button c-button--inline c-button--rounded c-button--blue-bordered" name="">Cancel</button>
+                                </div>
+
+                                <div class="col-12 col-md-3 col-lg-2 c-form__group u-margin-bottom-15">
+                                    <button type="submit" id="" class="c-button c-button--inline  c-button--rounded c-button--blue" name="">Submit</button>
+                                </div>
+                                
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 offset-lg-1 col-lg-4">
+            <div class="o-body-container__right-layout j-article-sidebar">
+                {% if config['inventory']['adSpace']['side-fix'][0] is defined %}
+                    <div class="j-adslot" id="{{config['inventory']['adSpace']['side-fix'][0]}}" data-adshape="side-fix"></div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="j-keyword-cont" data-keywords="{{blogData.keywords}}"></div>
+</main><!-- .site-main -->
+
+
+{# {{this.registerJs("Acme.eventMap = new Acme.GoogleMap();")}} #}
+
+<script>
+    // main script is defered so event listener makes sure
+    // defered script is loaded before this runs
+    document.addEventListener("DOMContentLoaded", function(event) {
+        Acme.cards = new Card();
+        Acme.eventForm = new Acme.EventForm([{{eventBlogId}}]);
+       {{userScript | raw}}
+    });
+</script>

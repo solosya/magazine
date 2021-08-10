@@ -1,0 +1,217 @@
+@mixin card-4-base() {
+    @include card-name("C4 mobile");
+
+    .c-cards-view {
+        @include flex-direction(column, vertical);
+
+        // @media #{$bootstrap-sm} {
+        //     @include flex-height(258px);
+        // }
+
+        &__media {
+            height:40vw;
+            min-height:145px;
+            // @media #{$bootstrap-sm} {
+            //     @include flex-height(130px);
+            // }
+        }
+
+        &__category {
+            margin-top:9px;
+            margin-bottom:10px;
+        }
+
+
+        &__heading {
+            @include font-size(16);
+            @include flex-height(25px);
+            margin-bottom: 20px;
+            font-weight: $weightBold;
+            line-height: 1.18;
+            color: $black;
+        }
+
+        &__description {
+            @include font-size(13);
+            font-weight: $weightRegular;
+            line-height: 1.54;
+            color: $greyish;
+            display: none;
+        }
+
+        &__author {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        &.without-image {
+            .c-cards-view {
+
+                &__container {
+                    @include flex-height(258px);
+                    width: 100%;
+                    margin-left: 0px;
+                    padding: 0px 20px 0;
+                }
+
+                &__category {
+                    margin-top: 30px;
+                    margin-bottom: 11px;
+                }
+                &__heading {
+                    @include flex-height(25px);
+                    margin-bottom: 20px;
+                }
+                &__description {
+                    @include font-size(13);
+                    margin-bottom: 15px;
+                    line-height: 1.54;
+                    display: block;
+                    @include flex-height(61px);
+                    margin-bottom:40px;
+                }
+
+                &__author {
+                    padding-top:10px;
+                    flex-direction: row;
+                    border-top: 1px solid rgba($greyish, 0.3);
+                    @include align-items(flex-start);
+                    bottom: 15px;
+                    width: calc(100% - 40px);
+            
+                }
+            }
+        }
+
+        &.social {
+            .social-icon {
+                @include size(35px);
+
+                &:before {
+                    @include font-size(16);
+                    line-height: 35px;
+                }
+            }
+
+            &.without-image {
+                .c-cards-view {
+                    &__container {
+                        padding-top: 50px;
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+.card-4-mobile {
+    @media #{$mobile} {
+        @include card-4-base();
+    }
+}
+
+@mixin card-4-tablet-base() {
+    @include card-4-base();
+
+    @include card-name("C4 tablet");
+    .c-cards-view {
+
+        @include flex-height(326px);
+
+        &__media {
+            height: 175px;
+            width: 100%;
+            background: $white none repeat scroll 0 0;
+
+            img {
+                display: block;
+            }
+        }
+
+
+        &__container {
+            width: 100%;
+            margin-left: 0;
+        }
+
+        &__heading{
+            @include font-size(18);
+            @include flex-height(67.5px);
+            margin-bottom: 0;
+        }
+
+        &__category {
+            margin-top:15px;
+        }
+
+        &__description {
+            display: none;
+        }
+        
+        &__time {
+            @include font-size(11);
+        }
+
+        &.without-image {
+            .c-cards-view {
+
+                &__category {
+                    margin-top: 36px;
+                    margin-bottom: 24px;
+                }
+
+                &__heading {
+                    @include flex-height(67px);
+
+                }
+
+                &__description {
+                    height:75px;
+                    max-height:none;
+                }
+
+                &__author {
+                    padding-top:0;
+                    flex-direction: column;
+                    border:0;
+                    @include align-items(flex-start);
+                }
+                &__author-name {
+                    padding-bottom:8px;
+                    width:100%;
+                    border-bottom: 1px solid rgba($greyish, 0.3);
+                }
+                &__time {
+                    padding-top:9px;
+                    @include font-size(12);
+
+                }
+
+            }
+        }
+    }
+}
+
+.card-4-tablet {
+    @media #{$tablet} {
+        @include card-4-tablet-base();
+    }
+}
+
+.card-4-desktop {
+	@media #{$desktop-up} {
+        @include card-4-tablet-base();
+        @include card-name("C4 desktop");
+        .c-cards-view {
+
+            
+            &__heading{
+                
+                @include flex-height(45px);
+                
+            }
+        }
+    }
+}

@@ -1,0 +1,45 @@
+{%
+    set link = _AppHelper.buildUrl('profile/user-posts', 
+        {
+            name: Html.encode(myArticles[0].createdBy['username'])
+        })
+%}
+
+<section>
+    <div class="row">
+        <div class="col-sm-12 section-header">
+            <p></p>
+            <div class="hk">
+                <h2>Recent Articles
+
+                    <span class='hidden-xs'> 
+                        {% if myArticles is defined and myArticles | length > 0 %}
+                            (<a href='{{ _AppHelper.buildUrl('profile/user-posts',{name :  Html.encode(myArticles[0].createdBy['username'])})}}' 
+                                class='view-more'>View all articles
+                            </a>)
+                        {% endif %}
+                    </span>
+
+                </h2>
+                <p></p>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-6">
+            <div class="row">
+            {% for i in 0..8 if myArticles[articleCount] %}
+
+                <div class="col-md-4 col-sm-12">
+                    {{this.render('../_single-article.twig', {
+                        article: myArticles[articleCount], 
+                        imageSize: {width:190, height:160},
+                        containerClass: 'card-sm feature-side-tablet card-sm-wide-mobile'
+                    }) | raw}}
+                    <hr class="divide18 visible-md-block visible-lg-block space-only">
+                </div>
+
+                {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+            {% endfor %}
+        </div>
+    </div>
+</section>

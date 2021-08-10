@@ -1,0 +1,96 @@
+{% set articleCount = 0 %}
+{% set cardIndex = 0 %}
+
+{% set popularArticles = _Article.getPopularArticles({ limit: 5, sortBy: 'VIEWS', scope: 'network' }) %}
+
+<div class="row" data-section="00">
+    
+    
+    <div class="col-12 col-lg-9">
+
+
+        <div class="row">
+            <div class="col-12">
+                {{this.render('../_single-article.twig', {
+                    article: articles[articleCount], 
+                    position: (articleCount+1),
+                    imageSize: {width: 720, height: 420},
+                    containerClass: "card-1-mobile card-1-tablet card-1-desktop",
+                    timeSuppress: timeSuppress
+                }) | raw}}
+                {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+            </div>
+        </div>
+
+        {# Below most populer is for tablet only #}
+        <div class="d-none d-md-block d-lg-none row">
+            <div class="col-12">
+                <div class="c-news-feed">
+                    <div class="c-news-feed__title u-site-color">Most popular</div>
+                    <ul class="row c-news-feed__list">
+
+                        {% for i in 0..3 if popularArticles[i] %}
+                            {% set displayClass = i > 2 ? 'd-sm-block d-md-none d-lg-block' : '' %}
+                                <li class="col-sm-12 col-md-4 col-lg-12 {{displayClass}}">
+                                    {{this.render('../_single-article.twig', {
+                                        article: popularArticles[i], 
+                                        imageSuppress: true,
+                                        containerClass: "card-6-mobile card-6-tablet card-6-desktop",
+                                        timeSuppress: timeSuppress
+                                    }) | raw}}
+                                    
+                                </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+        
+            {% for i in 0..2 if articles[articleCount] %}
+                <div class="col-12 col-md-4">
+                    {{this.render('../_single-article.twig', {
+                        article: articles[articleCount], 
+                        position: (articleCount+1),
+                        imageSize: {width: 296, height: 260},
+                        containerClass: "card-4-mobile card-4-tablet card-2-desktop card-2-desktop-lg",
+                        timeSuppress: timeSuppress
+                    }) | raw}}
+                    {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                </div>
+            {% endfor %}
+            
+        </div>
+
+    </div>
+
+    {# behaviour: 'lightbox', #}
+
+
+    <div class="col-12 col-lg-3">
+        <div class="c-news-feed d-block d-md-none d-lg-block u-desktop-margin-bottom-20">
+            <div class="c-news-feed__title u-site-color">Most popular</div>
+            <ul class="row c-news-feed__list">
+
+                {% for i in 0..3 if popularArticles[i] %}
+                    {% set displayClass = i > 2 ? 'd-sm-block d-md-none d-lg-block' : '' %}
+                        <li class="col-sm-12 col-md-4 col-lg-12 {{displayClass}}">
+                            {{this.render('../_single-article.twig', {
+                                article: popularArticles[i], 
+                                imageSuppress: true,
+                                containerClass: "card-6-mobile card-6-tablet card-6-desktop",
+                                timeSuppress: timeSuppress
+                            }) | raw}}
+                            
+                        </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+        {% if adslots[0] is defined %}
+            <div class="j-adslot" id="{{adslots[0]}}" data-adshape="mrec"></div>
+        {% endif %}
+    </div>
+</div>

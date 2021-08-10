@@ -1,0 +1,135 @@
+{% import "quotes.twig" as quotes %}
+
+{% set imageSuppress = imageSuppress is defined and imageSuppress == 'true' ? true : false  %}
+{% set swap = swap is defined and swap == 'false' ? '' : 'swap'  %}
+{% set lightbox = ''  %}
+{% set eventImg = '' %}
+
+{% if behaviour is defined %} 
+    {% if behaviour == 'noclick' %}
+        {% set event = event | merge({'url' : 'javascript: void(0)'}) %}
+    {% elseif behaviour == 'lightbox' %}
+        {% set lightbox = behaviour %}
+    {% endif %}
+{% endif %}
+
+
+{% set imgWidth = 0 %}
+{% set imgHeight = 0 %}
+{% if imageSize is defined %}
+    {% set imgWidth = (imageSize.width is defined) ? imageSize.width : 0 %}
+    {% set imgHeight = (imageSize.height is defined) ? imageSize.height : 0 %}
+{% endif %}
+
+
+{% set placeholder   = "https://place-hold.it/1" %}
+{% set promotedClass = (event.isPromoted) ? 'ad_icon' : '' %}
+
+{% set hasMedia      = (event.media | length > 0) ? 'withImage__content': 'without-image' %}
+{% set startDayname  = _AppHelper.getDateTimeBasedOnTimezone(event.startDate, 'd') %}
+{% set startDay      = _AppHelper.getDateTimeBasedOnTimezone(event.startDate, 'd') %}
+{% set startMonth    = _AppHelper.getDateTimeBasedOnTimezone(event.startDate, 'M') %}
+{% set startTime     = _AppHelper.getDateTimeBasedOnTimezone(event.startDate, 'g:ia') %}
+{% set eventTitle    = quotes.smarten(titleTruncateLength is defined ? event.title | truncate(titleTruncateLength) : event.title)  %}
+{% set figureClass   = event.media['type'] == 'video' ? 'video' : '' %}
+
+{% set publishDate = (event.publishDate is defined) ? event.publishDate : event.publishedDate %}
+{% set publishDateTime = (event.publishDateTime is defined) ? event.publishDateTime : event.publishedDateTime %}
+
+{% set publishDate = _AppHelper.getDefaultTimezoneDateTime(publishDate, 'F Y') %}
+
+{% set publishedAgo = _AppHelper.getSecondsSincePublished(publishDateTime) %}
+
+{% if publishedAgo < 86400 %}
+    {% set publishDate = _AppHelper.getRelativeTime(publishDateTime) ~ " ago" %}
+{% endif %}
+
+
+{% set startDate        = _AppHelper.getDefaultTimezoneDateTime(event.startDate, 'j M') %}
+{% set fullStartDate    = _AppHelper.getDefaultTimezoneDateTime(event.startDate, 'j F') %}
+{% set fullStartDate    = _AppHelper.getDefaultTimezoneDateTime(event.startDate, 'l, dS F Y') %}
+{% set fullEndDate      = _AppHelper.getDefaultTimezoneDateTime(event.endDate, 'l, dS F Y') %}
+{% set endDate          = _AppHelper.getDefaultTimezoneDateTime(event.endDate, 'j M') %}
+
+{% set startDay         = _AppHelper.getDefaultTimezoneDateTime(event.startDate, 'd') %}
+{% set endDay           = _AppHelper.getDefaultTimezoneDateTime(event.endDate, 'd') %}
+
+{% set startTime        = _AppHelper.getDefaultTimezoneDateTime(event.startDate, 'g:ia') %}
+{% set endTime          = _AppHelper.getDefaultTimezoneDateTime(event.endDate, 'g:ia') %}
+
+{% set fullStartTime    = _AppHelper.getDefaultTimezoneDateTime(event.startDate, 'g:ia M j') %}
+{% set fullEndTime      = _AppHelper.getDefaultTimezoneDateTime(event.endDate, 'g:ia M j') %}
+
+{% set eventMonth       = _AppHelper.getDefaultTimezoneDateTime(event.startDate, 'F') %}
+{% set startMonthFull       = _AppHelper.getDefaultTimezoneDateTime(event.startDate, 'F') %}
+{% set endMonthFull       = _AppHelper.getDefaultTimezoneDateTime(event.endDate, 'F') %}
+
+{% set startMonth       = _AppHelper.getDefaultTimezoneDateTime(event.startDate, 'M') %}
+{% set endMonth         = _AppHelper.getDefaultTimezoneDateTime(event.endDate, 'M') %}
+
+{% set fullStartTime    = _AppHelper.getDefaultTimezoneDateTime(event.startDate, 'g:ia M j') %}
+{% set fullEndTime      = _AppHelper.getDefaultTimezoneDateTime(event.endDate, 'g:ia M j') %}
+
+
+
+{% set venue            = event.venue %}
+
+
+<div class="{{containerClass}}" data-title="{{ eventTitle | raw }}">
+    {% set eventImgSmall = _Media.getMediaUrl(event.media[0], 500, 500, {'crop': 'fill', 'gravity': 'faces'} ) %}
+    {% set eventImg = _Media.getMediaUrl(event.media[0], imgWidth, imgHeight, {'crop': 'fill', 'gravity': 'faces'} ) %}
+    
+    <a  href="{{event.url}}" 
+        class="{{swap}} {{hasMedia}}" 
+        data-id="{{event.eventId}}" 
+        data-guid="{{event.eventGuid}}" 
+        data-position="{{position}}" 
+        data-social="0"
+        data-event-image="{{eventImg}}" 
+        data-event-text="{{Helper.htmlToText(event.title, -1) | raw | escape('html')}}">
+
+        <article class="c-eventcards-view  {{lightbox}} {{figureClass}}">
+            
+            {% if (hasMedia == 'withImage__content') and imageSuppress == false %}
+                <figure class="c-eventcards-view__media {{figureClass}}">
+                    <picture>
+                        <source media="(max-width: 620px)" srcset="{{eventImgSmall}}">
+                        <img class="img-fluid" src="{{eventImg}}" data-original="{{eventImg}}"  {% if eventImg is not empty %} style="background-image:url('{{placeholder}}');" {% endif %}>
+                    </picture>
+                </figure>
+            {% endif %}
+
+            <div class="c-eventcards-view__date">{{ startDay }} <span class="c-eventcards-view__month">{{startMonthFull}}{% if endDate != startDate %} - {{endDay}} {{endMonthFull}}{% endif %}</span></div>
+
+            <div class="c-eventcards-view__container">
+                <div class="c-eventcards-view__info">
+                    <div class="c-eventcards-view__category">Events</div>
+                    <h2  class="c-eventcards-view__heading js-card-heading j-truncate {{figureClass}}">{{ quotes.smarten(event.title) }}</h2>
+                    <p   class="c-eventcards-view__description j-truncate">{{ quotes.smarten(event.excerpt | raw) }}</p>
+                    <div class="c-eventcards-view__day">{{ fullStartDate }}</div>
+                    <div class="c-eventcards-view__time">{{startTime}}{% if event.endDate != "" %} - {{endTime}}{% endif %}</div>
+                    <div class="c-eventcards-view__time-venue">{{startTime}}{% if venue != "" %} - {{venue}}{% endif %}</div>
+                    {# <div class="event-time">
+                        {% if startDay == endDay %}
+                            <p class="date">{{ startDay }}</p>
+                            <p class="month">{{ eventStartMonth }}</p>
+                        {% else %}
+                            <p class="date">{{ startDay }}-{{ endDay }}</p>
+                            {% if eventStartMonth == eventEndMonth %}
+                                <p class="month">{{ eventStartMonth }}</p>
+                            {% else %}
+                                <p class="month">{{ eventStartMonth }} {{ eventEndMonth }}</p>
+                            {% endif %}
+                        {% endif %}
+                    </div> #}
+           
+                    <div class="c-eventcards-view__author">
+                        <div class="c-eventcards-view__icon--pin">{{ this.render('icons.twig', {icon: 'location'} ) | raw }}</div>
+                        <div class="c-eventcards-view__author__name">{{venue}}</div>
+                    </div>
+
+                </div>
+            </div>
+        </article>
+    </a>
+</div>

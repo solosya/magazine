@@ -1,0 +1,260 @@
+{% import "quotes.twig" as quotes %}
+
+{% set imageSuppress = imageSuppress is defined and imageSuppress == true   ? true      : false   %}
+{% set lazyload      =      lazyload is defined and lazyload == false       ? false     : false    %}
+{% set template      =      template is defined and template != ''          ? template  : 'main'  %}
+{% set swap          =          swap is defined and swap == 'false'         ? ''        : 'swap'  %}
+{% set dev           =           dev is defined and dev == true             ? true      : false   %}
+{% set inline        =        inline is defined and inline != ''            ? inline    : ''      %}
+{% set amp           =           amp is defined and amp == true             ? true      : false   %}
+
+{# This can add a prefix to the card class to segregate its styles #}
+{% set cardType      = cardType      is defined and cardType != ''          ? cardType  : ''      %}
+
+{#change the image source to either article or author#}
+{% set imageSource   = imageSource   is defined and imageSource != ''       ? imageSource : 'article'  %}
+
+
+
+{% set lightbox   = '' %}
+{% set articleImg = '' %}
+
+{% if behaviour is defined %} 
+    {% if behaviour == 'noclick' %}
+        {% set article = article | merge({'url' : 'javascript: void(0)'}) %}
+    {% elseif behaviour == 'lightbox' %}
+        {% set lightbox = behaviour %}
+    {% endif %}
+{% endif %}
+
+{# {{_AppHelper.printArray(article)}} #}
+
+
+{% set imgWidth = 0 %}
+{% set imgHeight = 0 %}
+{% if imageSize is defined %}
+    {% set imgWidth = (imageSize.width is defined) ? imageSize.width : 0 %}
+    {% set imgHeight = (imageSize.height is defined) ? imageSize.height : imgWidth %}
+{% endif %}
+
+{% set imgSizes = {
+    "mobile"  : imageSizes is defined and imageSizes.mobile is defined  ? imageSizes.mobile  : {width:375, height:500},
+    "tablet"  : imageSizes is defined and imageSizes.tablet is defined  ? imageSizes.tablet  : {width:500, height:768},
+    "desktop" : imageSizes is defined and imageSizes.desktop is defined ? imageSizes.desktop : {width:imgWidth, height:imgHeight},
+} %}
+
+
+{% set displayMedia = ((article.hasMedia or article.hasPreviewMedia) and imageSuppress != true) ? true : false %}
+
+
+{# // used for dev to turn an article into a social card for testing ui #}
+{# {% if dev %} #}
+    {# {% set article = article | merge({
+        articleId: -1
+    }) %} #}
+
+
+    {# {% set article = article | merge( {
+        'social': {
+            'url' : article.url,
+            'blog' : {
+                'guid': article.blog.guid
+            },
+            'guid' : article.guid,
+            'media' : {
+                'path' : article.featuredMedia.media.url,
+                'type' : article.featuredMedia.type,
+            },
+            'hasMedia': 'TRUE',
+            'content' : article.excerpt,
+            'source': 'twitter',
+            'user' : {
+                'name' : 'Lee'
+            }
+        } 
+    }) %} #}
+{# {% endif %} #}
+
+
+
+{% set isArticle = (article.articleId > 0 or (isArticle is defined and isArticle == 'true')) ? 0 : 1 %}
+
+
+{% if isArticle == 0 %}
+
+
+    {% set profileImg = false %}
+    {% if authorImg is defined and authorImg == true %}
+        {% set profileImg = _Media.getMediaUrl(article.createdBy['media'], 34, 34, {radius: 'max', gravity: 'face', 'crop': 'thumb', type: 'user'}) %}
+    {% endif %}
+
+
+    {% set publishDate = (article.publishDate is defined) ? article.publishDate : article.publishedDate %}
+    {% set publishDateTime = (article.publishDateTime is defined) ? article.publishDateTime : article.publishedDateTime %}
+    {% set publishDate  = _AppHelper.getDefaultTimezoneDateTime(publishDate, 'd M Y') %}
+    {% set publishedAgo = _AppHelper.getSecondsSincePublished(publishDateTime) %}
+    
+    {% if publishedAgo < 86400 %}
+        {% set publishDate = _AppHelper.getRelativeTime(publishDateTime) ~ " ago" %}
+    {% elseif template == 'property' and publishedAgo < 259200  %}
+        {% set publishDate = "NEW LISTING" %}
+    {% endif %}
+    {% if timeSuppress is defined and timeSuppress == true %}
+        {% set publishDate = "" %}
+    {% endif %}
+
+
+
+    
+    {% set articleTitle = quotes.smarten(article.title)  %}
+    {% if article.titlePreview is defined and article.titlePreview != "" %}
+        {% set articleTitle = quotes.smarten(article.titlePreview) %}
+    {% endif %}
+
+    {% if watermark is defined and watermark != 'FALSE' %}
+        {% set imageparams = {'crop': 'fill', 'gravity': 'faces:auto', 'watermark': watermark } %}
+    {% else %}
+        {% set imageparams = {'crop': 'fill', 'gravity': 'faces:auto'} %}
+    {% endif %}
+
+    {% set imageSource = imageSource == 'article' ? article.featuredMedia : article.createdBy['media'] %}
+    {% set imageSmall     = _Media.getMediaUrl(imageSource,imgSizes.mobile.width, imgSizes.mobile.height,  imageparams ) %}
+    {% set imageMedium    = _Media.getMediaUrl(imageSource,imgSizes.tablet.width, imgSizes.tablet.height,  imageparams ) %}
+    {% set imageLarge     = _Media.getMediaUrl(imageSource,imgSizes.desktop.width,imgSizes.desktop.height, imageparams ) %}
+
+
+
+    {% set newWindow = false %}
+    {% set redirUrl = article.url %}
+    {% if article.externalUrl != null %}
+        {% set redirUrl = article.externalUrl %}
+        {% set newWindow = true %}
+    {% endif %}
+
+    {% if url is defined and url != '' %}
+        {% set redirUrl = url %}
+        {% set newWindow = true %}
+    {% endif %}
+
+
+    {% if amp == true %}
+        {% set redirUrl = redirUrl ~ '?amp=1' %}
+    {% endif %}
+
+
+    {% set params = {
+        imageSuppress   : imageSuppress,
+        hasMediaClass   : (displayMedia) ? 'withImage__content': 'without-image',
+        placeholder     : "https://place-hold.it/1",
+        imgHeight       : imgHeight,
+        imgWidth        : imgWidth,
+        image           : imageLarge,
+        imageMedium     : imageMedium,
+        imageSmall      : imageSmall,
+        publishDate     : publishDate,
+        videoClass      : article.featuredMedia['type'] == 'video' ? 'c-cards-view__media--video' : '',
+        profileImg      : profileImg,
+        hasMedia        : (displayMedia) ? 'True' : 'False',
+        blogguid        : article.blog.guid,
+        blogTitle       : article.blog.title,
+        category        : article.label,
+        cardType        : cardType, 
+        lazyload        : lazyload,
+        content         : article.excerpt,
+        author          : article.createdBy['displayName'],
+        status          : article.status,
+        social          : isArticle,
+        title           : articleTitle,
+        image           : _Media.getMediaUrl(article.featuredMedia,imgWidth, imgHeight, imageparams ),
+        guid            : article.guid,
+        url             : redirUrl,
+        id              : article.articleId,
+        target          : (newWindow) ? "_blank" : "_self",
+        additionalInfo  : article.additionalInfo
+    } %}
+    
+    {% set totalstring = "" %}
+    {% set totals = (article.total is defined) ? article.total : false %}
+    {% if totals and _User.isAdminUser() %}
+        {% set totalstring = "Viewed " ~ totals.view ~ " times" %}
+        {% set totalstring = totalstring ~ " Published " ~ params.publishDate %}
+    {% endif %}
+
+{% else %}
+
+    {% set lightbox = "lightbox" %}
+
+    {% set params = {
+        placeholder     : "https://place-hold.it/1",
+        hasMedia        : article.social.hasMedia,
+        hasMediaClass   : (article.social.hasMedia) ? 'withImage__content': 'without-image',
+        hasContentClass : (article.social.content) ? '' : 'without__content',
+        videoClass      : article.social.media['type'] == 'video' ? 'c-cards-view__media--video' : '',
+        imageSmall      : article.social.media['path'],
+        imageMedium     : article.social.media['path'],
+        image           : article.social.media['path'],
+        publishDate     : _AppHelper.getDateTimeBasedOnTimezone(article.social.publishDate, 'd M Y'),
+        blogguid        : article.social.blog.guid,
+        blogTitle       : article.social.blog.title,
+        title           : "",
+        content         : article.social.content,
+        category        : article.social.source,
+        author          : ( social.source == _Article.socialArticleSourceTwitter() ) ? '@' : '' ~ article.social.user['name'] | lower,
+        profileImg      : '',
+        imageSuppress   : imageSuppress,
+        cardType        : cardType, 
+        lazyload        : lazyload,
+        imgWidth        : imgWidth,
+        imgHeight       : imgHeight,
+        status          : '',
+        url             : article.social.url,
+        id              : article.socialId,
+        guid            : article.socialGuid,
+        social          : isArticle,
+        target          : "_blank",
+    } %}
+
+
+
+{% endif %}
+
+
+
+<div class="{{containerClass}}" data-title="{{ params.title | raw }}" {{inline}}>
+    
+
+    <a  href                = "{{params.url}}" 
+        class               = "{{swap}}" 
+        data-id             = "{{params.id}}" 
+        data-guid           = "{{params.guid}}" 
+        data-position       = "{{position}}" 
+        data-social         = "{{params.social}}"
+        data-blog-guid      = "{{params.blogguid}}"
+        data-blog-title     = "{{params.blogTitle}}"
+        data-article-image  = "{{params.articleImg}}" 
+        data-article-text   = "{{Helper.htmlToText(params.title, -1) | raw | escape('html')}}"
+        target              = "{{params.target}}"
+        title               = "{{totalstring}}">
+
+        {% if dev %}
+            <div class="article_number">{{position}}</div>
+        {% endif %}
+        
+        {# Article content including image #}
+        <article class="{{cardType}}c-cards-view {{params.social == 0 ? "" : "social"}} {{params.category}} {{params.hasMediaClass}} {{lightbox}} {{contentType}} {{params.status}}">
+            {{ this.render('_article-' ~ template ~ '.twig', {
+                params:params, 
+                networkData: networkData
+            } ) | raw }}
+        </article>
+
+        {# Article admin buttons to delete/edit/pin #}
+        {% if article.userHasBlogAccess == '1' and swap != '' and amp != true %}
+            {{ this.render('_article_admin.twig', {
+                article  : article, 
+                position : position, 
+                type     : params.social == 0 ? "article" : "social"
+            } ) | raw }}
+        {% endif %}
+    </a>
+</div>

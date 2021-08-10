@@ -1,0 +1,141 @@
+.c-plans {
+    margin:0;
+    padding:0;
+    width:100%;
+    margin:0px 0;
+    list-style:none;
+    @include flexbox;
+    @include align-items(flex-start);
+    @include align-content(flex-start);
+    @include justify-content(flex-start);
+    @include flex-direction(column, vertical);
+    overflow-x: scroll;
+
+    @media #{$mobile-sm-up} {
+        width:auto;
+        margin:0px -15px;
+        @include flex-direction(row, horizontal);
+        padding-bottom:10px;
+    }
+
+
+    &__name, &__usercount, &__price {
+        width:100%;
+        color:$greyish;
+        text-align:center;
+        display:inline-block;
+        &--selected {
+            color:white;
+        }
+    }
+
+    &__name {
+        color:$black;
+        @include font-size(20);
+        line-height:1.5;
+        font-weight:$weightBold;
+        margin-bottom:15px;
+        &--selected {
+            color:white;
+        }
+
+    }
+    &__usercount {
+        @include font-size(13);
+        line-height:1.5;
+        font-weight:$weightBold;
+    }
+    &__price {
+        @include font-size(30);
+        line-height:1.5;
+        font-weight:$weightLight;
+    }
+
+    &__button {
+        display:inline-block;
+        width: 20px;
+        height:20px;
+        border-radius:6px;
+        border: 1px solid $greyish;
+        background-color:none;
+
+        &--selected {
+            border: 1px solid white;
+            background-color:white;
+        }
+    }
+
+    &__block {
+        width:100%;
+        margin:0px 0;
+        min-height:160px;
+        cursor:pointer;
+        @include flexbox;
+        text-align:center;
+        @include padding(25);
+        @include margin-bottom(20);
+        @include align-items(center);
+        @include justify-content(center);
+        @include flex-direction(column, vertical);
+        flex:1 0 calc(100% - 0px);
+        max-width:calc(100% - 0px);
+        background-color:#d8d8d8;
+        @include border-radius(6px);
+
+        &:last-child {
+            margin-bottom:0;
+        }
+
+        // @include responsive(xs) {
+        //     margin:0px 15px;
+        //     flex:1 0 calc(50% - 30px);
+        //     max-width: calc(33.333% - 30px);
+        // }
+
+       
+        .button-set {
+
+            input {
+                &[type="radio"] + span {
+                    margin-right:0px;
+                    background-color:#d8d8d8;
+                    border:1px solid rgba($greyish,0.5);
+                }
+            }
+        }
+
+        &.selected {
+            background-color:$mainColor;
+
+            &__name, &__usercount, &__price {
+                color:$white;
+            }
+
+            .button-set {
+
+                input {
+                    &[type="radio"] + span {
+                        margin-right:0px;
+                        background-color:$mainColor!important;
+                        border:1px solid rgba($white,0.85)!important;
+
+                        &:after {
+                            @include opacity(1);
+                            @include border-radius(6px);
+                            background-color:$white!important;
+                            border:2px solid $mainColor!important;
+                        }
+
+                        &:checked + span {
+                            border:1px solid rgba($white,0.85)!important;
+                        }
+                    }
+                }
+                &[type="radio"]:checked + span::after {
+                    border:2px solid $mainColor!important;
+                    background-color:$white!important;
+                }
+            }
+        }
+    }
+}

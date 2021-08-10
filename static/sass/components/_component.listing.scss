@@ -1,0 +1,35 @@
+/* Begin feed listing style */
+
+.c-news-feed {
+    &__title {
+        color: $mainColor;
+        @include font-size(20);
+        line-height: 1.2;
+        font-weight: $weightBold;
+        position: relative;
+        padding-bottom: 15px;
+
+        &:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 30px;
+            height: 1px;
+            background-color: #979797;
+        }
+    }
+
+    &__list {
+        padding: 0px;
+
+        li {
+            margin-top: 20px;
+        }
+        &__items {
+            @include flexbox();
+        }
+    }
+}
+
+/* End feed listing style */

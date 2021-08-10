@@ -1,0 +1,32 @@
+{#
+    container           required - The dom element to render fetched articles into
+    offset:             required - get pinned articles
+    non-pinned-offset:  required - get non pinned articles
+    limit:              required - number of articles to fetch
+    after:              optional - html to be rendered after card
+    before:             optional - html to be rendered before card
+    label:              optional - text on the load more button
+    name:               optional - id of the load more button in case you have multiple on a page
+    blogId:             optional - Choose which blog to fetch from
+    loadtype:           optional - blog/search/user_articles/users or events(defaults to current blog)
+    card_class:         optional - class will be attached to card
+    rendertype:         optional - write/append
+    searchTerm:         optional - If search add the term
+    card-class:         optional - Class added to card during render
+    buttonClass:        optional - Class added to button (hide for infinite scroll)
+    button-label:       optional - The text of the load more button
+    cardTemplate:       optional - name of template used to render the card
+    imageSupress:       optional - don't render images on cards
+    card-template:      optional - Alternate template to render card
+    image-suppress:     optional - Make sure images don't render on card
+    ads:                optional - Will insert an ad into the rendered result
+#}
+
+
+<a  href="#"
+    id="{{name}}"
+    class="{{buttonClass}}"
+    >
+    {{label}}
+</a>
+

@@ -1,0 +1,49 @@
+
+.weather-panel-reverse {
+    .weather-panel {
+    
+        &__location {
+            &-1 {
+                color: black;
+            }
+        }
+    
+        &__temperature {
+            color:$mainColor;
+            &-1{
+                color: $mainColor;
+            }
+        }
+        &__description {
+            color:$greyish;
+            &-1{
+                color: black;
+            }
+        }
+    
+        &__wind {
+            color:color(darkgrey);
+            &-1 {
+                color: black;
+            }
+        }
+    
+        &__pulldown-icon {
+            color:black;
+        }
+
+
+        &__icon {
+            > .svg-fill {
+                stroke: $mainColor;
+                fill: #fff;
+            }
+            &-1{
+                > .svg-fill {
+                    stroke: $mainColor;
+                    fill: white;
+                }
+            }
+        }
+    }
+}

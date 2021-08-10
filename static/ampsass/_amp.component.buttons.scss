@@ -1,0 +1,161 @@
+/* Begin header style */
+
+.c-button {
+    position:relative;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    padding: 0 16px;
+    display: inline-block;
+    border: 2px solid $transparent;
+    @include font-size(13);
+    line-height: 2.8;
+    letter-spacing: 1.4px;
+    font-weight: $weightMedium;
+    @include transition(all 0.3s ease);
+    min-width: 120px;
+    text-align: center;
+    height: 40px;
+    @include flexbox();
+    @include align-items(center);
+    @include justify-content(center);
+    text-transform: uppercase;
+
+    &--background-white{
+        background-color: white;
+    }
+    
+    &-block {
+        width: $viewportSize;
+        display: block;
+    }
+
+    &--inline {
+        display:inline-block;
+    }
+
+    &--rounded {
+        @include border-radius(25px);
+    }
+
+    &--radius {
+        @include border-radius(4px);
+    }
+
+    &--spinner {
+        color:white;
+        &:hover {
+            color:lightness( $mainColor, 0.82);
+        }
+    }
+
+    &--search {
+        min-width: 80px;
+        height:30px;
+        line-height:1.8;
+        padding: 0;
+
+    }
+
+    &--blue {
+        background-color: $mainColor;
+        border-color: $mainColor;
+        background-color: $mainColor;
+        border-color: $mainColor;
+        color: $white;
+
+        &:hover {
+            background-color: $mainColor;
+            border-color: $mainColor;
+            background-color: lightness( $mainColor, 0.82);
+            border-color: lightness( $mainColor, 0.82);
+            color: $white;
+        }
+
+        &-bordered {
+            border-color:  $mainColor;
+            color: $mainColor;
+
+            &:hover {
+                color: $white;
+                background-color: lightness( $mainColor, 0.82);
+                border-color: lightness( $mainColor, 0.82);
+            }
+        }
+    }
+
+
+    &--red {
+        color: $white;
+        border-color: $error;
+        background-color: $error;
+
+        &:hover {
+            color: $white;
+            border-color: $blackred;
+            background-color: $blackred;
+        }
+
+        &--bordered {
+            color: $error;
+            border-color: $greyish;
+            background-color: transparent;
+
+            &:hover {
+                color: $white;
+                border-color: $blackred;
+                background-color: $blackred;
+            }
+        }
+    }
+
+    &--center{
+        margin-right: auto;
+        margin-left: auto;
+    }
+    
+    &--disabled {
+        @include opacity(.5);
+    }
+
+    &--plan {
+        min-width:230px;
+        max-width:230px;
+        @include margin-top(10);
+        &.c-button__blue-bordered{
+            background-color: unset;
+        }
+    }
+    &--right {
+        float:right;
+        @include margin-top(20);
+    }
+    &:focus {
+        outline: 0;
+    }
+    &--disabled{
+        border: none;
+        background: $grey;
+        cursor: unset;
+        &:hover{
+            background: $grey;
+        }
+    }
+    &--subscribe{
+        height: 50px;
+        padding-top:   5px;
+    }
+    &__trial{
+        font-size: rem(13);
+        font-weight: 500;
+        line-height: 1;
+        text-align: center;
+        color: $white;
+        text-transform: none;
+        margin-top: -7px;
+        letter-spacing: 1px;
+    }
+}
+
+/* End header style */

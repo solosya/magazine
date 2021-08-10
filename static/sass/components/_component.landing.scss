@@ -1,0 +1,13 @@
+.landing {
+    &__h1 {
+        font-family: $primaryFont;
+        @include font-size(32);
+        font-weight:700;
+        text-align:center;
+    }
+    &__h2 {
+        font-family: $primaryFont;
+        @include font-size(32);
+        text-align:center;
+    }
+}

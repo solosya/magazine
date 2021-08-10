@@ -1,0 +1,52 @@
+{# % set disqusArr = _AppHelper.getDisqusToken(disqus) %}
+{% if disqusArr.token != FALSE and disqusArr.token != '' %}
+{% set disqusJsParams = {articleId: articleId, url: url, userId:userId, token: disqusArr.token, networkName: disqusArr.networkName, shortName:disqus.shortName, apiKey: disqus.apiKey  }  %}
+{{this.registerJs('$.fn.Disqus({params:'~ disqusJsParams|json_encode|raw ~'})')}}
+<div class="panel-group col-sm-9" id="accordion3">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#FBComment"><i class="fa fa-comments"></i>Comments(<span class="disqus-comment-count" data-disqus-identifier="{{articleId}}">0</span>)</a></h4>
+        </div>
+        <div id="FBComment" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div id="disqus_thread"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="ad-large-vert visible-sm-block" style="position:absolute;">
+            <div id='div-gpt-ad-halfpage-ss' class="google_ad">
+                <script type='text/javascript'>
+                    googletag.cmd.push(function() { googletag.display('div-gpt-ad-halfpage-ss'); });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %} #}
+
+
+{% set disqusArr = _AppHelper.getDisqusToken(disqus) %}
+{% if disqusArr.token != FALSE and disqusArr.token != '' %}
+    {% set disqusJsParams = {articleId: articleId, url: url, userId:userId, token: disqusArr.token, networkName: disqusArr.networkName, shortName:disqus.shortName, apiKey: disqus.apiKey  }  %}
+{% else %}
+    {% set disqusJsParams = {articleId: articleId, url: url, userId:userId, networkName: disqusArr.networkName, shortName:disqus.shortName, apiKey: disqus.apiKey  }  %}
+{% endif %}
+
+{# {{this.registerJs('$.fn.Disqus({params:'~ disqusJsParams|json_encode|raw ~'})')}} #}
+<script>
+    // main script is defered so event listener makes sure
+    // defered script is loaded before this runs
+    document.addEventListener("DOMContentLoaded", function(event) {
+        const theParams = {{disqusJsParams|json_encode|raw}};
+        $.fn.Disqus({
+            params: theParams,
+            });
+    });
+</script>
+
+<div class="row row-eq-height-desk">
+    <div class="DisqusCommentArea col-12" style="">
+        <div id="disqus_thread" class="DisqusPlaceholder"></div>
+    </div>
+</div>

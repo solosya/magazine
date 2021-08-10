@@ -1,0 +1,79 @@
+{% if paywallType == "subscribe" or paywallType == "renew" %}
+
+    <div class="c-article__paywalled-view">
+        <div class="o-paywalled">
+            <div class="o-paywalled__head">
+                Subscribe to {{networkData.title}} to read the full story.
+            </div>
+            <div class="o-paywalled__action">
+                <a href="{{networkData.defaultBlogUrl}}/subscriptions" class="c-button c-button--rounded c-button--blue c-article__subscribe-button">SUBSCRIBE NOW</a>
+                {% if trialToggle %}
+                    <a href="{{networkData.defaultBlogUrl}}/subscriptions" class="c-button c-button--rounded c-button--blue-bordered">Start Free Trial</a>
+                {% endif %}
+                <a id="articleSigninBtn" href="javascript:;" class="c-button c-button--rounded c-button--blue-bordered">SIGN IN</a>
+            </div>
+
+            <div class="o-paywalled__period">
+                <a href="{{networkData.defaultBlogUrl}}/subscriptions#subscriptions" class="o-paywalled__text">Click here to view our subscription options. </a>
+            </div>
+        </div>
+    </div>
+
+
+{% elseif paywallType == "topup"  %}
+
+
+    <div class="c-article__paywalled-view">
+        <div class="o-paywalled">
+            <div class="o-paywalled__head">
+                Time to top up! You’ve reached your article limit.
+            </div>
+
+            <div class="o-paywalled__period">
+                <a href="{{networkData.defaultBlogUrl}}/user/edit-profile" class="">Visit your My Account page to buy more articles.</a>
+            </div>
+        </div>
+    </div>
+
+
+{% elseif paywallType == "upgrade"  %}
+
+
+    <div class="c-article__paywalled-view">
+        <div class="o-paywalled">
+            <div class="o-paywalled__head">
+                To access premium content, upgrade your subscription
+            </div>
+            <div class="o-paywalled__action">
+                <a href="{{networkData.defaultBlogUrl}}/user/edit-profile?plans=true#plans" class="c-button c-button--rounded c-button--blue c-article__subscribe-button">UPGRADE</a>
+            </div>
+
+            <div class="o-paywalled__period">
+                <a href="{{networkData.defaultBlogUrl}}/user/edit-profile" class="c-paywalled-article__subscriptions--underline">Visit your My Account page to buy more articles.</a>
+            </div>
+        </div>
+    </div>
+
+
+{% elseif paywallType == "signup"  %}
+
+    <div class="c-article__paywalled-view">
+        <div class="o-paywalled">
+            <div class="o-paywalled__head">
+                To keep reading, sign up for a free account.
+            </div>
+            <div class="o-paywalled__action">
+                <a href="{{networkData.defaultBlogUrl}}/subscriptions" class="c-button c-button--rounded c-button--blue c-article__subscribe-button">SUBSCRIBE NOW</a>
+                {% if trialToggle %}
+                    <a href="{{networkData.defaultBlogUrl}}/subscriptions" class="c-button c-button--rounded c-button--blue-bordered">Start Free Trial</a>
+                {% endif %}
+                <a id="articleSigninBtn" href="javascript:;" class="c-button c-button--rounded c-button--blue-bordered">SIGN IN</a>
+            </div>
+
+            <div class="o-paywalled__period">
+                <a href="{{networkData.defaultBlogUrl}}/subscriptions#subscriptions" class="o-paywalled__text">Click here to view our subscription options. </a>
+            </div>
+        </div>
+    </div>
+    
+{% endif %}

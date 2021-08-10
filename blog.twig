@@ -1,0 +1,29 @@
+{% set blogInfo = _Blog.getBlog() %}
+{% set networkData = _Network.getNetworkData() %}
+
+{{ set(this, 'title', blogInfo.title) }}
+
+
+{% set limit = 18 %}
+{% set articlesArr = _Blog.getBlogFeed({'limit': limit, 'offset': 0}) %}
+{% set articles = articlesArr.articles %}
+{% set firstCount = articles | length %}
+
+{% set popularArticles = _Article.getPopularArticles({ limit: 5, sortBy: 'VIEWS', scope: 'blog' }) %}
+
+<!-- used to index each article as we loop over throughout the template -->
+{% set articleCount = _AppHelper.getApplicationEnv() == 'DEV' ? 0 : 0 %}
+{% set dev = _AppHelper.getApplicationEnv() == 'DEV' ? true : false %}
+
+
+
+
+<main id="main" class="site-main" role="main" data-article-limit="{{limit}}" data-article-count="{{articles | length}}">
+    
+    <div class="container">
+
+       
+
+    </div>
+    <div class="j-keyword-cont" data-keywords="{{blogInfo.keywords}}"></div>
+</main><!-- .site-main -->

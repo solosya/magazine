@@ -1,0 +1,45 @@
+.c-checkbox {
+    position:relative;
+
+    &__input {
+        display:none;
+    }
+
+    &__button {
+        cursor:pointer;
+        height:20px;
+        width:20px;
+        border: 1px solid #e7e7e7;
+        border-radius:6px;
+        display:inline-block;
+        position:absolute;
+        left:0;
+        top:0;
+
+        &::after{
+            content:"";
+            display:block;
+            height:14px;
+            width:14px;
+            border-radius:4px;
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-47%, -52%);
+            background-color: $mainColor;
+            opacity:0;
+            transition: opacity .2s;
+        }
+    }
+
+    &__label {
+        @include font-size(12);
+        cursor:pointer;
+        position:relative;
+        padding-left:30px;
+    }
+
+    &__input:checked ~ &__label &__button::after {
+        opacity: 1;
+    }
+}

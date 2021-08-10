@@ -1,0 +1,293 @@
+/* Begin page head style */
+.c-filter {
+    &--search {
+        @include flexbox;
+        @include margin-top(-5);
+        @include margin-bottom(30);
+        @include align-content(flex-start);
+        @include align-items(flex-start);
+        @include justify-content(space-between);
+        @include flex-direction(column, vertical);
+        
+        @include responsive(xs) {
+            @include flex-direction(row, horizontal);
+            
+            @include respond-to(md) {
+                @include margin-top(-5);
+                @include margin-bottom(45);
+            }
+        }
+            
+        .form-control, select.form-control {
+            height:43px!important;
+            border:1px solid $black_sh3;
+            
+            &:focus {
+                border-color: $blue;
+            }
+        }
+        .selectdropdown {
+            border:0px none;
+        }
+        
+        &--field {
+            width:100%;
+            height:43px;
+            max-width:100%;
+            position:relative;
+            @include margin-bottom(15);
+            
+            @include responsive(xs) {
+                width:60%;
+                max-width:60%;
+                @include margin-right(10);
+                @include margin-bottom(0);
+            }
+            
+            .c-search-icon {
+                top:50%;
+                right:5px;
+                color:$greyish;
+                position:absolute;
+                @include size(40px);
+                @include padding(9);
+                background-color:$white;
+                @include transform(translateY(-50%));
+            }
+            .form-control {
+                @include padding-right(35);
+            }
+        }
+        &--select {
+            width:100%;
+            height:43px;
+            max-width:100%;
+            @include margin-bottom(15);
+            
+            @include responsive(xs) {
+                width:30%;
+                max-width:30%;
+                @include margin-right(10);
+                @include margin-bottom(0);
+            }
+        }
+        &--button {
+            // width:130px;
+            height:43px;
+            max-width:130px;
+            
+            .c-button {
+                height:43px;
+            }
+        }
+        
+        .c-filter--search--select {
+            @include flexbox;
+            @include margin-bottom(15);
+            @include align-items(center);
+            @include justify-content(flex-start);
+            @include flex-direction(row, horizontal);
+            position: relative;
+            @include responsive(sm) {
+                @include margin-bottom(0);
+            }
+
+            cursor: pointer;
+            
+            label {
+                color:$greyish;
+                max-width:150px;
+                white-space:nowrap;
+                @include margin-right(10);
+                @include margin-bottom(0);
+                font-weight:$weightRegular;
+            }
+        }
+        &__dropdown{
+            display: none;
+            border:1px solid $black_sh3;
+            border-radius: 4px;
+            background: $white;
+            top: 0;
+            max-height: 500px;
+            overflow-y: scroll;
+            &:focus {
+                border-color: $blue;
+            }
+            position: absolute;
+            z-index: 10;
+            cursor: pointer;
+            &--active{
+                display: block;
+            }
+            &--field{
+                line-height:1.9;
+                
+                &:after{
+                    content: "";
+                    width: 14px;
+                    height: 7px;
+                    display: block;
+                    float: right;
+                    margin-top: 10px;
+                    margin-left: 10px;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-image: url("../icons/arrow.svg");
+                }
+            }
+            &--item{
+                @include padding(10);
+                &:hover{
+                    background: $blue;
+                    color: $white;
+                }
+                &:first-child{
+                    &:after{
+                        content: "";
+                        width: 14px;
+                        height: 7px;
+                        display: block;
+                        float: right;
+                        margin-top: 5px;
+                        margin-left: 10px;
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        background-image: url("../icons/arrow.svg");
+                        @include transform(rotate(180deg));
+                    }
+                }    
+
+            }
+        }
+    }
+    
+    &--name {
+        color:$black;
+        @include font-size(22);
+        line-height:1.35;
+        @include margin-bottom(15);
+        font-weight:$weightBold;
+        font-family:$secondaryFont;
+        
+        @include responsive(xs) {
+            @include font-size(30);
+            line-height:1.2;
+            @include margin-bottom(25);
+        }
+        @include responsive(md) {
+            @include font-size(26);
+            line-height:1.2;
+            @include margin-bottom(25);
+        }
+    }
+    
+    &--text {
+        color:$greyish;
+        @include font-size(14);
+        line-height:1.54;
+        letter-spacing:0;
+        font-weight:$weightRegular;
+
+        @include responsive(md) {
+            @include font-size(15);
+            line-height:1.54;
+        }
+    }
+    
+    &--social {
+        margin:0;
+        padding:0;
+        list-style:none;
+        @include flexbox;
+        
+        li {
+            margin:0;
+            padding:0;
+            display:block;
+            @include size(32px);
+            @include margin-left(20);
+            
+            &:first-child {
+                @include margin-left(0);
+            }
+            
+            a {
+                color:$blue;
+                display:block;
+                text-align:center;
+                @include size(32px);
+                line-height:30px;
+                @include border-radius(50%);
+                border:1px solid $blue;
+                
+                &:hover {
+                    color:$white;
+                    background-color:$blue;
+                    border:1px solid $blue;
+                }
+            }
+        }
+    }
+    
+    &-left {
+        width:100%;
+        max-width:100%;
+        position:relative;
+        @include padding-right(0);
+        @include flexbox;
+        @include align-content(stretch);
+        @include align-items(center);
+        @include justify-content(flex-start);
+        @include flex-direction(row, horizontal);
+        @include margin-bottom(25);
+        
+        @include responsive(md) {
+            width:calc(100% - 540px);
+            max-width:calc(100% - 540px);
+            @include padding-right(75);
+        }
+    }
+    &-right {
+        width:100%;
+        max-width:100%;
+        
+        @include responsive(md) {
+            width:540px;
+            max-width:540px;
+            @include flexbox;
+            @include padding-top(10);
+            @include padding-left(25);
+        }
+    }
+    
+    &--avatar {
+        width:105px;
+        @include size(105px);
+        max-width:105px;
+        @include border-radius(50%);
+        @include flex(0 0 105px);
+        @include image_background();
+        
+        @include responsive(xs) {
+            width:145px;
+            @include size(145px);
+            max-width:145px;
+            @include border-radius(50%);
+            @include flex(0 0 145px);
+        }
+    }
+    &--details {
+        @include padding-left(15);
+        width:calc(100% - 105px);
+        max-width:calc(100% - 105px);
+        @include flex(0 0 calc(100% - 105px));
+        
+        @include responsive(xs) {
+            @include padding-left(45);
+            width:calc(100% - 145px);
+            max-width:calc(100% - 145px);
+            @include flex(0 0 calc(100% - 145px));
+        }
+    }
+}

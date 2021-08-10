@@ -1,0 +1,279 @@
+main.eventForm {
+    div.center {
+        height:100%;
+        
+        >p {
+            height:100%;
+            vertical-align:middle;
+        }
+        > input {
+            height:100%;
+            vertical-align:middle;
+        }
+    }
+
+
+    .error-message {
+        display:none;
+        padding:3px 10px;
+        background:color(red);
+        color:white;
+        font-size:rem(15);
+        margin-bottom:41px;
+        font-style:italic;
+        &.active {
+            display:block;
+        }
+    }
+
+
+    form {
+        .formError {
+            border-color:color(red) !important;
+        }
+
+        .float-left {
+            float:left;
+            width:520px;
+            margin-right:22px;
+        }
+
+        .propertyListingSelect {
+            .pulldown {
+                height:44px;
+                width:100%;
+                border: 1px solid #E5E5E5;
+                margin-bottom:10px;
+
+                >p {
+                    line-height:44px;
+                }
+
+                >ul {
+                    top:42px;
+                    border: 1px solid #E5E5E5;
+                }
+            }
+        }
+
+
+
+        p.form-section-label {
+            font-size: rem(15);
+            margin-bottom:12px;
+            font-weight:700;
+            margin-top:45px;
+            @include colourselect('');
+        }
+
+        hr {
+            background-color: color(dark);
+            height: 1px;
+            border: 0;
+            margin-bottom: 55px;
+        }
+
+        hr.light {
+            background-color: #d9d9d6;
+            height: 1px;
+            margin-bottom: 22px;
+        }
+
+        .areatext {
+            position: relative;
+            top: -20px;
+        }
+
+        
+        textarea {
+            &.job-description {
+                height: 174px;
+                padding:11px 15px;
+                width:100%;
+            }
+        }
+
+        fieldset {
+            margin: 12px 0;
+
+            label {
+                font-weight:normal;
+                font-size: rem(15);
+                margin-left:7px;
+            }
+        }
+        
+        input[type=radio] {
+            &.inline {
+                margin-top:20px;
+            }
+        }
+
+
+        input[type=text], input[type=password], input[type=email] {
+            display:block;
+            border:none;
+            height: 44px;
+            padding: 7px;
+            width:100%;
+            margin-bottom:12px;
+            padding-left:15px;
+            border-radius:6px;
+            border: 1px solid color(lightgrey);
+
+
+            &::placeholder {
+                font-size: rem(14);
+                color:color(lightgrey);
+            }
+            &::-webkit-input-placeholder {
+                font-size: rem(14);
+                color:color(lightgrey);
+            }
+            &::-moz-placeholder { /* Firefox 19+ */
+                font-size: rem(14);
+                color:color(lightgrey);
+            }
+            &:-ms-input-placeholder { /* IE 10+ */
+                font-size: rem(14);
+                color:color(lightgrey);
+            }
+            &:-moz-placeholder { /* Firefox 18- */
+                font-size: rem(14);
+                color:color(lightgrey);
+            }
+
+            &:disabled {
+                padding: 0px !important;
+                border: none;
+            }
+
+            &.eventStart, &.eventEnd {
+                // display:inline-block;
+                // width: auto;
+            }
+
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            border: 1px solid color(lightgrey);
+            border-radius:6px;
+            float:left;
+            margin-right:12px;
+            padding:10px;
+            height: 330px;
+            &::placeholder {
+                font-size: rem(14);
+                color:color(lightgrey);
+            }
+            &::-webkit-input-placeholder {
+                font-size: rem(14);
+                color:color(lightgrey);
+            }
+            &::-moz-placeholder { /* Firefox 19+ */
+                font-size: rem(14);
+                color:color(lightgrey);
+            }
+            &:-ms-input-placeholder { /* IE 10+ */
+                font-size: rem(14);
+                color:color(lightgrey);
+            }
+            &:-moz-placeholder { /* Firefox 18- */
+                font-size: rem(14);
+                color:color(lightgrey);
+            }
+
+        }
+
+        h3 {
+            font-size:rem(14);
+        }
+
+
+        button.submit {
+            margin-top:40px;
+            color:white;
+            &:disabled,
+            &[disabled] {
+                background-color: #cccccc;
+                color: #666666;
+            }
+            @include colourselectbackground('');
+
+        }
+        
+        .floatcontainer {
+            overflow:auto;
+        }
+        .uploadFileBtn {
+            float:left;
+            height:174px;
+            width:100%;
+            background:color(buttongrey);
+            cursor:pointer;
+            border-radius:6px;
+            padding:12px;
+            display:table;
+
+            @media screen and (max-width: $sm-break) {
+                margin-top:20px;
+                height:134px;
+
+            }
+
+
+            > div.innerImgBtn {
+                display:table-cell;
+                vertical-align:middle;
+                text-align:center;
+                height:100%;
+                border: 1px dashed black;
+                border-radius:3px;
+
+                > div.vertical {
+                    margin:auto;
+
+                    >p {
+                        font-size:rem(10);
+                        padding:0;
+                        margin:0;
+                        margin-top:7px;
+                    }
+                }
+            }
+
+        }
+        .imagearray {
+            clear:both;
+            margin:20px 0;
+            overflow:auto;
+            .formimage {
+                float:left;
+                margin-right:15px;
+                height:150px;
+                width:150px;
+                background-size:cover;
+            }
+        }
+        .images {
+            height:200px;
+            width:200px;
+        }
+
+        div.inline {
+            display:inline-block;
+            margin-right:35px;
+            &:last-of-type {
+                margin-right:0;
+            }
+        }
+
+        label {
+            font-size: rem(14);
+            color:color(dark);
+        }
+    }
+}
+

@@ -1,0 +1,101 @@
+.c-events-panel {
+
+    @include margin-bottom(25);
+
+    @include responsive(xs) {
+        @include margin-bottom(45);
+    }
+    @media #{$tablet} {
+        margin-bottom: 0;
+    }
+
+    &__head {
+        color: $mainColor;
+        @include font-size(16);
+        line-height: 1.35;
+        @include margin-bottom(15);
+        font-weight: $weightBold;
+
+        @include responsive(xs) {
+            @include font-size(18);
+            line-height: 1.35;
+        }
+    }
+
+    &__details {
+        width: 100%;
+        @media #{$mobile} {
+            width: auto;
+        }
+    }
+
+    &__details-lists {
+        width: 100%;
+        position: relative;
+        @include margin-bottom(15);
+
+        &:last-child,
+        &:only-child {
+            @include margin-bottom(0);
+        }
+    }
+
+    &__date {
+        top: 0;
+        left: 0;
+        z-index: 10;
+        color: $mainColor;
+        @include flexbox;
+        position: absolute;
+        @include font-size(20);
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        background-color: $white;
+        @include padding-bottom(5);
+        font-weight: $weightMedium;
+
+    }
+
+    &__month {
+        color: $greyish;
+        @include font-size(12);
+        font-weight: $weightRegular;
+        @include padding-left(6);
+        text-transform: uppercase;
+    }
+
+    &__excerpt {
+        position: relative;
+        @include padding-left(70);
+        @include padding-bottom(15);
+
+        &:before {
+            top: 0;
+            left: 38px;
+            width: 1px;
+            z-index: -1;
+            height: 100%;
+            content: ' ';
+            position: absolute;
+            background-color: rgba($greyish, .5);
+        }
+    }
+
+    &__name {
+        color: $black;
+        @include font-size(16);
+        line-height: 1.25;
+        font-weight: $weightBold;
+        @include margin-bottom(10);
+    }
+
+    &__time {
+        color: $greyish;
+        @include font-size(13);
+        line-height: 1.25;
+        font-weight: $weightRegular;
+        @include margin-bottom(0);
+        font-style: italic;
+    }
+}

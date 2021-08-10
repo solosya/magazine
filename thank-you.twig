@@ -1,0 +1,60 @@
+{{ set(this, 'title', 'Signup Successful') }}
+{% set networkData = _Network.getNetworkData() %}
+{% set config       = _Network.getThemeConfig() %}
+{% set thankyou = {} %}
+{% if config['thank-you-page'] %}
+        {% set thankyou = config['thank-you-page'] %}
+{% endif %}
+
+<main id="main" class="site-main" role="main">
+	<div class="o-media-hero relative">
+        <figure class="o-media-slider">
+            <picture class="image-cover">
+                {% if thankyou['image']['url'] is defined and thankyou['image']['url'] != '' %}
+                        <img class="image-cover" src="{{thankyou['image']['url']}}" alt="Banner Image" />
+                {% else %}
+                        <!--[if IE 9]><video style="display:none;"><![endif]-->
+                        <source 
+                                media="(max-width:767px)"
+                                sizes="100vw"
+                                srcset="{{networkData.templatePath}}/static/images/banner/slide_02_Mobile.jpg 2x" />
+                        <source 
+                                media="(min-width:768px)"
+                                sizes="33.3vw"
+                                srcset="{{networkData.templatePath}}/static/images/banner/slide_02.jpg 1x" />
+                        <!--[if IE 9]></video><![endif]-->
+                        <img class="image-cover" sizes="(min-width:601px) 33vw, 100vw" srcset="{{networkData.templatePath}}/static/images/banner/slide_02_Mobile.jpg 767w, {{networkData.templatePath}}/static/images/banner/slide_02.jpg 1200w" alt="Banner Image" />
+                {% endif %}
+            </picture>
+            <div class="o-media-hero_overlay">
+                <div class="o-media-hero_caption">
+                        <div class="o-media-hero_caption_balance">
+                                <div class="container">
+                                        <div class="o-media-hero_caption_wrapper">
+                                                {% if thankyou['maintext'] is defined and thankyou['maintext'] != '' %}
+                                                        <h2 class="o-media-hero_text text">{{thankyou['maintext']}}</h2>
+                                                {% else %}
+                                                        <h2 class="o-media-hero_text text">Thank you for <br class="hidden-xs">subscribing.</h2>
+                                                {% endif %}
+                                                <p>Visit the <a class="u-color--main" href="{{networkData.defaultBlogUrl}}/user/edit-profile"><b>My Account</b></a> page to update your details.</p>
+                                                
+                                                {% set buttonUrl = networkData.defaultBlogUrl %}
+                                                {% set buttonText = 'Start Reading' %}
+                                                {% if thankyou['button']['url'] is defined and thankyou['button']['url'] != '' %}
+                                                        {% set buttonUrl = thankyou['button']['url'] %}
+                                                {% endif %}
+                                                {% if thankyou['button']['text'] is defined and thankyou['button']['text'] != '' %}
+                                                        {% set buttonText = thankyou['button']['text'] %}
+                                                {% endif %}                                                                                                
+                                                <div class="o-media-hero_button-set">
+                                                        <a class="c-button c-button--rounded c-button--background-white c-button--blue-bordered" href="{{buttonUrl}}">{{buttonText}}</a>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+            </div>
+        </figure>
+	</div>
+	<!-- End Hero Banner -->
+</main>

@@ -1,0 +1,36 @@
+.blog-details {
+
+    background:#ececec;
+    @media #{$mobile}{
+        flex-direction:column;
+    }
+
+    &__img {
+        width:395px;
+        height: 235px;
+        background:grey;
+
+        @media #{$mobile} {
+            width:100%;
+            height:auto;
+        }
+        @media #{$tablet}{
+            width:300px;
+            height: 200px;
+        }
+    }
+
+    &__content {
+        font-family: $base-font-family;
+        @include font-size(15);
+        padding:37px;
+        @media #{$tablet}{
+            padding:25px;
+        }
+
+        >p {
+            margin-bottom:7px;
+        }
+    }
+
+}

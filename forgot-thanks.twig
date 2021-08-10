@@ -1,0 +1,20 @@
+{# empty Twig template #}
+{{ set(this, 'title', "Thank You") }}
+{% set config       = _Network.getThemeConfig() %}
+<div class="login-page">
+    <div class="container">
+        <div class="tab-content">
+            <div class="row">
+                <div class="col-12 col-lg-7 text-center">
+                    <p class="helper-text">Your reset password email has been sent successfully.</p>
+                    <a href="{{_AppHelper.getLoginUrl()}}" class="button green">Back to login</a>
+                </div>
+                <div class="col-12 offset-lg-1 col-lg-4">
+                    {% if config['inventory']['adSpace']['hpage'][0] is defined %}
+                        <div class="j-adslot" id="{{config['inventory']['adSpace']['hpage'][0]}}" data-adshape="hpage"></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

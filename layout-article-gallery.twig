@@ -1,0 +1,102 @@
+{% import "partials/quotes.twig" as quotes %}
+{{ set(this, 'title', article.title) }}
+{{ this.registerLinkTag({rel:'amphtml', href:_AppHelper.getServerUrl(false)~'?amp=1'}) }}
+
+{% set networkData = _Network.getNetworkData() %}
+{% set config       = _Network.getThemeConfig() %}
+{% set blogInfo = _Blog.getBlog() %}
+{% set articleImg = false %}
+{% if article.media|length > 0 %}
+    {% set articleImg = _Media.getMediaUrl(article.media[0],1094, 515, {'crop': 'fill', 'gravity': 'auto'} ) %}
+{% endif %}
+{% set articleBlog = article.blog.title | lower %}
+{% set publishDate = _AppHelper.getDateTimeBasedOnTimezone(article.publishDate, 'F, Y') %}
+
+{% set showPaywall = false %}
+{% if not _User.isAdminUser() and article.showPaywall == true  %}
+    {% set showPaywall = true %}
+{% endif %}
+{% set ArticleContent = article.content %}
+{% set watermark = false %}
+{% if config['watermark']['settings'] is defined and config['watermark']['sections'][articleBlog|lower] is defined %}
+    {% set watermark = config['watermark']['settings'] %}
+{% endif %}
+
+{% set watermark = false %}
+{% if config['watermark']['settings'] is defined and config['watermark']['sections'][articleBlog|lower] is defined %}
+    {% set watermark = config['watermark']['settings'] %}
+{% endif %}
+
+
+<main id="main" class="article-gallery u-margin-bottom-100" role="main" data-paywall="{{showPaywall}}">
+
+    <div class="container u-margin-top-30">
+        <div class="row">
+            <div class="col-12 col-lg-10 col-xl-8">
+
+                <div class="row">
+                    <div class="col-12">
+
+                        {{this.render('partials/gallery.twig', {
+                            media: article.media,
+                            type: 'article',
+                            default: true,
+                            galleryStyle: 'gallery',
+                            watermark: watermark,
+                            showPaywall: showPaywall
+                        }) | raw}}
+                    </div>
+                    <div class="col-12">
+                        <a href="{{blogInfo.url}}"><p class="article-gallery__category">{{article.label}}</p></a>
+                        <h1 class="article-gallery__title">{{ quotes.smarten(article.title) }}</h1>
+                        <time class="article-gallery__date" datetime="{{publishedDate}}">{{article.publishedDate}}</time>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="c-article__container c-article__container-sm u-margin-top-40">
+                                {{ ArticleContent | _resizeImages({'width': 600}) | raw }}
+                        </div>
+
+
+
+                        {% if showPaywall == true %}
+                            {{this.render('partials/article/paywall_article_notice.twig', {networkData:networkData}) | raw}}
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-none d-lg-block col-md-2">
+
+            {% if showPaywall != true %}
+                <div id="owl-thumbs" class="owl-thumbs article-gallery__thumbs" data-slider-id="1">
+                    {% for image in article.media %}
+                        {% set articleImg = _Media.getMediaUrl(image,152, 95, {'crop': 'fill', 'gravity':'faces'} ) %}
+                        <img id="owl-{{loop.index}}" src="{{articleImg}}" class="owl-thumb-item">
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            </div>
+        
+        </div>
+
+        
+    </div>
+
+    {% set theKeywords = '' %}
+    {% if article.keywords is defined and article.keywords != '' %}
+        {% set theKeywords = article.keywords %}
+    {% elseif blogInfo.keywords is defined and blogInfo.keywords != '' %}
+        {% set theKeywords = blogInfo.keywords %}
+    {% endif %}
+    <div class="j-keyword-cont" data-keywords="{{theKeywords}}"></div>
+</main>
+
+
+

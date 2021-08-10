@@ -1,0 +1,48 @@
+.c-header-0-top-bar,.c-header-1-top-bar,.c-header-2-top-bar,.c-header-3-top-bar {
+    order:1;
+    border-bottom: 1px solid $offwhite;
+    @include flexbox();
+    @include justify-content(flex-end);
+    &-2{
+        margin-top: 20px;
+        margin-bottom: 15px;
+        border-bottom: none; 
+    }
+    
+
+    &__link {
+        color: $greyish;
+        @include font-size(11);
+        line-height:5px;
+        letter-spacing: 0.4px;
+        padding: 6px 11px;
+        font-weight: $weightRegular;
+        white-space:nowrap;
+        @include transition(all 0.3s ease);
+        // &-2{
+        //     color: white;
+        // }
+        &:last-child{
+            padding-right: 0;
+        }
+
+        &:hover {
+            color: $mainColor;
+        }
+    }
+    @media #{$mobile} {
+        display:none;
+    }
+
+}
+.c-header-2-top-bar{
+    margin-top: 20px;
+    margin-bottom: 15px;
+    border-bottom: none; 
+}
+.c-header-1-top-bar{
+    border-bottom: 0;
+}
+.c-header-3-top-bar{
+    border-bottom: 0;
+}

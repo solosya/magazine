@@ -1,0 +1,116 @@
+{% set loggedin = _User.isGuest() ? false : true %}
+{% set user = loggedin ? _User.getUser() : null %}
+
+
+{% set logo = network.templatePath ~ '/static/images/logo.svg'%}
+
+{% set logoWidth = 142 %}
+{% set logoHeight = 35 %}
+
+{% if config['logo'] is defined and config['logo']['mobile'] is defined %}
+    {% if config['logo']['mobile']['width'] is defined %}
+        {% set logoWidth = config['logo']['mobile']['width'] %}
+
+        {% if config['logo']['mobile']['height'] is not defined %}
+            {% set logoHeight = 0 %}
+        {% endif %}
+    {% endif %}
+
+    {% if config['logo']['mobile']['height'] is defined %}
+        {% set logoHeight = config['logo']['mobile']['height'] %}
+
+        {% if config['logo']['mobile']['width'] is not defined %}
+            {% set logoWidth = 0 %}
+        {% endif %}
+
+    {% endif %}
+{% endif %}
+
+{% if network.logoMedia | length > 0 %}
+    {% set logo = _Media.getMediaUrl(network.logoMedia, logoWidth, logoHeight, {'crop': 'fit'} ) %}
+{% endif %}
+
+
+
+{% set paywall = true %}
+{% if config['paywall'] is defined and config['paywall'] == false %}
+    {% set paywall = false %}
+{% endif %}
+
+
+
+
+{% set headermenu = getCache("headermenu") %}
+{% if (headermenu is empty) %}
+    {% set headermenu = _Menu.get({'menuType': 'header', "menuGroupName":"header-main"}) %}
+    {% set cache = setCache("headermenu", headermenu, 500) %}
+{% endif %}
+
+
+
+<header>
+
+    <a href="{{network.defaultBlogUrl}}" class="header__logo-container">
+        <figure class="header__logo-figure">
+            <amp-img layout="fixed" width="{{logoWidth}}" height="{{logoHeight}}" src="{{logo}}" class=""></amp-img>
+        </figure>
+    </a>
+
+
+
+
+    <div class="header__menu-div">
+        <div class="o-hamburger" role="button" on='tap:sidebar.open'  tabindex="1"></div>
+    </div>
+    {# <button class="header-icon-1 o-hamburger " on='tap:sidebar.open'></button> #}
+    <a href="{{logoUrl}}" class="header-logo"></a>
+</header>
+<div class="header-clear"></div>
+
+
+
+<amp-sidebar id="sidebar" layout="nodisplay" side="right">
+    
+    <div class="close__button">
+        <div class="o-close o-close--dark" on='tap:sidebar.close' role="1" tabindex="1"></div>
+    </div>
+
+    <div class="c-search-bar">
+        <form class="c-search-bar__form" method="get" id="searchform" target="_blank" action="{{networkData.defaultBlogUrl}}/search">
+            {# <div class="c-search-bar__submit"></div> #}
+            <div class="c-search-bar__icon">{{ this.render('../../../partials/icons.twig', {icon: 'search'} ) | raw }}</div>
+
+            <input class="c-search-bar__input" type="text" name="s" placeholder="Search"/>
+            <button class="c-search-bar__button c-button c-button--rounded c-button--blue" type="submit" id="searchsubmit">Go</button>
+        </form>
+    </div>
+
+
+    {% for menuItem in headermenu %}
+    
+        {% if menuItem is defined %}
+            {% set activeClass = (menuItem.link == _AppHelper.getServerUrl()) ? 'active' : ''%}
+            {% set externalClass = (menuItem.isExternal) ? 'external-link' : '' %}
+            {% set hasChildren = menuItem.children is defined and menuItem.children | length > 0 ? true : false %} 
+
+            {% if hasChildren %}
+                <amp-accordion class="sidebar-menu">
+                    <section>
+                        <h4 class='menu-heading'>{{ ((menuItem.label is empty) ? ((menuItem.pageTitle is empty)? menuItem.blogTitle : menuItem.pageTitle) : menuItem.label )}} <i class="fa fa-angle-down"></i></h4>
+                        <ul>
+                            {% for childItem in menuItem.children%}
+                                {% set externalClass = (childItem.isExternal) ? 'external-link' : '' %}
+                                {% set name = ((childItem.label is empty) ? ((childItem.pageTitle is empty)? childItem.blogTitle : childItem.pageTitle) : childItem.label) %}
+                                <li><a href="{{childItem.link |raw}}" {% if childItem.target != "" %}target="{{childItem.target}}"{% endif %}><i class="fa fa-angle-right"></i>{{ name }}</a></li>
+                                    {% endfor %}
+                        </ul>
+                    </section>
+                </amp-accordion>
+            {% else %}
+                <div class="sidebar-menu">
+                    <a href="{{menuItem.link |raw}}" class="sidebar-item channel-{{menuItem.id}} {{activeClass}} {{externalClass}}" {% if menuItem.target != "" %}target="{{menuItem.target}}"{% endif %}>{{ ((menuItem.label is empty) ? ((menuItem.pageTitle is empty)? menuItem.blogTitle : menuItem.pageTitle) : menuItem.label )}} </a>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</amp-sidebar>

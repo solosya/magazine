@@ -1,0 +1,151 @@
+{{ set(this, 'title', _Blog.getBlogTitle()) }}
+{% set networkData = _Network.getNetworkData() %}
+{% set site        = networkData.title | lower | split(" ")[0]%}
+{% set config       = _Network.getThemeConfig() %}
+{% set layoutTitle  = _Page.getLayoutTitle() | lower | replace({' ': '_'}) %}
+
+
+{% set limit = 14 %}
+
+{% set blogData     = _Blog.getBlog() %}
+{% set articlesArr = _Blog.getBlogFeed({'limit': limit, 'offset': 0}) %}
+{% set articles = articlesArr.articles %}
+{% set firstCount = articles | length %}
+
+
+
+
+{% set popularArticles = _Article.getPopularArticles({ limit: 10, sortBy: 'VIEWS', scope: 'blog' }) %}
+
+
+<!-- used to index each article as we loop over throughout the template -->
+{% set articleCount = _AppHelper.getApplicationEnv() == 'DEV' ? 0 : 0 %}
+{% set popCount = _AppHelper.getApplicationEnv() == 'DEV' ? 0 : 0 %}
+{% set dev = _AppHelper.getApplicationEnv() == 'DEV' ? false : false %}
+
+{% if config['watermark']['settings'] is defined and config['watermark']['sections'][blogData.title|lower] %}
+    {% set watermark = config['watermark']['settings'] %}
+{% else %}
+    {% set watermark = 'FALSE' %}
+{% endif %}
+
+
+<main id="main" class="site-main u-padding-top-60{% if layoutTitle  == 'gallery_grey_layout' %} u-grey-background{% endif %}" role="main" data-article-limit="{{limit}}" data-article-count="{{articles | length}}">
+   
+    <div class="container ">
+
+        <div class="row" id="loadmore_section">
+            <div class="col-12">
+                <div class="c-page-head c-page-head-xs">
+                    <div class="u-heading__large u-heading__large-xs u-pr--6">{{blogData.title}}</div>
+                    
+                </div>
+            </div>
+            
+            {% if layoutTitle  != 'digital_edition_layout' %}
+                {% for i in 0..6 if articles[articleCount] %}
+                    <div class="col-12 col-md-4 col-lg-3">
+                        {{this.render('partials/_single-article.twig', {
+                            article: articles[articleCount], 
+                            position: (articleCount+1),
+                            imageSize: {width: 360, height: 270},
+                            containerClass: "card-4-mobile card-4-tablet card-4-desktop",
+                            watermark: watermark
+                        }) | raw}}
+                        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                    </div>
+                {% endfor %}
+            {% else %}
+
+                {% if articles[articleCount] %}
+                    <div class="col-12 col-md-4 col-lg-6">
+                        {{this.render('partials/_single-article.twig', {
+                            article: articles[articleCount], 
+                            position: (articleCount+1),
+                            imageSize: {width: 300, height: 326},
+                            containerClass: "card-4-mobile card-4-tablet card-9-desktop",
+                            watermark: watermark
+                        }) | raw}}
+                        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                    </div>
+                {% endif %}
+
+                {% for i in 0..4 if articles[articleCount] %}
+                    <div class="col-12 col-md-4 col-lg-3">
+                        {{this.render('partials/_single-article.twig', {
+                            article: articles[articleCount], 
+                            position: (articleCount+1),
+                            imageSize: {width: 360, height: 270},
+                            containerClass: "card-4-mobile card-4-tablet card-4-desktop",
+                            watermark: watermark
+                        }) | raw}}
+                        {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+
+            <div class="col-12 col-lg-3">
+                {% if config['inventory']['adSpace']['mrec'][0] is defined %}
+                    <div class="j-adslot" id="{{config['inventory']['adSpace']['mrec'][0]}}" data-adshape="mrec"></div>
+                {% endif %}
+            </div>
+            {% for i in 0..7 if articles[articleCount] %}
+                <div class="col-12 col-md-4 col-lg-3">
+                    {{this.render('partials/_single-article.twig', {
+                        article: articles[articleCount], 
+                        position: (articleCount+1),
+                        imageSize: {width: 360, height: 270},
+                        containerClass: "card-4-mobile card-4-tablet card-4-desktop",
+                        watermark: watermark
+                    }) | raw}}
+                    {% set articleCount = (dev) ? articleCount : articleCount + 1 %}
+                </div>
+            {% endfor %}
+            <div class="col-12">
+                {% if config['inventory']['adSpace']['banner'][1] is defined %}
+                    <div class="j-adslot u-margin-bottom-40 u-mobile-margin-bottom-15" id="{{config['inventory']['adSpace']['banner'][1]}}" data-adshape="banner"></div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if articles|length >= limit %}
+            <section class="">
+                <div class="row">
+                    {{ this.render('partials/ajaxarticles_new.twig', {
+                        name            : "section-load",
+                        label           : "",
+                        buttonClass     : "c-button c-button--rounded c-button--blue-bordered u-margin-bottom-40",
+                    }) | raw }}
+                </div>
+            </section>
+        {% endif %}
+
+    </div>
+    <div class="j-keyword-cont" data-keywords="{{blogData.keywords}}"></div>
+</main>
+
+
+
+<script>
+    // main script is defered so event listener makes sure
+    // defered script is loaded before this runs
+    document.addEventListener("DOMContentLoaded", function(event) {
+        
+        Acme.loadMore = new Acme.View.articleFeed({
+            model           : new Card(),
+            infinite        : true,
+            container       : 'loadmore_section',
+            offset          : 12,
+            limit           : 12,
+            name            : 'section-load',
+            blogid          : "{{ blogData['guid'] }}",
+            card_class      : 'card-4-mobile card-4-tablet card-4-desktop col-12 col-md-4 col-lg-3',
+            non_pinned      : "{{ articlesArr.existingNonPinnedCount }}"
+        });
+
+
+    });
+</script>
+
+            {# non_pinned      : {{articlesArr.existingNonPinnedCount}}, #}

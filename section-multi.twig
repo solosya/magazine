@@ -1,0 +1,138 @@
+{{ set(this, 'title', _Blog.getBlogTitle()) }}
+
+{# {% cache 'indexCache_1' 300 %} #}
+
+{% set networkData  = _Network.getNetworkData() %}
+{% set layoutTitle  = _Page.getLayoutTitle() | lower | replace({' ': '_'}) %}
+{% set blogData     = _Blog.getBlog() %}
+{% set homeBlog     = blogData['title'] | lower %}
+{% set config       = _Network.getThemeConfig() %}
+{% set layout       = blogData.layout %}
+{% set dev          = _AppHelper.getApplicationEnv() == 'DEV' ? false : false %}
+
+{% set bannerSpots  = [3,5] %}
+{% set blogFeeds    = {} %}
+{% set panels       = [] %}
+{% set bannerSlots = [] %}
+
+
+
+{# *******************************************************
+            CONFIG OPTIONS SET IN PLATFORM
+******************************************************* #}
+
+{% if config['active'] is not defined or config['active'] == true %}
+
+    {% if config['page']['news']['sections'] is defined %}
+        {% set panels = config['page']['news']['sections'] %}
+    {% endif %}
+
+    {% if config['page']['news']['blogFeeds'] is defined %}
+        {% set blogFeeds = config['page']['news']['blogFeeds'] %}
+    {% endif %}
+
+    {% if config['inventory'][blogData.title]['bannerSpots'] is defined %}
+        {% set bannerSpots = config['inventory'][blogData.title]['bannerSpots'] %}
+    {% endif %}
+
+{% endif %}
+
+
+
+
+{# <div class="clearfix"></div> #}
+
+
+<main id="main" class="site-main" role="main" data-layout="{{layoutTitle}}">
+
+<div class="u-section-header u-margin-top-25">
+    <div class="container">
+        <h2 class="u-section-header__title">{{_Blog.getBlogTitle()}}</h2>
+    </div>
+</div>  
+
+{# *******************************************************
+                Fetch all needed feeds
+******************************************************* #}
+{% for key in blogFeeds | keys %}
+
+    {% set break = false %}
+    {% for blog in networkData.networkBlogs if not break %}
+
+
+        {# FOR DEV  #}
+        {% if dev %}
+            {% set blogFeeds = blogFeeds | merge({
+                (key) : { 
+                    'feed' : _Blog.getBlogFeed({'limit': 1, 'offset': 0}), 
+                    'link' : blog.link 
+                    } 
+                }) %}
+        {% endif %}
+
+
+        {# FOR PRODUCTION #}
+        {% if not dev and blog.title | lower == key | lower %}
+
+            {% set feed = _Blog.getBlogFeed({
+                'offset' : 0, 
+                'blogid' : blog.guid,
+                'limit'  : blogFeeds[key]['limit']
+                })
+            %}
+
+            {% set blogFeeds = blogFeeds | merge({
+                (key) : {
+                    'feed'      : feed,
+                    'link'      : blog.link
+                    }
+                }) %}
+            {% set break = true %}
+        {% endif %}
+
+    {% endfor %}
+{% endfor %}
+{# 
+<pre>
+{{dump(blogFeeds)}}
+</pre> #}
+
+
+    {# *******************************************************
+                        RENDER PANELS
+    ******************************************************* #}
+    {% set bannerNo = 1 %}
+    {% for pagesection in panels | keys %}
+
+       {% if panels[pagesection]['active'] is not defined or panels[pagesection]['active'] == true %}
+       
+            {% set params = {
+                'networkData' : networkData,
+                'blogFeeds'   : blogFeeds,
+                'blogData'    : blogData,
+                'config'      : panels[pagesection],
+                'dev'         : dev
+            } %}
+
+            {{this.render('render.twig', params) | raw}} 
+
+            {% if loop.index in bannerSpots %}
+                {% if config['inventory']['adSpace']['banner'][bannerNo] is defined %}
+                    <div class="j-adslot" id="{{config['inventory']['adSpace']['banner'][bannerNo]}}" data-adshape="banner"></div>
+                {% endif %}
+                {% set bannerNo = bannerNo + 1 %}
+            {% endif %}
+
+
+        {% endif %}
+
+    {% endfor %}
+
+
+    <div class="j-keyword-cont" data-keywords="{{blogData.keywords}}"></div>
+</main><!-- .site-main -->
+
+
+
+
+{# {% endcache %} #}

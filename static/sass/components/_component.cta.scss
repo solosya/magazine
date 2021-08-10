@@ -1,0 +1,104 @@
+.c-cta {
+    &-section{
+        height: 417px;
+        display: block;
+        position: relative;
+        border: solid 1px $grey;
+        @media #{$tablet}{
+            height: 340px;
+        }
+        @media #{$mobile}{
+            height: 250px;
+        }
+        &__image{
+            max-width: calc(100% - 30px);
+            display: block;
+            margin: 0 auto;
+            >img{
+                width: 100%;
+            }
+            @media #{$tablet}{
+                max-width: calc(100% - 70px);
+            }
+            @media #{$mobile}{
+                max-width: unset;
+                height: 180px;
+                >img{
+                    width:unset;
+                    height: 100%;
+                    display: block;
+                    margin: 0 auto;
+                }
+                &:after{
+                    content: '';
+                    height: 1px;
+                    background: $greyish;
+                    width: calc(100% - 30px);
+                    display: block;
+                    margin: 10px auto;
+                }
+            }
+            
+        }
+        &__button{
+            display: block;
+            position: relative;
+            padding: 30px 30px 0;
+            @media #{$tablet}{
+                padding-top: 10px;
+            }
+            @media #{$mobile}{
+                padding: 0;
+                position: absolute;
+                left: 15px;
+                bottom: 5px;
+            }
+            >a {
+                >svg{
+                    margin-left: auto;
+                    margin-right: auto;
+                    display: block;
+                    >path{
+                        fill: $grey;
+                    }
+                }
+                &:hover{
+                    >svg{
+                        >path{
+                            fill: $greyish;
+                        }
+                    }
+                }
+            }
+            &:after{
+                content: '';
+                height: 1px;
+                background: $greyish;
+                width: 100%;
+                display: block;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                @media #{$mobile}{
+                    display: none;
+                }
+            }
+        }
+        &__text{
+            color: $greyish;
+            font-size: rem(19);
+            font-weight: $weightMedium;
+            padding: 0 30px;
+            text-align: center;
+            @media #{$tablet}{
+                font-size: rem(15);
+            }
+            @media #{$mobile}{
+                padding-left: 80px;
+                font-size: rem(15);
+                position: absolute;
+                bottom: 5px;
+                min-height: 45px;
+            }
+        }
+    }
+}
