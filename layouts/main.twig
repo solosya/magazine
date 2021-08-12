@@ -91,7 +91,7 @@
 
     {% if _AppHelper.getApplicationEnv() == 'PROD'%}
 
-        <link rel="stylesheet" href="{{networkData.templatePath}}/static/deploy/concat.min.css?v=1b9848c0" type="text/css" media="all">
+        <link rel="stylesheet" href="{{networkData.templatePath}}/static/deploy/concat.min.css?v=5fb8bc12" type="text/css" media="all">
 
     {% else %}
 
@@ -218,7 +218,7 @@
 
 
 
-    {% set footerTemplate = '' %}
+    {# {% set footerTemplate = '' %}
     {% if config['footer-style'] is defined %}
         {% set footerTemplate = "_" ~ config['footer-style'] %}
     {% endif %}
@@ -230,7 +230,12 @@
             addresses: addresses,
             config: config 
         }) | raw }}
-    {% endif %}
+    {% endif %} #}
+
+    
+    {{ this.render('partials/footer/footer.twig', {
+        networkData : networkData
+    }) | raw}}
 
 
 

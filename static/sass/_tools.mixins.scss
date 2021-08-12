@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @mixin card-name($name) {
 	//move this counter up to chage the file without changing any actual styles
 	counter: 6;
@@ -521,8 +523,8 @@ align-content:$value;
 
 
 @mixin font-size($sizeValue: 16, $line: $sizeValue * 1.2) {
-	font-size: ($sizeValue / 16) + rem;
-	line-height: ($line / 16) + rem;
+	font-size: math.div($sizeValue, 16) + rem;
+	line-height: math.div($line, 16) + rem;
 }
 
 @mixin calc($property, $expression) {
@@ -573,70 +575,70 @@ $breakpoints: (
 /* Padding */
 @mixin padding($padding) {
 	@if length($padding)==1 {
-			padding: $padding/16 + rem;
+			padding: math.div($padding, 16) + rem;
 	}
 
 	@if length($padding)==2 {
-			padding: nth($padding, 1)/16 + rem nth($padding, 2)/16 + rem;
+			padding: math.div(nth($padding, 1), 16) + rem math.div(nth($padding, 2), 16) + rem;
 	}
 
 	@if length($padding)==3 {
-			padding: nth($padding, 1)/16 + rem nth($padding, 2)/16 + rem nth($padding, 3)/16 + rem;
+			padding: math.div(nth($padding, 1), 16) + rem math.div(nth($padding, 2), 16) + rem math.div(nth($padding, 3), 16) + rem;
 	}
 
 	@if length($padding)==4 {
-			padding: nth($padding, 1)/16 + rem nth($padding, 2)/16 + rem nth($padding, 3)/16 + rem nth($padding, 4)/16 + rem;
+			padding: math.div(nth($padding, 1), 16) + rem math.div(nth($padding, 2), 16) + rem math.div(nth($padding, 3), 16) + rem math.div(nth($padding, 4), 16) + rem;
 	}
 }
 
 @mixin padding-top($padding-top) {
-	padding-top: $padding-top/16 + rem;
+	padding-top: math.div($padding-top, 16) + rem;
 }
 
 @mixin padding-right($padding-right) {
-	padding-right: $padding-right/16 + rem;
+	padding-right: math.div($padding-right, 16) + rem;
 }
 
 @mixin padding-bottom($padding-bottom) {
-	padding-bottom: $padding-bottom/16 + rem;
+	padding-bottom: math.div($padding-bottom, 16) + rem;
 }
 
 @mixin padding-left($padding-left) {
-	padding-left: $padding-left/16 + rem;
+	padding-left: math.div($padding-left, 16) + rem;
 }
 
 @mixin margin($margin) {
 	@if length($margin)==1 {
-			margin: $margin/16 + rem;
+			margin: math.div($margin, 16) + rem;
 	}
 
 	@if length($margin)==2 {
-			margin: nth($margin, 1)/16 + rem nth($margin, 2)/16 + rem;
+			margin: math.div(nth($margin, 1), 16) + rem math.div(nth($margin, 2), 16) + rem;
 	}
 
 	@if length($margin)==3 {
-			margin: nth($margin, 1)/16 + rem nth($margin, 2)/16 + rem nth($margin, 3)/16 + rem;
+			margin: math.div(nth($margin, 1), 16) + rem math.div(nth($margin, 2), 16) + rem math.div(nth($margin, 3), 16) + rem;
 	}
 
 	@if length($margin)==4 {
-			margin: nth($margin, 1)/16 + rem nth($margin, 2)/16 + rem nth($margin, 3)/16 + rem nth($margin, 4)/16 + rem;
+			margin: math.div(nth($margin, 1), 16) + rem math.div(nth($margin, 2), 16) + rem math.div(nth($margin, 3), 16) + rem math.div(nth($margin, 4), 16) + rem;
 	}
 }
 
 @mixin margin-top($margin-top) {
-	margin-top: $margin-top/16 + rem;
+	margin-top: math.div($margin-top, 16) + rem;
 }
 
 @mixin margin-bottom($margin-bottom) {
-	margin-bottom: $margin-bottom/16 + rem;
+	margin-bottom: math.div($margin-bottom, 16) + rem;
 }
 
 @mixin margin-left($margin-left) {
-	margin-left: $margin-left/16 + rem;
+	margin-left: math.div($margin-left, 16) + rem;
 }
 
 @mixin margin-right($margin-right) {
-	margin-right: $margin-right/16 + rem;
+	margin-right: math.div($margin-right, 16) + rem;
 }
 
 // @mixin defineColorHSL($color, $hue, $saturation, $lightness){
