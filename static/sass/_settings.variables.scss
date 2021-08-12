@@ -1,8 +1,3 @@
-//Fonts
-$font-family-sans-serif: var(--main-font);
-$font-family-serif: var(--sec-font);
-$base-font-family: var(--main-font) !default;
-
 $iconfont: "FontAwesome";
 
 // Font Sizing
@@ -14,8 +9,8 @@ $uppercase: uppercase;
 // ================================
 
 /* Primary Fonts Style */
-$primaryFont: var(--main-font);
-$secondaryFont: var(--sec-font);
+$primaryFont: "nimbus-sans", sans-serif;
+$secondaryFont: "baskerville-display-pt";
 $weightLight: 300;
 $weightRegular: 400;
 $weightMedium: 500;
@@ -28,13 +23,19 @@ $font-unit: 0em;
 $browser-context: $font-size-base;
 $baseFontSize: 16px; /* ($baseFontSize * 1) + 0px; */
 
-// //colors
+//Fonts
+$font-family-sans-serif: $primaryFont;
+$font-family-serif: $secondaryFont;
+$base-font-family: $primaryFont !default;
+
+//colors
 $darkgrey: #383737;
 $darkergrey: #979797;
 
 $greyish: #595859;
 $grey: #d8d8d8;
 $grey2: #7f7f7f;
+$grey3: #636567;
 $black: #000000;
 $transparent: rgba(0, 0, 0, 0);
 $blue: #4a90e2;

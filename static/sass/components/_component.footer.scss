@@ -4,8 +4,47 @@
   background: $white;
 
   &__main {
+    border-top: 1px solid rgba($grey3, 0.5);
   }
   &__bottom {
+    border-top: 1px solid rgba($grey3, 0.5);
+    background: $white;
+
+    &-p2 {
+      background-color: $black;
+      min-height: 56px;
+      @include flexbox;
+      @include align-items(center);
+
+      &-container {
+        @include flexbox;
+        @include align-items(center);
+        @include justify-content(space-between);
+      }
+    }
+
+    &__info {
+      @include flexbox;
+      @include align-items(center);
+
+      &__copy {
+        color: $white;
+        @include font-size(12);
+        line-height: 1.33;
+        font-weight: $weightRegular;
+      }
+
+      &__nav {
+        a {
+          color: $white;
+          @include font-size(12);
+          line-height: 1.33;
+          font-weight: $weightRegular;
+          text-decoration: none;
+          margin-left: 56px;
+        }
+      }
+    }
   }
 }
 
