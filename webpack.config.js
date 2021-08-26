@@ -12,6 +12,11 @@ module.exports = {
   optimization: {
     minimize: true
   },
+  resolve: {
+    alias: {
+        'handlebars': 'handlebars/dist/handlebars.js'
+    }
+ },
   module: {
     rules: [
       {

@@ -14,7 +14,7 @@ export const Card = function(attrs = {}) {
     this.data = attrs;
     this.events();
 };
-
+window.Card = Card;
 
 Card.prototype.render = function(options = {})
 {

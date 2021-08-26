@@ -1,5 +1,3 @@
-{# {{ use('yii/web/JqueryAsset') }} #}
-
 {% set networkData   = _Network.getNetworkData() %}
 {% set blogData      = _Blog.getBlog() %}
 {% set addresses     = blogData.settings['contact'] %}
@@ -10,10 +8,6 @@
 {% set config        = _Network.getThemeConfig() %}
 
 
-{# If url uses port numbers append to site url data #}
-{% if url['port'] %}
-    {% set networkData = networkData | merge({ "defaultBlogUrl" : networkData['defaultBlogUrl'] ~ ":" ~ url['port'] }) %}
-{% endif %}
 
 {% set showPaywall = false %}
 {% set paywallOn = blogData['showPaywall'] %}
@@ -21,10 +15,6 @@
 {% set isAdmin = _User.isAdminUser() %}
 
 
-{% set squeeze = false %}
-{% if 'auth login' in pageClass %}
-    {% set squeeze = true %}
-{% endif %}
 
 
 {% if not _User.isAdminUser() and paywallOn == 1 %}
@@ -85,30 +75,13 @@
 
 
 
-    {# {% set isPage = 'content_box_page' in _Page.getBodyClass() and 'page-contact-us' not in _Page.getBodyClass() %} #}
-
-
-
     {% if _AppHelper.getApplicationEnv() == 'PROD'%}
-
         <link rel="stylesheet" href="{{networkData.templatePath}}/static/deploy/concat.min.css?v=1b9848c0" type="text/css" media="all">
-
     {% else %}
-
         <link rel='stylesheet' href='{{networkData.templatePath}}/static/deploy/concat.css' type='text/css' media='all' />
-        <link rel='stylesheet' href='{{networkData.templatePath}}/static/development/js/plugins/owl.carousel.css' type='text/css' media='all' />
-        <link rel='stylesheet' href='{{networkData.templatePath}}/static/development/js/plugins/owl.theme.default.css' type='text/css' media='all' />
-
     {% endif %}
 
-    {# {% if isPage %}
-            <link href="{{_AppHelper.getAssetsStaticPath()}}/dist/vendors/ContentBox/assets/minimalist-basic/content-bootstrap.css" rel="stylesheet" type="text/css" />
-            <link href="{{_AppHelper.getAssetsStaticPath()}}/dist/vendors/ContentBox/box/box.css" rel="stylesheet" type="text/css" />
-            <link href="{{_AppHelper.getAssetsStaticPath()}}/dist/vendors/ContentBox/contentbuilder/contentbuilder.css" rel="stylesheet" type="text/css" />
-            <link href="{{_AppHelper.getAssetsStaticPath()}}/dist/vendors/ContentBox/contentbox/contentbox.css" rel="stylesheet" type="text/css" />
-    {% endif %} #}
 
-    <script src="https://js.stripe.com/v3/"></script>
 
 
 
@@ -185,13 +158,11 @@
         {% set headerStyle = config['header-style'] %}
     {% endif %}
 
-    {% if squeeze == false %}
-        {{ this.render('partials/header/_header' ~ headerStyle ~ '.twig', {
-            networkData: networkData, 
-            paymeter: paymeter,
-            config: config
-        }) | raw }}
-    {% endif %}
+    {{ this.render('partials/header/_header' ~ headerStyle ~ '.twig', {
+        networkData: networkData, 
+        paymeter: paymeter,
+        config: config
+    }) | raw }}
 
 
 
@@ -224,13 +195,11 @@
     {% endif %}
 
 
-    {% if squeeze == false %}
-        {{ this.render('partials/footer/footer' ~ footerTemplate ~ '.twig', {
-            networkData : networkData,
-            addresses: addresses,
-            config: config 
-        }) | raw }}
-    {% endif %}
+    {{ this.render('partials/footer/footer' ~ footerTemplate ~ '.twig', {
+        networkData : networkData,
+        addresses: addresses,
+        config: config 
+    }) | raw }}
 
 
 

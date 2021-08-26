@@ -113,10 +113,6 @@ gulp.task('scripts-concat', function(){
       .pipe(concat('concat.js'))
       .pipe(gulp.dest('./static/js'))
       .pipe(gp_rename('vendor.js'))
-      .pipe(terser())
-      // .pipe(uglify().on('error', function(err) {
-      //     gutil.log(gutil.colors.red('[Error]'), err.toString())
-      // }))
       .pipe(gulp.dest('./static/js'))
       .pipe(hasher());        
 
