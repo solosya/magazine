@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @function em($pixels, $context: $browser-context) {
     @if (unitless($pixels)) {
         $pixels: $pixels * 1px;
@@ -7,7 +9,7 @@
         $context: $context * 1px;
     }
 
-    @return $pixels / $context * 1em;
+    @return math.div($pixels, $context) * 1em;
 }
 
 @function color($c) {
@@ -23,7 +25,7 @@
         $context: $context * 1px;
     }
 
-    @return $pixels / $context * 1rem;
+    @return math.div($pixels, $context) * 1rem;
 }
 
 @function lightness($color, $lightnessMultiplier){
