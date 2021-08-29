@@ -132,21 +132,29 @@
                 <div class="col-4 col-lg-3">
                     <div class="c-footer__address__container">
                         <div class="c-footer__address__heading">Address</div>
-                        <div class="c-footer__address__content address">532 Smith Street Collingwood VIC Australia</div>
+                        <div class="c-footer__address__content address">
+                            {{addresses.address}}<br />{{addresses.city}}<br />{{addresses.state}}
+                            {{addresses.postcode}}</p>
+                        </div>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="c-footer__address__container">
                         <div class="c-footer__address__heading">Email</div>
+                        {% if addresses.email != "" %}
                         <div class="c-footer__address__content">
-                            <a href="mailto:info@magazineemail.com.au">info@magazineemail.com.au</a>
+                            <a href="mailto:{{addresses.email}}"
+                                class="c-footer__addresses__content">{{addresses.email}}</a>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-4 col-lg-3">
                     <div class="c-footer__address__container">
                         <div class="c-footer__address__heading">Telephone</div>
-                        <div class="c-footer__address__content">1300 545 600</div>
+                        {% if addresses.phone != "" %}
+                        <div class="c-footer__address__content">{{addresses.phone}}</div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-2 d-none d-lg-flex justify-content-end">
