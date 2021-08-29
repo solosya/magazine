@@ -1,0 +1,33 @@
+
+/* Begin nav 1 style */
+
+.c-nav {
+    $selfNav: &;
+    &.c-nav-1 {
+      @include flexbox;
+      @include align-items(center);
+      #{$selfNav} {
+        &__grid {
+          @include flexbox;
+          li {
+            margin-right: 30px;
+          }
+        }
+        &__item {
+          color: $grey3;
+          @include font-size(12);
+          line-height: 1.33;
+          text-decoration: none;
+        }
+        &--signIn {
+          color: $black;
+          font-style: italic;
+          @include font-size(16);
+          line-height: 1.5;
+          font-family: $secondaryFont;
+        }
+      }
+    }
+  }
+  
+  /* End nav 1 style */

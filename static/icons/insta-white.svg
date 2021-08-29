@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 56.3 (101010) - https://sketch.com -->
+    <title>E472404A-D14D-4B75-A582-6D8E30927162</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <path d="M2.19504,0.428929605 L14.19504,0.428929605 C15.2996095,0.428929605 16.19504,1.3243601 16.19504,2.4289296 L16.19504,14.4289296 C16.19504,15.5334991 15.2996095,16.4289296 14.19504,16.4289296 L2.19504,16.4289296 C1.0904705,16.4289296 0.19504,15.5334991 0.19504,14.4289296 L0.19504,2.4289296 C0.19504,1.3243601 1.0904705,0.428929605 2.19504,0.428929605 Z M8.44504,12.4289296 C10.654179,12.4289296 12.44504,10.6380686 12.44504,8.4289296 C12.44504,6.21979061 10.654179,4.4289296 8.44504,4.4289296 C6.235901,4.4289296 4.44504,6.21979061 4.44504,8.4289296 C4.44504,10.6380686 6.235901,12.4289296 8.44504,12.4289296 Z M13.19504,2.4557377 C12.64288,2.4557377 12.19504,2.9034177 12.19504,3.4557377 C12.19504,4.0080577 12.64288,4.4557377 13.19504,4.4557377 C13.74736,4.4557377 14.19504,4.0080577 14.19504,3.4557377 C14.19504,2.9034177 13.74736,2.4557377 13.19504,2.4557377 Z" id="path-1"></path>
+    </defs>
+    <g id="Extra-large-(XL)-≥1200px" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01A-Homepage--v-XL" transform="translate(-1194.000000, -11782.000000)">
+            <g id="footer-/-default" transform="translate(-1.000000, 10976.000000)">
+                <g id="icons-/-socials-/-instagram-/-solid" transform="translate(1194.000000, 805.000000)">
+                    <g id="colour-/-primary" transform="translate(0.804960, 0.544262)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <use id="Mask" fill="#4B4C4E" xlink:href="#path-1"></use>
+                        <g id="colour-/-white" mask="url(#mask-2)" fill="#FFFFFF">
+                            <g transform="translate(-30.000000, -27.000000)">
+                                <rect x="0" y="1" width="80" height="75" rx="6"></rect>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

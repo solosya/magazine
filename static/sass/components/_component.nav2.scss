@@ -1,0 +1,20 @@
+/* Begin nav 2 style */
+
+.c-nav {
+  $selfNav: &;
+  &.c-nav-2 {
+    #{$selfNav} {
+      &__grid {
+      }
+      &__item {
+        color: $grey3;
+        @include font-size(16);
+        line-height: 1.5;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+/* End nav 2 style */
+

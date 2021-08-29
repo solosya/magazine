@@ -1,0 +1,24 @@
+
+/* Begin nav 3 style */
+
+.c-nav {
+  $selfNav: &;
+  &.c-nav-3 {
+    #{$selfNav} {
+      &__grid {
+        li {
+          margin: 15px 0;
+        }
+      }
+      &__item {
+        color: $grey3;
+        @include font-size(16);
+        line-height: 1.5;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+/* End nav 3 style */
+

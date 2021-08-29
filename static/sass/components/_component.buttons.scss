@@ -49,7 +49,16 @@
             color:lightness( $mainColor, 0.82) !important;
         }
     }
-
+    &--black {
+        background-color: $black;
+        border-color: $black;
+        color: $white;
+    
+        &-bordered {
+          border-color: $black;
+          color: $black;
+        }
+    }
 
     &--blue {
         background-color: $mainColor;

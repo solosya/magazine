@@ -98,6 +98,93 @@
       border-top: 1px solid rgba($grey3, 0.5);
       padding: 15px 0;
     }
+    &__bottom {
+        border-top: 1px solid rgba($grey3, 0.5);
+        background: $white;
+    
+        &-p1 {
+          padding: 25px 0;
+          text-align: center;
+    
+          @media #{$mobile} {
+            text-align: inherit;
+          }
+        }
+        &__ack-heading {
+          font-family: $secondaryFont;
+          @include font-size(12);
+          line-height: 1.33;
+          font-weight: $weightBold;
+          color: $black;
+          @media #{$mobile} {
+            @include font-size(16);
+            line-height: 1.5;
+          }
+        }
+    
+        &__ack-content {
+          color: $grey3;
+          font-family: $secondaryFont;
+          @include font-size(12);
+          line-height: 1.33;
+          font-weight: $weightRegular;
+          font-style: italic;
+          margin-top: 15px;
+    
+          @media #{$mobile} {
+            font-style: inherit;
+            @include font-size(16);
+            line-height: 1.5;
+          }
+        }
+    
+        &-p2 {
+          background-color: $black;
+          min-height: 56px;
+          @include flexbox;
+          @include align-items(center);
+    
+          &-container {
+            @include flexbox;
+            @include align-items(center);
+            @include justify-content(space-between);
+          }
+        }
+    
+        &__info {
+          @include flexbox;
+          @include align-items(center);
+    
+          &__copy {
+            color: $white;
+            @include font-size(12);
+            line-height: 1.33;
+            font-weight: $weightRegular;
+          }
+    
+          &__nav {
+            a {
+              color: $white;
+              @include font-size(12);
+              line-height: 1.33;
+              font-weight: $weightRegular;
+              text-decoration: none;
+              margin-left: 56px;
+            }
+          }
+        }
+    
+        &__rightSide {
+          @include flexbox;
+          @include align-items(center);
+    
+          .desginer-info {
+            margin-right: 40px;
+            color: $white;
+            @include font-size(12);
+          }
+        }
+    }
   }
   
   /* End footer style */
