@@ -1,55 +1,64 @@
 /* Begin links view style */
+
 .u-sf {
-    font-family: $secondaryFont;
+	font-family: $secondaryFont;
 }
 
 .u-pr {
-    &--6 {
-        padding-right: 6px;
-    }
+	&--6 {
+		padding-right: 6px;
+	}
 }
+
 .u-pl {
-    &--6 {
-        padding-left: 6px;
-    }
+	&--6 {
+		padding-left: 6px;
+	}
 }
 
 .u-mt {
-    &--50 {
-        margin-top: 50px; 
-    }
+	&--50 {
+		margin-top: 50px;
+	}
+}
+
+.u-mr {
+	&--30 {
+		margin-right: 32px;
+	}
 }
 
 .u-image-covered {
-    @include image_background();
-}
-.u-advertisement-section {
-    text-align: center;
-    &__m80 {
-        margin: 80px 0;
-    }
+	@include image_background();
 }
 
+.u-advertisement-section {
+	text-align: center;
+	&__m80 {
+		margin: 80px 0;
+	}
+}
 
 .x-close {
-	top:50%;
-	right:0;
-	z-index:50;
-	border:none;
-	cursor:pointer;
-	position:absolute;
+	top: 50%;
+	right: 0;
+	z-index: 50;
+	border: none;
+	cursor: pointer;
+	position: absolute;
 	@include size(16px);
-	background:transparent;
-    @include transform(translateY(-50%));
+	background: transparent;
+	@include transform(translateY(-50%));
 	@include transition(all 0.4s ease-in-out);
-	&:before, &:after {
-		top:50%;
-		left:-15%;
-		right:-15%;
-		height:1px;
-		content:' ';
-		position:absolute;
-		background-color:lighten($black,20%);
+	&:before,
+	&:after {
+		top: 50%;
+		left: -15%;
+		right: -15%;
+		height: 1px;
+		content: " ";
+		position: absolute;
+		background-color: lighten($black, 20%);
 		@include transition(all 0.2s ease-in-out);
 	}
 	&:before {
@@ -60,11 +69,31 @@
 	}
 	&:hover {
 		/*@include transform(translateY(-50%) rotate(90deg)!important);*/
-        &:before, &:after {
-            background-color:$mainColor;
-        }
+		&:before,
+		&:after {
+			background-color: $mainColor;
+		}
 	}
 }
 
+.u-generic-socialIcons {
+	@include flexbox;
+	&__item {
+		text-decoration: none;
+		display: block;
+		@include font-size(14);
+		color: $black;
+		font-weight: $weightRegular;
+
+		img {
+			display: block;
+		}
+		+ .u-generic-socialIcons {
+			&__item {
+				margin-left: 16px;
+			}
+		}
+	}
+}
 
 /* Begin links view style */
