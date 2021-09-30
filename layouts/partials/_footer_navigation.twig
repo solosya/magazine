@@ -1,0 +1,34 @@
+{% for item in items %}
+<div class="col-12 col-md-6 col-lg-3">
+    <div class="c-footer__main__container">
+        <h3>
+            {% if item.label != "" %}
+            {{item.label}}
+            {% elseif item.blogTitle != "" %}
+                {{item.blogTitle}}
+            {% elseif item.pageTitle != "" %}
+                {{item.pageTitle}}
+            {% endif %}
+        </h3>
+        {% if item.children %}
+        <div class="c-nav c-nav-2 d-none d-md-block">
+            <ul class="c-nav__grid">
+                {% for childItem in item.children %}
+                    <li>
+                        <a class="c-nav__item" href="{{childItem.link |raw}}">
+                            {% if childItem.label != "" %}
+                            {{childItem.label}}
+                            {% elseif childItem.blogTitle != "" %}
+                                {{childItem.blogTitle}}
+                            {% elseif childItem.pageTitle != "" %}
+                                {{childItem.pageTitle}}
+                            {% endif %}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
