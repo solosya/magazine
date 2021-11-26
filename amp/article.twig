@@ -72,7 +72,8 @@
     {% set para2      = storySplit[1] | slice(0, 80) ~ '</p>'  %}
     {% set ArticleContent  = [storySplit[0], para2] | join('</p>') %}
 
-    {% set plans 		= network['paywallPlans'] %}
+    {% set plans = _Paywall.getActiveNetworkPaywallPlans() %}
+
     {% for plan in plans  %}
         {% if plan.trial_status == "1" %}
             {% set trialToggle = true %}

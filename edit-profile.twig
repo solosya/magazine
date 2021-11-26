@@ -8,7 +8,8 @@
 
 {% set propListingsArr = [] %}
 {% set pwstats = _User.getPaywallStats(true) %}
-{% set plans = _Network.getNetworkData()['paywallPlans'] %}
+{% set plans = _Paywall.getActiveNetworkPaywallPlans() %}
+
 
 {% set userLimit = 10 %}
 {% set user = _User.getUser() %}

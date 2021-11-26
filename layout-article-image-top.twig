@@ -73,7 +73,8 @@
     {% set para2_words = storySplit[2] | split(' ') | slice(0, 10) %}
     {% set para2 = para2_words | join(' ') ~ '</p>'  %}
     {% set ArticleContent = '<p>' ~ [storySplit[1], para2] | join('<p>') %}
-    {% set plans 		= networkData['paywallPlans'] %}
+    {% set plans = _Paywall.getActiveNetworkPaywallPlans() %}
+
     {% for plan in plans  %}
         {% if plan.trial_status == "1" %}
             {% set trialToggle = true %}

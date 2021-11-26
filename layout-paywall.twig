@@ -1,5 +1,6 @@
 {% set networkData = _Network.getNetworkData() %}
-{% set plans 		= networkData['paywallPlans'] %}
+{% set plans = _Paywall.getActiveNetworkPaywallPlans() %}
+
 {% set blogData		= _Blog.getBlog() %}
 {% set blogName      = blogData.title %}
 {% set config       = _Network.getThemeConfig() %}
